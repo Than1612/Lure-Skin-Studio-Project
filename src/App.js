@@ -1,23 +1,15 @@
 import logo from './logo.svg';
 import './input.css';
+import Navbar from './components/Navbar';
+import Arrivals from './components/Arrivals';
+// import Hero from './components/Hero';
 
 function App() {
   return (
-    <div className="App flex">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p className="text-xs">
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App">
+      <Navbar/>
+      {/* <Hero/> */}
+      <Arrivals/>
     </div>
   );
 }

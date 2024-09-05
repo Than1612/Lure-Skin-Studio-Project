@@ -1,0 +1,27 @@
+.overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .slide-up {
+    transform: translateY(0);
+  }
+  
+  .slide-down {
+    transform: translateY(20px);
+  }
+  
+  .slide-up {
+    animation: slideUp 0.5s forwards;
+  }
+  
+  @keyframes slideUp {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
