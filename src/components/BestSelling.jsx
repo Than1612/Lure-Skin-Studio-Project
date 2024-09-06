@@ -5,10 +5,10 @@ import img2 from "../attachments/attachments1/i2.png";
 import img3 from "../attachments/attachments1/i3.png";
 import img4 from "../attachments/attachments1/i4.png";
 
-const Arrivals = () => {
+const BestSelling = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const startX = useRef(0);
-  const totalProducts = 5; 
+  const totalProducts = 5;
 
   const products = [
     { id: 1, name: "NATURAL GLOW", price: "$200.00", img: img1 },
@@ -61,19 +61,19 @@ const Arrivals = () => {
 
   return (
     <div
-      className="arrivals-section"
+      className="best-selling-section"
       style={{ width: "100vw" }}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
     >
-      <h2 className="section-title">ARRIVALS</h2>
+      <h2 className="best-selling-title">BEST SELLING ITEMS</h2>
       <div className="flex items-center justify-between relative">
-        <button className="arrow-btn left-arrow" onClick={prevProduct}>
+        <button className="best-selling-arrow-btn best-selling-left-arrow" onClick={prevProduct}>
           ←
         </button>
 
         <div
-          className="flex gap-2 justify-around overflow-hidden carousel"
+          className="flex gap-2 justify-around overflow-hidden best-selling-carousel"
           style={{ width: "90vw", transition: "transform 0.5s ease-in-out" }}
         >
           {getVisibleProducts().map((product) => (
@@ -86,7 +86,7 @@ const Arrivals = () => {
           ))}
         </div>
 
-        <button className="arrow-btn right-arrow" onClick={nextProduct}>
+        <button className="best-selling-arrow-btn best-selling-right-arrow" onClick={nextProduct}>
           →
         </button>
       </div>
@@ -94,4 +94,4 @@ const Arrivals = () => {
   );
 };
 
-export default Arrivals;
+export default BestSelling;
