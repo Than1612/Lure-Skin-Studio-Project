@@ -1,66 +1,37 @@
-import React, { useState } from 'react';
-import './Hero.css'; // Import the CSS file for animations
-import img1 from "../images/cat-large-item1.jpg";
-import img2 from "../images/cat-large-item2.jpg";
-import img3 from "../images/cat-large-item3.jpg";
-const slides = [
-  {
-    image: img1, // Replace with your image URLs
-    title: 'Slide Title 1',
-    description: 'This is the description for slide 1.',
-  },
-  {
-    image: img2,
-    title: 'Slide Title 2',
-    description: 'This is the description for slide 2.',
-  },
-  {
-    image: img3,
-    title: 'Slide Title 3',
-    description: 'This is the description for slide 3.',
-  },
-];
+import React from 'react';
+import { Slide } from 'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css';
+
+import img1 from "../attachments/attachments2/img10.png";
+import img2 from "../attachments/img1.png";
+
 
 const Hero = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
+    const images = [
+        "https://images.unsplash.com/photo-1509721434272-b79147e0e708?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80",
+        "https://images.unsplash.com/photo-1506710507565-203b9f24669b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1536&q=80",
+        "https://images.unsplash.com/photo-1536987333706-fc9adfb10d91?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80",
+    ];
 
-  const nextSlide = () => {
-    setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prevSlide) => (prevSlide - 1 + slides.length) % slides.length);
-  };
-
-  return (
-    <div className="relative w-full max-w-2xl mx-auto overflow-hidden">
-      <div
-        className="absolute inset-0 transition-transform duration-500 ease-in-out"
-        style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-      >
-        {slides.map((slide, index) => (
-          <div
-            key={index}
-            className="relative w-full h-64 bg-cover bg-center"
-            style={{ backgroundImage: slide.image }}
-          >
-            <div className="flex items-center justify-center h-full overlay">
-              <div className={`text-white text-center transition-transform duration-500 ${currentSlide === index ? 'slide-up' : 'slide-down'}`}>
-                <h2 className="text-2xl font-bold">{slide.title}</h2>
-                <p className="mt-2">{slide.description}</p>
-              </div>
+    return (
+        <Slide>
+            <div className="each-slide-effect">
+                <div style={{ 'backgroundImage': `url(${img1})`, height:"140vh",backgroundRepeat:"no-repeat",backgroundSize:"cover" }}>
+                    <span>Summer Glow</span>
+                </div>
             </div>
-          </div>
-        ))}
-      </div>
-      <button onClick={prevSlide} className="absolute left-0 z-10 p-2 bg-gray-800 text-white rounded-full">
-        Prev
-      </button>
-      <button onClick={nextSlide} className="absolute right-0 z-10 p-2 bg-gray-800 text-white rounded-full">
-        Next
-      </button>
-    </div>
-  );
+            <div className="each-slide-effect">
+                <div style={{ 'backgroundImage': `url(${img2})`, height:"140vh",backgroundRepeat:"no-repeat",backgroundSize:"cover" }}>
+                    <span>Summer Glow</span>
+                </div>
+            </div>
+            <div className="each-slide-effect">
+                <div style={{ 'backgroundImage': `url(${img1})`, height:"140vh",backgroundRepeat:"no-repeat",backgroundSize:"cover" }}>
+                    <span>Summer Glow</span>
+                </div>
+            </div>
+        </Slide>
+    );
 };
 
 export default Hero;
