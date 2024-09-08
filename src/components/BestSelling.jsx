@@ -1,5 +1,7 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import ArrivalsCard from "./ArrivalsCard";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import img1 from "../attachments/attachments1/i1.png";
 import img2 from "../attachments/attachments1/i2.png";
 import img3 from "../attachments/attachments1/i3.png";
@@ -9,6 +11,9 @@ const BestSelling = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const startX = useRef(0);
   const totalProducts = 5;
+  useEffect(() => {
+    AOS.init({ duration: 1000 }); // Initialize AOS with custom duration
+  }, []);
 
   const products = [
     { id: 1, name: "NATURAL GLOW", price: "$200.00", img: img1 },
@@ -61,14 +66,18 @@ const BestSelling = () => {
 
   return (
     <div
-      className="best-selling-section"
+      className="best-selling-section open-up"
       style={{ width: "100vw" }}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
+      data-aos="zoom-out"
     >
       <h2 className="best-selling-title">BEST SELLING ITEMS</h2>
       <div className="flex items-center justify-between relative">
-        <button className="best-selling-arrow-btn best-selling-left-arrow" onClick={prevProduct}>
+        <button
+          className="best-selling-arrow-btn best-selling-left-arrow"
+          onClick={prevProduct}
+        >
           ←
         </button>
 
@@ -86,7 +95,10 @@ const BestSelling = () => {
           ))}
         </div>
 
-        <button className="best-selling-arrow-btn best-selling-right-arrow" onClick={nextProduct}>
+        <button
+          className="best-selling-arrow-btn best-selling-right-arrow"
+          onClick={nextProduct}
+        >
           →
         </button>
       </div>
