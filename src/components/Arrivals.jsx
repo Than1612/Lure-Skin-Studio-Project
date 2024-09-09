@@ -1,15 +1,20 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import ArrivalsCard from "./ArrivalsCard";
 import img1 from "../attachments/attachments1/i1.png";
 import img2 from "../attachments/attachments1/i2.png";
 import img3 from "../attachments/attachments1/i3.png";
 import img4 from "../attachments/attachments1/i4.png";
+import "./Arrivals.css";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const Arrivals = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const startX = useRef(0);
-  const totalProducts = 5; 
-
+  const totalProducts = 5;
+  useEffect(() => {
+    AOS.init({ duration: 1000 }); // Initialize AOS with custom duration
+  }, []);
   const products = [
     { id: 1, name: "NATURAL GLOW", price: "$200.00", img: img1 },
     { id: 2, name: "NATURAL GLOW", price: "$100.00", img: img2 },
@@ -61,10 +66,11 @@ const Arrivals = () => {
 
   return (
     <div
-      className="arrivals-section"
+      className="arrivals-section open-up"
       style={{ width: "100vw" }}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
+      data-aos="zoom-out"
     >
       <h2 className="section-title">ARRIVALS</h2>
       <div className="flex items-center justify-between relative">
