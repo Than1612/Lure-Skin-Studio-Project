@@ -72,14 +72,14 @@ const Arrivals = () => {
       onTouchMove={handleTouchMove}
       data-aos="zoom-out"
     >
-      <h2 className="section-title">ARRIVALS</h2>
+      <h2 className="section-title text-uppercase mb-0">ARRIVALS</h2>
       <div className="flex items-center justify-between relative">
         <button className="arrow-btn left-arrow" onClick={prevProduct}>
           ←
         </button>
 
         <div
-          className="flex gap-2 justify-around overflow-hidden carousel"
+          className="flex gap-2 justify-around overflow-hidden carousel text-uppercase fs-6 mt-3"
           style={{ width: "90vw", transition: "transform 0.5s ease-in-out" }}
         >
           {getVisibleProducts().map((product) => (
