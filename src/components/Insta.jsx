@@ -10,6 +10,7 @@ const Insta=()=>{
     return(
         <div className="w-screen my-5 py-5">
             
+
             <h4 class="text-center py-3 " style={{
     fontFamily: "'Rockwell', 'Prata', serif",
     textAlign: "center",
@@ -26,6 +27,7 @@ const Insta=()=>{
                 <img src={img3} className="w-1/5 shrink" style={{width:"18%"}}></img>
                 <img src={img4} className="w-1/5 shrink" style={{width:"18%"}}></img>
                 <img src={img5} className="w-1/5 shrink" style={{width:"18%"}}></img>
+ 
             </div>
         </div>
     )

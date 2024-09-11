@@ -23,7 +23,7 @@ code {
   height: 100vh;
   background-color: #000;
   z-index: 1000;
-  animation: reveal 2s forwards;
+  animation: reveal 1s forwards;
 }
 
 @keyframes reveal {
@@ -33,4 +33,11 @@ code {
   100% {
     transform: translateY(-100%); /* Move the black screen up */
   }
+}
+
+
+.prata-regular {
+  font-family: "Prata", system-ui;
+  font-weight: 400;
+  font-style: normal;
 }
