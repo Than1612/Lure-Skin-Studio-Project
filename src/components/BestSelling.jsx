@@ -11,6 +11,7 @@ const BestSelling = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const startX = useRef(0);
   const totalProducts = 5;
+  
   useEffect(() => {
     AOS.init({ duration: 1000 }); // Initialize AOS with custom duration
   }, []);
@@ -66,23 +67,20 @@ const BestSelling = () => {
 
   return (
     <div
-      className="best-selling-section open-up"
+      className="arrivals-section open-up"
       style={{ width: "100vw" }}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       data-aos="zoom-out"
     >
-      <h2 className="best-selling-title">BEST SELLING ITEMS</h2>
+      <h2 className="section-title text-uppercase mb-0">BEST SELLING ITEMS</h2>
       <div className="flex items-center justify-between relative">
-        <button
-          className="best-selling-arrow-btn best-selling-left-arrow"
-          onClick={prevProduct}
-        >
+        <button className="arrow-btn left-arrow" onClick={prevProduct}>
           ←
         </button>
 
         <div
-          className="flex gap-2 justify-around overflow-hidden best-selling-carousel"
+          className="flex gap-2 justify-around overflow-hidden carousel text-uppercase fs-6 mt-3"
           style={{ width: "90vw", transition: "transform 0.5s ease-in-out" }}
         >
           {getVisibleProducts().map((product) => (
@@ -95,10 +93,7 @@ const BestSelling = () => {
           ))}
         </div>
 
-        <button
-          className="best-selling-arrow-btn best-selling-right-arrow"
-          onClick={nextProduct}
-        >
+        <button className="arrow-btn right-arrow" onClick={nextProduct}>
           →
         </button>
       </div>
