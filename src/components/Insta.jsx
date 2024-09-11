@@ -10,13 +10,13 @@ const Insta=()=>{
     return(
         <div className="w-screen my-5 py-5">
             
-            <span style={{fontFamily:"'Prata', serif;"}}>Follow us on Instagram</span>
-            <div className="flex justify-center" style={{height:"40vh"}}>
-                <img src={img1} className="w-1/5 shrink" style={{width:"18%"}}></img>
-                <img src={img2} className="w-1/5 shrink" style={{width:"18%"}}></img>
-                <img src={img3} className="w-1/5 shrink" style={{width:"18%"}}></img>
-                <img src={img4} className="w-1/5 shrink" style={{width:"18%"}}></img>
-                <img src={img5} className="w-1/5 shrink" style={{width:"18%"}}></img>
+            <span className="prata-regular">Follow us on Instagram</span>
+            <div className="flex justify-center" style={{height:"35vh"}}>
+                <img src={img1} className="w-1/5 shrink" style={{width:"16%"}}></img>
+                <img src={img2} className="w-1/5 shrink" style={{width:"16%"}}></img>
+                <img src={img3} className="w-1/5 shrink" style={{width:"16%"}}></img>
+                <img src={img4} className="w-1/5 shrink" style={{width:"16%"}}></img>
+                <img src={img5} className="w-1/5 shrink" style={{width:"16%"}}></img>
             </div>
         </div>
     )
