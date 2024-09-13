@@ -8,6 +8,7 @@ import BestSelling from './components/BestSelling';
 import Hero from './components/Hero';
 import Insta from './components/Insta';
 import Footer from './components/Footer';
+import Extra from './components/Extra';
  
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
         <Hero />
         <Arrivals />
         <BestSelling />
+        <Extra/>
         <Insta/>
       <Footer/>
       </div>
