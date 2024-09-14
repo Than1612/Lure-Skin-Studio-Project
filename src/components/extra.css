@@ -1,0 +1,9 @@
+.shop-btn{
+    transition: all 0.15s;
+    border: 1px solid white
+}
+
+.shop-btn:hover{
+    border-color: #f0d4d0;
+    cursor:pointer;
+}
