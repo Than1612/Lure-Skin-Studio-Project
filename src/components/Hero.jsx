@@ -18,28 +18,30 @@ const slides = [
 
 const Hero = () => {
   const [active, setActive] = useState(0);
+  const [transitioning, setTransitioning] = useState(true);
+
   const max = slides.length;
 
   const intervalBetweenSlides = () =>
     setActive(active === max - 1 ? 0 : active + 1);
 
   useEffect(() => {
-    const interval = setInterval(() => intervalBetweenSlides(), 3000);
+    const interval = setInterval(() => {
+      setTransitioning(true);
+      intervalBetweenSlides();
+    }, 5000);
+
     return () => clearInterval(interval);
-  });
-
-  const nextOne = () => setActive((active + 1) % max);
-
-  const prevOne = () => setActive((active - 1 + max) % max);
+  }, []);
 
   const isActive = (value) => active === value && "active";
 
   const setSliderStyles = () => {
     const transition = active * -100;
-
     return {
       width: slides.length * 100 + "vw",
-      transform: "translateX(" + transition + "vw)",
+      transform: `translateX(${transition}vw)`,
+      transition: transitioning ? "transform 1s ease-in-out" : "none",
     };
   };
 
@@ -51,34 +53,40 @@ const Hero = () => {
             className="each-slide"
             key={index}
             style={{ backgroundImage: item.eachSlide }}
-          ></div>
+          >
+            <div className="slide-content">
+              <h2 className="section-title">Summer Glow</h2>
+              <p className="caption">
+                Tortor eget placerat arcu integer. Lectus fames egestas
+                tincidunt aliquet vivamus nibh lorem nulla. This is Modern
+                fashion ectus fames egestas tincidunt aliquet vivamus nibh lorem
+                nulla.
+              </p>
+              <div className="btn-left btn-swiper">
+                <a href="#" className="btn">
+                  Shop Collection
+                </a>
+              </div>
+            </div>
+          </div>
         ))}
       </div>
-      <button type="button" className="arrows prev" onClick={() => prevOne()}>
-        <svg fill="#FFFFFF" width="50" height="50" viewBox="0 0 24 24">
-          <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
-          <path d="M0 0h24v24H0z" fill="none" />
-        </svg>
-      </button>
-      <button type="button" className="arrows next" onClick={() => nextOne()}>
-        <svg fill="#FFFFFF" height="50" viewBox="0 0 24 24" width="50">
-          <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
-          <path d="M0 0h24v24H0z" fill="none" />
-        </svg>
-      </button>
+
       <ul className="dots-container">
-        {slides.map(
-          (
-            silde,
-            index // check index
-          ) => (
-            <li className={isActive(index) + " dots"} key={index}>
-              <button onClick={() => setActive(index)}>
-                <span>&#9679;</span>
-              </button>
-            </li>
-          )
-        )}
+        {slides.map((_, index) => (
+          <li className={isActive(index) + " dots"} key={index}>
+            <button onClick={() => setActive(index)}>
+              <span
+                className={`transition-transform duration-300 ${
+                  active === index ? "text-gray-600 scale-125" : "text-gray-300"
+                }`}
+                style={{ fontSize: active === index ? "50px" : "40px" }}
+              >
+                &#9679;
+              </span>
+            </button>
+          </li>
+        ))}
       </ul>
     </section>
   );

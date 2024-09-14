@@ -7,50 +7,20 @@
 
 .slider .wrapper {
   height: 100vh;
-  transition: 0.5s all linear;
-  will-change: transform;
-}
-
-.slider .arrows {
-  position: absolute;
-  top: 50%;
-  background: none;
-  height: 60px;
-  border: 0;
-  cursor: pointer;
-  transition: ease 0.3s all;
-  outline: none;
-}
-
-.slider .arrows.prev {
-  left: 0;
-}
-
-.slider .arrows.prev:hover {
-  opacity: 0.7;
-  left: -10px;
-}
-
-.slider .arrows.next {
-  right: 0;
-}
-
-.slider .arrows.next:hover {
-  right: -10px;
-  opacity: 0.7;
+  display: flex;
+  transition: transform 1s ease-in-out; /* Smoother transition over 1s */
 }
 
 .slider .dots-container {
   height: auto;
   margin: 0;
   padding: 0;
-  position: absolute;
   width: auto;
   text-align: center;
   left: 50%;
   bottom: 9px;
   transform: translateX(-50%);
-  z-index: 10;
+  position: absolute;
   list-style-type: none;
 }
 
@@ -60,13 +30,17 @@
 }
 
 .slider .dots-container li.active button {
-  color: #00d8ff;
+  color: rgb(86, 90, 68);
 }
 
 .slider .dots-container li button {
   color: #fff;
   background-color: transparent;
   border: none;
+}
+
+.slider .dots-container li button span {
+  min-height: 30px;
 }
 
 .slider .dots-container li button:hover {
@@ -96,11 +70,43 @@
 .slider .each-slide {
   width: 100vw;
   height: 100vh;
-  float: left;
-  line-height: 100vh;
-  font-size: 40vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   background-size: cover;
-  background-position: center center;
+  background-position: center;
   background-color: transparent;
+}
+.slider .slide-content {
+  border-radius: 10px;
+  max-width: 80%;
+}
+
+.slider .slide-content .section-title {
+  color: white;
+  font-size: 6rem;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.slider .slide-content .caption {
+  color: white;
+  opacity: 0.8;
+  padding: 0 300px;
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.slider .slide-content .btn {
+  color: white;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border: 2px solid white;
+  text-decoration: none;
+}
+
+.slider .slide-content .btn:hover {
+  background-color: white;
+  color: black;
 }
