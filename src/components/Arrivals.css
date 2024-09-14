@@ -12,15 +12,22 @@
   justify-content: space-between;
   position: relative;
   width: 100%;
-  max-width: 100vw;
+  max-width: 90vw;
   overflow: hidden;
 }
 
 .carousel {
   display: flex;
-  width: 80%;
-  justify-content: center;
+  width: calc(100% * 5); /* Adjust according to total number of products */
+  justify-content: flex-start;
   transition: transform 0.5s ease-in-out;
+}
+
+.arrivals-card {
+  flex: 0 0 33.33%; /* Show 3 cards at a time */
+  max-width: 33.33%;
+  box-sizing: border-box;
+  padding: 10px;
 }
 
 .arrow-btn {
@@ -47,10 +54,9 @@
   right: 10px;
 }
 
-.product-card {
-  flex: 0 0 25%;
-  opacity: 0.5;
-  transition: opacity 0.5s ease-in-out;
+.product-image {
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .product-card.active {
@@ -73,7 +79,6 @@
   font-family: "Rockwell", serif;
   font-weight: bold;
   color: #2d2d2d;
-  position: relative;
 }
 
 .section-title::after {
@@ -96,9 +101,9 @@
 }
 
 @media (max-width: 768px) {
-  .arrivals-section {
-    width: 100%;
-    margin-bottom: 30px;
+  .arrivals-card {
+    flex: 0 0 100%;
+    max-width: 100%;
   }
 
   .arrow-btn {
