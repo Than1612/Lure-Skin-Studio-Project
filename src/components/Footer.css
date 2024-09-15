@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Prata&display=swap");
+h5,
+p {
+  font-family: "Prata", serif;
+}
+.item-anchor {
+  position: relative;
+  color: #000;
+  text-decoration: none;
+  font-family: "Prata", serif;
+}
+.item-anchor::after {
+  position: absolute;
+  height: 1px;
+  content: "";
+  left: 0;
+  bottom: 0;
+  width: 0;
+  background: #000;
+  transition: width 0.2s;
+}
+
+.item-anchor:hover::after {
+  width: 100%;
+}
+
+.svg-color {
+  color: #000;
+  margin-left: 100%;
+}
