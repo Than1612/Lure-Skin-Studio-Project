@@ -4,7 +4,8 @@ import "../components/Navbar.css";
 import { FaBlog, FaFileAlt, FaHome, FaPhone, FaStore } from "react-icons/fa";
 import { IoHomeOutline } from "react-icons/io5";
 import { CiPen } from "react-icons/ci";
-import { MdOutlinePhoneInTalk } from "react-icons/md";
+import { IoMdCall } from "react-icons/io";
+
 import { AiOutlineShop } from "react-icons/ai";
 import { FaRegFileImage } from "react-icons/fa6";
 
@@ -150,7 +151,7 @@ const Navbar = () => {
           <CiPen size={20} className="mr-2" /> Blog
         </li>
         <li>
-          <MdOutlinePhoneInTalk size={20} className="mr-2" /> Contact
+          <IoMdCall size={20} className="mr-2" /> Contact
         </li>
       </ul>
 

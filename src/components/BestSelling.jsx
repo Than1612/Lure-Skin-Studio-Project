@@ -23,12 +23,18 @@ const BestSelling = () => {
     { id: 5, name: "NATURAL GLOW", price: "$100.00", img: img3 },
   ];
 
+  const visibleItemsCount = 3;
+
   const nextProduct = () => {
-    setCurrentIndex((prev) => (prev + 1) % products.length);
+    if (currentIndex + visibleItemsCount < products.length) {
+      setCurrentIndex((prev) => prev + 1);
+    }
   };
 
   const prevProduct = () => {
-    setCurrentIndex((prev) => (prev - 1 + products.length) % products.length);
+    if (currentIndex > 0) {
+      setCurrentIndex((prev) => prev - 1);
+    }
   };
 
   return (
@@ -37,7 +43,7 @@ const BestSelling = () => {
       style={{ width: "100vw" }}
       data-aos="zoom-out"
     >
-      <h2 className="section-title text-uppercase mb-0">ARRIVALS</h2>
+      <h2 className="section-title text-uppercase mb-0">BEST SELLING</h2>
       <div className="carousel-container">
         <button className="arrow-btn left-arrow" onClick={prevProduct}>
           ←
