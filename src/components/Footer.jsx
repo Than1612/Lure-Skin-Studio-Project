@@ -100,7 +100,7 @@ const Footer = () => {
                 </a>
               </p>
               <p>
-                Do you need support? Give us a call.{" "}
+                Do you need support? Give us a call.{" "}<br/>
                 <a href="tel:+91 8778081625" class="item-anchor">
                   +91 8778081625
                 </a>
@@ -114,7 +114,7 @@ const Footer = () => {
           <div class="row">
             <div class="col-md-6 d-flex flex-wrap"></div>
             <div class="col-md-6 text-md-end mt-3 mt-md-0">
-              <p>© Copyright 2023. All rights reserved.</p>
+              <p>© Copyright 2024. All rights reserved.</p>
             </div>
           </div>
         </div>

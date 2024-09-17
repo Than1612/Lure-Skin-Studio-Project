@@ -37,6 +37,7 @@ const Arrivals = () => {
       style={{ width: "100vw" }}
       data-aos="zoom-out"
     >
+      <br/><br/>
       <h2 className="section-title text-uppercase mb-0">ARRIVALS</h2>
       <div className="carousel-container">
         <button className="arrow-btn left-arrow" onClick={prevProduct}>

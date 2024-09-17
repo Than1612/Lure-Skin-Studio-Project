@@ -37,7 +37,7 @@ const BestSelling = () => {
       style={{ width: "100vw" }}
       data-aos="zoom-out"
     >
-      <h2 className="section-title text-uppercase mb-0">ARRIVALS</h2>
+      <h2 className="section-title text-uppercase mb-0">BEST SELLING</h2>
       <div className="carousel-container">
         <button className="arrow-btn left-arrow" onClick={prevProduct}>
           ←
