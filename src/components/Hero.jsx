@@ -21,26 +21,18 @@ const Hero = () => {
   const [transitioning, setTransitioning] = useState(true);
 
   const max = slides.length;
-  
-  const showPrevArrow = active > 0;
-  const showNextArrow = active < max - 1;
 
-  const intervalBetweenSlides = () => {
-    if (active < max - 1) {
-      setActive(active + 1);
-    }
-  };
+  const intervalBetweenSlides = () =>
+    setActive(active === max - 1 ? 0 : active + 1);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (active < max - 1) {
-        setTransitioning(true);
-        intervalBetweenSlides();
-      }
+      setTransitioning(true);
+      intervalBetweenSlides();
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [active]);
+  }, []);
 
   const isActive = (value) => active === value && "active";
 
@@ -51,13 +43,6 @@ const Hero = () => {
       transform: `translateX(${transition}vw)`,
       transition: transitioning ? "transform 1s ease-in-out" : "none",
     };
-  };
-
-  const goToSlide = (index) => {
-    if (index >= 0 && index < max) {
-      setActive(index);
-      setTransitioning(false);
-    }
   };
 
   return (
@@ -87,21 +72,10 @@ const Hero = () => {
         ))}
       </div>
 
-      {showPrevArrow && (
-        <button className="arrow left-arrow" onClick={() => goToSlide(active - 1)}>
-          &#9664; {/* Left Arrow */}
-        </button>
-      )}
-      {showNextArrow && (
-        <button className="arrow right-arrow" onClick={() => goToSlide(active + 1)}>
-          &#9654; {/* Right Arrow */}
-        </button>
-      )}
-
       <ul className="dots-container">
         {slides.map((_, index) => (
           <li className={isActive(index) + " dots"} key={index}>
-            <button onClick={() => goToSlide(index)}>
+            <button onClick={() => setActive(index)}>
               <span
                 className={`transition-transform duration-300 ${
                   active === index ? "text-gray-600 scale-125" : "text-gray-300"
