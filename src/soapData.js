@@ -23,7 +23,8 @@ const soapData = {
         "Activated bamboo charcoal powder",
         "Tea tree oil"
       ],
-      "proImg": sample
+      "proImg": sample,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus."
     },
     {
       "product_name": "Shea Butter Soap",
@@ -44,7 +45,8 @@ const soapData = {
         "Unrefined Shea butter",
         "Rose geranium oil"
       ],
-      "proImg": sample
+      "proImg": sample,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus."
     },
     {
       "product_name": "French Green Clay with Spirulina Soap",
@@ -66,7 +68,8 @@ const soapData = {
         "Spirulina powder",
         "Peppermint oil"
       ],
-      "proImg": sample
+      "proImg": sample,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus."
     },
     {
       "product_name": "French Pink Clay with Rose Soap",
@@ -87,7 +90,8 @@ const soapData = {
         "French pink clay",
         "Organic rose petals"
       ],
-      "proImg": sample
+      "proImg": sample,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus."
     },
     {
       "product_name": "Red-wine soap",
@@ -111,7 +115,8 @@ const soapData = {
         "Distilled water",
         "Solvents (CAPB) and red color (FDA approved)"
       ],
-      "proImg": sample
+      "proImg": sample,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus."
     },
     {
       "product_name": "Detan soap",
@@ -132,7 +137,8 @@ const soapData = {
         "Potato powder",
         "Tomato purée"
       ],
-      "proImg": sample
+      "proImg": sample,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus."
     },
     {
       "product_name": "All Clear Dandruff Hair Oil",
@@ -162,7 +168,8 @@ const soapData = {
         "Rosemary oil",
         "Tea tree oil."
       ],
-      "proImg": sample
+      "proImg": sample,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus."
     },
     {
       "product_name": "Hair Growth Oil",
@@ -190,7 +197,8 @@ const soapData = {
         "Vetiver",
         "White turmeric."
       ],
-      "proImg": sample
+      "proImg": sample,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus."
     }
   ]
 };
