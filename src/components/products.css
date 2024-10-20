@@ -18,7 +18,7 @@
 }
 
 .product-grid.expand {
-  max-height: 2000px; /* Larger height when expanded */
+  max-height: 2000px;
   transition: max-height 0.5s ease;
 }
 
@@ -41,12 +41,77 @@
   height: auto;
   margin-bottom: 10px;
 }
+
 .product-details {
   padding: 10px;
 }
 
 .product-price {
   font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.product-name {
+  max-height: 100px;
+  overflow-y: hidden;
+  transition: color 0.3s ease;
+}
+
+.add-to-cart {
+  margin-top: 10px;
+}
+
+.cart-icon {
+  color: #007bff;
+  cursor: pointer;
+  height: 2em;
+  width: 2em;
+  transition: color 0.3s ease;
+}
+
+.cart-icon:hover {
+  color: #0056b3;
+}
+
+.cart-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.cart-btn .cart-icon {
+  margin-right: 5px;
+}
+
+.cart-btn:hover .cart-icon {
+  color: #218838;
+}
+
+.cover {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  background-color: rgba(0, 0, 0, 0.6);
+  transition: top 0.4s ease;
+  color: white;
+  padding: 10px;
+}
+
+.product-card:hover .cover {
+  top: 38%;
+  display: flex;
+  font-size: 12px;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.product-card:hover .product-price,
+.product-card:hover .product-name {
+  color: transparent;
 }
 
 .see-more-btn {
@@ -58,39 +123,29 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-size: 1rem;
+  display: block;
+  margin: 20px auto;
 }
 
 .see-more-btn:hover {
   background-color: #0056b3;
 }
 
-.product-name{
-  max-height: 100px;
-  overflow-y: hidden;
+.sort-container {
+  margin-bottom: 20px;
+  text-align: center;
 }
 
-/* Cover initial styling */
-.cover {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  height: 60%;
-  background-color: rgba(0, 0, 0, 0.6);
-  transition: top 0.4s ease; /* Smooth slide up effect */
-  color: white;
+.sort-container select {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
 }
 
-/* On hover, move the cover upwards */
-.product-card:hover .cover {
-  top: 38%;
-  display: flex;
-  font-size: 12px;
-  flex-direction: column;
-  justify-content: space-between;
-  
-}
-
-.product-card:hover .product-price,.product-card:hover .product-name{
-  color: transparent;
+@media (min-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
