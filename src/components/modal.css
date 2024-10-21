@@ -1,0 +1,165 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8); /* Darker backdrop */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: all 0.3s ease; /* Smooth appearance */
+}
+
+.modal-content {
+  background: linear-gradient(135deg, #f0f8ff, #ffffff);
+  padding: 20px;
+  border-radius: 15px; /* Softer rounded corners */
+  max-width: 800px;
+  width: 90%;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+  animation: modalOpen 0.3s ease; /* Animation effect on open */
+}
+
+@keyframes modalOpen {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  transition: transform 0.3s ease; /* Add a hover effect */
+}
+
+.close-button:hover {
+  transform: rotate(90deg); /* Rotate on hover */
+}
+
+.modal-details {
+  display: flex;
+  flex-direction: row; /* Keep the layout in rows */
+  align-items: center; /* Center vertically */
+  justify-content: space-between; /* Ensure even spacing between the image and the details section */
+ 
+}
+
+.modal-image-container {
+  flex: 1;
+  display: flex;
+  justify-content: center; /* Center the image */
+  align-items: center;
+}
+
+.modal-image {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: transform 0.3s ease; /* Smooth scaling effect */
+}
+
+.modal-image:hover {
+  transform: scale(1.05); /* Slight zoom on hover */
+}
+
+.modal-info {
+  flex: 1;
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.modal-info h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #007bff; /* Underline effect */
+  padding-bottom: 5px;
+}
+
+.modal-info p {
+  margin-bottom: 15px;
+  line-height: 1.6; /* Improve readability */
+}
+
+ul {
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+
+ul strong {
+  margin-bottom: 10px;
+  display: block;
+  color: #007bff;
+}
+
+ul li {
+  margin-bottom: 5px;
+}
+
+.cart-btn {
+  padding: 12px 25px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 30px; /* Rounded button */
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.cart-btn:hover {
+  background-color: #218838;
+  transform: scale(1.05); /* Slightly larger on hover */
+}
+
+.cart-btn svg {
+  font-size: 20px; /* Larger cart icon */
+}
+
+@media (max-width: 768px) {
+  .modal-content {
+    flex-direction: column; /* Stacks the image and info on smaller screens */
+    width: 100%;
+  }
+
+  .modal-image-container,
+  .modal-info {
+    flex: unset;
+  }
+}
+
+.carousel-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  flex: 1; /* Takes equal space */
+}
+.carousel-image {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain; /* Ensures image is not stretched */
+}
