@@ -1,4 +1,3 @@
- 
 import logo from './logo.svg';
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -10,8 +9,9 @@ import Hero from './components/Hero';
 import Insta from './components/Insta';
 import Footer from './components/Footer';
 import Extra from './components/Extra';
-import Products from './components/products'
- 
+import Products from './components/products';
+import Blog from './components/blog'; 
+import Policy from './components/policy';
 
 function App() {
   useEffect(() => {
@@ -53,8 +53,13 @@ function App() {
 
           {/* Route for the products page */}
           <Route path="/products" element={<Products />} />
+
+          {/* Route for the blog page */}
+          <Route path="/blog" element={<Blog />} />
+
+          {/* Route for the policy page */}
+          <Route path="/policy" element={<Policy />} /> 
         </Routes>
-        
         
         <Footer />
       </div>
