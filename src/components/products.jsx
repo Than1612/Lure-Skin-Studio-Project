@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import "./products.css"; 
-import { soaps, oils } from "../soapData"; 
-import { FaShoppingCart } from "react-icons/fa"; 
+import "./products.css";
+import { soaps, oils } from "../soapData"; // Assuming you import your data correctly
+import { FaShoppingCart } from "react-icons/fa";
+import ProductModal from "./Modal"; // Import the modal
 
 const Products = () => {
   const [showAllSoaps, setShowAllSoaps] = useState(false);
   const [showAllOils, setShowAllOils] = useState(false);
   const [sortBy, setSortBy] = useState("");
+  const [selectedProduct, setSelectedProduct] = useState(null); // State for selected product
 
   const initialDisplayLimit = 4;
 
@@ -18,23 +20,33 @@ const Products = () => {
     setShowAllOils(!showAllOils);
   };
 
+  const openModal = (product) => {
+    setSelectedProduct(product); // Set the product to display in modal
+  };
+
+  const closeModal = () => {
+    setSelectedProduct(null); // Close the modal
+  };
+
   const sortProducts = (products) => {
+    const sortedProducts = [...products]; // Create a copy to avoid mutating original array
     if (sortBy === "ratings") {
-      return products.sort((a, b) => b.ratings - a.ratings);
+      return sortedProducts.sort((a, b) => b.ratings - a.ratings);
     } else if (sortBy === "purchases") {
-      return products.sort((a, b) => b.purchases - a.purchases);
+      return sortedProducts.sort((a, b) => b.purchases - a.purchases);
     } else if (sortBy === "price") {
-      return products.sort((a, b) => a.MRP - b.MRP);
+      return sortedProducts.sort((a, b) => a.MRP - b.MRP);
     } else if (sortBy === "arrival") {
-      return products.sort((a, b) => new Date(a.arrivalDate) - new Date(b.arrivalDate));
+      return sortedProducts.sort((a, b) => new Date(a.arrivalDate) - new Date(b.arrivalDate));
     }
-    return products;
+    return sortedProducts;
   };
 
   return (
     <div className="product-container">
       <h1 className="tagline">Tag Line For Lure</h1>
 
+      {/* Sort Dropdown */}
       <div className="sort-container">
         <label htmlFor="sort">Sort By: </label>
         <select
@@ -50,26 +62,13 @@ const Products = () => {
         </select>
       </div>
 
+      {/* Soaps Section */}
       <section className="soap-section">
         <h2>Soaps</h2>
         <div className={`product-grid ${showAllSoaps ? "expand" : ""}`}>
           {sortProducts(showAllSoaps ? soaps : soaps.slice(0, initialDisplayLimit)).map((product, index) => (
-            <div key={index} className="product-card">
-              <div className="cover">
-                <ul className="benefits-list">
-                  {product.benefits.map((benefit, idx) => (
-                    <li key={idx} className="text-left">{benefit}</li>
-                  ))}
-                </ul>
-                <div className="flex flex-row justify-around align-items-center">
-                  <span style={{maxWidth:'50%'}}>Price: Rs {product.MRP}</span>
-                  <span style={{maxWidth:'50%'}}>{product.product_name}</span>
-                </div>
-                <div className="add-to-cart flex justify-end pr-2 pb-2">
-                  <FaShoppingCart className="cart-icon" style={{height:'2em',width:'2em'}} />
-                </div>
-              </div>
-              <img src={product.proImg} alt={product.product_name} className="product-image" />
+            <div key={index} className="product-card" onClick={() => openModal(product)}>
+              <img src={product.proImgs[0]} alt={product.product_name} className="product-image" />
               <div className="product-details text-left">
                 <p className="product-price">Price: Rs {product.MRP}</p>
                 <h6 className="product-name">{product.product_name}</h6>
@@ -84,26 +83,13 @@ const Products = () => {
         )}
       </section>
 
+      {/* Oils Section */}
       <section className="oil-section">
         <h2>Oils</h2>
         <div className={`product-grid ${showAllOils ? "expand" : ""}`}>
           {sortProducts(showAllOils ? oils : oils.slice(0, initialDisplayLimit)).map((product, index) => (
-            <div key={index} className="product-card">
-              <div className="cover">
-                <ul className="benefits-list">
-                  {product.benefits.map((benefit, idx) => (
-                    <li key={idx} className="text-left">{benefit}</li>
-                  ))}
-                </ul>
-                <div className="flex flex-row justify-around align-items-center">
-                  <span style={{maxWidth:'50%'}}>Price: Rs {product.MRP}</span>
-                  <span style={{maxWidth:'50%'}}>{product.product_name}</span>
-                </div>
-                <div className="add-to-cart flex justify-end pr-2 pb-2">
-                  <FaShoppingCart className="cart-icon" style={{height:'2em',width:'2em'}} />
-                </div>
-              </div>
-              <img src={product.proImg} alt={product.product_name} className="product-image" />
+            <div key={index} className="product-card" onClick={() => openModal(product)}>
+              <img src={product.proImgs[0]} alt={product.product_name} className="product-image" />
               <div className="product-details text-left">
                 <p className="product-price">Price: Rs {product.MRP}</p>
                 <h6 className="product-name">{product.product_name}</h6>
@@ -117,6 +103,9 @@ const Products = () => {
           </button>
         )}
       </section>
+
+      {/* Modal to show selected product details */}
+      <ProductModal product={selectedProduct} onClose={closeModal} />
     </div>
   );
 };

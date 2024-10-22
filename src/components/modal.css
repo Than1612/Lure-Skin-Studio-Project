@@ -1,0 +1,215 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8); /* Darker backdrop */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: all 0.3s ease; /* Smooth appearance */
+}
+
+.modal-content {
+  background: linear-gradient(135deg, #f0f8ff, #ffffff);
+  padding: 20px;
+  border-radius: 15px; /* Softer rounded corners */
+  max-width: 800px;
+  width: 90%;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+  animation: modalOpen 0.3s ease; /* Animation effect on open */
+}
+
+@keyframes modalOpen {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 2rem; /* Responsive size */
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  transition: transform 0.3s ease; /* Add a hover effect */
+}
+
+.close-button:hover {
+  transform: rotate(90deg); /* Rotate on hover */
+}
+
+.modal-details {
+  display: flex;
+  flex-direction: row; /* Keep the layout in rows */
+  align-items: flex-start; /* Align items to the start */
+  justify-content: space-between; /* Ensure even spacing between the image and the details section */
+}
+
+ 
+ 
+.modal-image-container {
+  flex: 1; /* Allows it to take equal space with modal-info */
+  display: flex;
+  justify-content: center; /* Center the image */
+  align-items: center;
+  position: relative; /* Necessary for carousel buttons */
+  max-width: 100%; /* Prevents overflow */
+  height: 100%; /* Make it take the full height of the parent */
+}
+
+.slide-image {
+  display: flex;
+  justify-content: center; /* Center the image */
+  align-items: center; /* Center the image vertically */
+  height: 100%; /* Ensure it takes the full height of the container */
+}
+
+.modal-image {
+  max-width: 100%; /* Keeps the image contained */
+  max-height: 400px; /* Set a max height for the image */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: contain; /* Ensure the image is contained within the box */
+  border-radius: 10px;
+  transition: transform 0.3s ease; /* Smooth scaling effect */
+}
+
+.modal-image:hover {
+  transform: scale(1.05); /* Slight zoom on hover */
+}
+
+.prev-button, .next-button {
+  position: absolute;
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%); /* Adjust for perfect centering */
+  background-color: rgba(255, 255, 255, 0.8); /* Slightly translucent background */
+  border: none;
+  cursor: pointer;
+  z-index: 1; /* Ensure buttons are above the image */
+  padding: 10px; /* Add some padding for better click area */
+  border-radius: 50%; /* Make buttons circular */
+}
+
+.prev-button {
+  left: 10px; /* Position left */
+}
+
+.next-button {
+  right: 10px; /* Position right */
+}
+
+.modal-info {
+  flex: 1;
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.modal-info h2 {
+  font-size: 2rem; /* Responsive size */
+  color: #333;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #007bff; /* Underline effect */
+  padding-bottom: 5px;
+}
+
+.modal-info p {
+  margin-bottom: 15px;
+  line-height: 1.6; /* Improve readability */
+  font-size: 1rem; /* Responsive size */
+}
+
+ul {
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+
+ul strong {
+  margin-bottom: 10px;
+  display: block;
+  color: #007bff;
+}
+
+ul li {
+  margin-bottom: 5px;
+}
+
+.cart-btn {
+  padding: 12px 25px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 30px; /* Rounded button */
+  cursor: pointer;
+  font-size: 1rem; /* Responsive size */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.cart-btn:hover {
+  background-color: #218838;
+  transform: scale(1.05); /* Slightly larger on hover */
+}
+
+.cart-btn svg {
+  font-size: 1.25rem; /* Larger cart icon */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .modal-content {
+    flex-direction: column; /* Stacks the image and info on smaller screens */
+    width: 80%!important;
+  }
+
+  .modal-image-container,
+  .modal-info {
+    flex: unset;
+  }
+
+  .modal-info {
+    margin-left: 0; /* Remove left margin */
+  }
+
+  .close-button {
+    font-size: 1.5rem; /* Smaller on mobile */
+  }
+
+  .modal-info h2 {
+    font-size: 1.5rem; /* Smaller on mobile */
+  }
+
+  .modal-info p {
+    font-size: 0.9rem; /* Smaller on mobile */
+  }
+
+  .cart-btn {
+    font-size: 0.9rem; /* Smaller button text */
+    padding: 10px 20px; /* Smaller padding */
+  }
+
+  .modal-image-container {
+    display: none; /* Hides the image if necessary */
+  }
+}
+
+
+
