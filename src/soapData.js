@@ -23,7 +23,7 @@ const soapData = {
         "Activated bamboo charcoal powder",
         "Tea tree oil",
       ],
-      proImg: sample,
+      proImgs: [sample, sample, sample], // Array of images
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus.",
       ratings: 4.7, 
@@ -45,7 +45,7 @@ const soapData = {
         "Store in a ventilated soap box to drain away the water completely.",
       ],
       loaded_with: ["Base oils", "Unrefined Shea butter", "Rose geranium oil"],
-      proImg: sample,
+      proImgs: [sample, sample, sample], // Array of images
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus.",
       ratings: 4.5, 
@@ -72,7 +72,7 @@ const soapData = {
         "Spirulina powder",
         "Peppermint oil",
       ],
-      proImg: sample,
+      proImgs: [sample, sample, sample], // Array of images
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus.",
       ratings: 4.3, 
@@ -98,7 +98,7 @@ const soapData = {
         "French pink clay",
         "Organic rose petals",
       ],
-      proImg: sample,
+      proImgs: [sample, sample, sample], // Array of images
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus.",
       ratings: 4.6, 
@@ -127,7 +127,7 @@ const soapData = {
         "Distilled water",
         "Solvents (CAPB) and red color (FDA approved)",
       ],
-      proImg: sample,
+      proImgs: [sample, sample, sample], // Array of images
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus.",
       ratings: 4.1, 
@@ -153,7 +153,7 @@ const soapData = {
         "Potato powder",
         "Tomato purée",
       ],
-      proImg: sample,
+      proImgs: [sample, sample, sample], // Array of images
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus.",
       ratings: 4.8, 
@@ -188,7 +188,7 @@ const soapData = {
         "Rosemary oil",
         "Tea tree oil.",
       ],
-      proImg: sample,
+      proImgs: [sample, sample, sample], // Array of images
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus.",
       ratings: 4.9, 
@@ -221,7 +221,7 @@ const soapData = {
         "Vetiver",
         "White turmeric.",
       ],
-      proImg: sample,
+      proImgs: [sample, sample, sample], // Array of images
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus.",
       ratings: 5.0, 

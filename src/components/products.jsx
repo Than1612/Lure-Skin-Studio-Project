@@ -68,7 +68,7 @@ const Products = () => {
         <div className={`product-grid ${showAllSoaps ? "expand" : ""}`}>
           {sortProducts(showAllSoaps ? soaps : soaps.slice(0, initialDisplayLimit)).map((product, index) => (
             <div key={index} className="product-card" onClick={() => openModal(product)}>
-              <img src={product.proImg} alt={product.product_name} className="product-image" />
+              <img src={product.proImgs[0]} alt={product.product_name} className="product-image" />
               <div className="product-details text-left">
                 <p className="product-price">Price: Rs {product.MRP}</p>
                 <h6 className="product-name">{product.product_name}</h6>
@@ -89,7 +89,7 @@ const Products = () => {
         <div className={`product-grid ${showAllOils ? "expand" : ""}`}>
           {sortProducts(showAllOils ? oils : oils.slice(0, initialDisplayLimit)).map((product, index) => (
             <div key={index} className="product-card" onClick={() => openModal(product)}>
-              <img src={product.proImg} alt={product.product_name} className="product-image" />
+              <img src={product.proImgs[0]} alt={product.product_name} className="product-image" />
               <div className="product-details text-left">
                 <p className="product-price">Price: Rs {product.MRP}</p>
                 <h6 className="product-name">{product.product_name}</h6>

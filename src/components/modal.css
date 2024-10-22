@@ -42,7 +42,7 @@
   right: 15px;
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: 2rem; /* Responsive size */
   font-weight: bold;
   color: #333;
   cursor: pointer;
@@ -56,28 +56,60 @@
 .modal-details {
   display: flex;
   flex-direction: row; /* Keep the layout in rows */
-  align-items: center; /* Center vertically */
+  align-items: flex-start; /* Align items to the start */
   justify-content: space-between; /* Ensure even spacing between the image and the details section */
- 
 }
 
+ 
+ 
 .modal-image-container {
-  flex: 1;
+  flex: 1; /* Allows it to take equal space with modal-info */
   display: flex;
   justify-content: center; /* Center the image */
   align-items: center;
+  position: relative; /* Necessary for carousel buttons */
+  max-width: 100%; /* Prevents overflow */
+  height: 100%; /* Make it take the full height of the parent */
+}
+
+.slide-image {
+  display: flex;
+  justify-content: center; /* Center the image */
+  align-items: center; /* Center the image vertically */
+  height: 100%; /* Ensure it takes the full height of the container */
 }
 
 .modal-image {
-  max-width: 100%;
-  height: auto;
-  object-fit: cover;
+  max-width: 100%; /* Keeps the image contained */
+  max-height: 400px; /* Set a max height for the image */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: contain; /* Ensure the image is contained within the box */
   border-radius: 10px;
   transition: transform 0.3s ease; /* Smooth scaling effect */
 }
 
 .modal-image:hover {
   transform: scale(1.05); /* Slight zoom on hover */
+}
+
+.prev-button, .next-button {
+  position: absolute;
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%); /* Adjust for perfect centering */
+  background-color: rgba(255, 255, 255, 0.8); /* Slightly translucent background */
+  border: none;
+  cursor: pointer;
+  z-index: 1; /* Ensure buttons are above the image */
+  padding: 10px; /* Add some padding for better click area */
+  border-radius: 50%; /* Make buttons circular */
+}
+
+.prev-button {
+  left: 10px; /* Position left */
+}
+
+.next-button {
+  right: 10px; /* Position right */
 }
 
 .modal-info {
@@ -89,7 +121,7 @@
 }
 
 .modal-info h2 {
-  font-size: 24px;
+  font-size: 2rem; /* Responsive size */
   color: #333;
   margin-bottom: 10px;
   border-bottom: 2px solid #007bff; /* Underline effect */
@@ -99,6 +131,7 @@
 .modal-info p {
   margin-bottom: 15px;
   line-height: 1.6; /* Improve readability */
+  font-size: 1rem; /* Responsive size */
 }
 
 ul {
@@ -123,7 +156,7 @@ ul li {
   border: none;
   border-radius: 30px; /* Rounded button */
   cursor: pointer;
-  font-size: 16px;
+  font-size: 1rem; /* Responsive size */
   transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
   display: flex;
   align-items: center;
@@ -137,29 +170,46 @@ ul li {
 }
 
 .cart-btn svg {
-  font-size: 20px; /* Larger cart icon */
+  font-size: 1.25rem; /* Larger cart icon */
 }
 
+/* Responsive Styles */
 @media (max-width: 768px) {
   .modal-content {
     flex-direction: column; /* Stacks the image and info on smaller screens */
-    width: 100%;
+    width: 80%!important;
   }
 
   .modal-image-container,
   .modal-info {
     flex: unset;
   }
+
+  .modal-info {
+    margin-left: 0; /* Remove left margin */
+  }
+
+  .close-button {
+    font-size: 1.5rem; /* Smaller on mobile */
+  }
+
+  .modal-info h2 {
+    font-size: 1.5rem; /* Smaller on mobile */
+  }
+
+  .modal-info p {
+    font-size: 0.9rem; /* Smaller on mobile */
+  }
+
+  .cart-btn {
+    font-size: 0.9rem; /* Smaller button text */
+    padding: 10px 20px; /* Smaller padding */
+  }
+
+  .modal-image-container {
+    display: none; /* Hides the image if necessary */
+  }
 }
 
-.carousel-container {
-  display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  flex: 1; /* Takes equal space */
-}
-.carousel-image {
-  max-width: 100%;
-  height: auto;
-  object-fit: contain; /* Ensures image is not stretched */
-}
+
+

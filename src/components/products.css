@@ -5,6 +5,7 @@
 .tagline {
   text-align: center;
   margin-bottom: 20px;
+  font-size: 2rem; /* Adjust as needed */
 }
 
 .product-grid {
@@ -49,12 +50,14 @@
 .product-price {
   font-weight: bold;
   transition: color 0.3s ease;
+  font-size: 1.2rem; /* Responsive font size */
 }
 
 .product-name {
   max-height: 100px;
   overflow-y: hidden;
   transition: color 0.3s ease;
+  font-size: 1rem; /* Responsive font size */
 }
 
 .add-to-cart {
@@ -123,7 +126,7 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  font-size: 1rem;
+  font-size: 1rem; /* Responsive font size */
   display: block;
   margin: 20px auto;
 }
@@ -142,10 +145,35 @@
   border-radius: 5px;
   border: 1px solid #ccc;
   background-color: #fff;
+  font-size: 1rem; /* Responsive font size */
 }
 
 @media (min-width: 768px) {
   .product-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 20%);
+  }
+
+  .tagline {
+    font-size: 2.5rem; /* Increase font size on larger screens */
+  }
+}
+
+@media (max-width: 768px) and (min-width: 480px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 20%);
+  }
+
+  .tagline {
+    font-size: 2rem; /* Adjust font size for medium screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 20%);
+  }
+
+  .tagline {
+    font-size: 1.5rem; /* Adjust font size for smaller screens */
   }
 }
