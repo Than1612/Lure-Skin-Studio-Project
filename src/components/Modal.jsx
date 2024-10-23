@@ -67,6 +67,12 @@ const ProductModal = ({ product, onClose }) => {
                 <li key={idx}>{ingredient}</li>
               ))}
             </ul>
+            <ul>
+              <strong>Disclaimer:</strong>
+              {product.disclaimer.map((disclaimer, idx) => (
+                <li key={idx}>{disclaimer}</li>
+              ))}
+            </ul>
             <button className="cart-btn">
               Add to Cart <FaShoppingCart />
             </button>

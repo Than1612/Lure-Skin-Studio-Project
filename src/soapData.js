@@ -23,6 +23,11 @@ const soapData = {
         "Activated bamboo charcoal powder",
         "Tea tree oil",
       ],
+      disclaimer:[
+        "Patch test before use.",
+        "The colour, fragrance, appearance & weight may vary a bit considering the fact that it’s handmade.", 
+        "These are not flaws they are nature of handmade soaps."
+    ],
       proImgs: [sample, sample, sample], // Array of images
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus.",
@@ -44,7 +49,16 @@ const soapData = {
         "Rub the soap gently on your wet skin to lather.",
         "Store in a ventilated soap box to drain away the water completely.",
       ],
-      loaded_with: ["Base oils", "Unrefined Shea butter", "Rose geranium oil"],
+      loaded_with: [
+        "Base oils", 
+        "Unrefined Shea butter", 
+        "Rose geranium oil"
+      ],
+      disclaimer:[
+        "Patch test before use.",
+        "The colour, fragrance, appearance & weight may vary a bit considering the fact that it’s handmade.", 
+        "These are not flaws they are nature of handmade soaps."
+    ],
       proImgs: [sample, sample, sample], // Array of images
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus.",
@@ -72,6 +86,11 @@ const soapData = {
         "Spirulina powder",
         "Peppermint oil",
       ],
+      disclaimer:[
+        "Patch test before use.",
+        "The colour, fragrance, appearance & weight may vary a bit considering the fact that it’s handmade.", 
+        "These are not flaws they are nature of handmade soaps."
+      ],
       proImgs: [sample, sample, sample], // Array of images
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus.",
@@ -97,6 +116,11 @@ const soapData = {
         "Wild Rose oil",
         "French pink clay",
         "Organic rose petals",
+      ],
+      disclaimer:[
+        "Patch test before use.",
+        "The colour, fragrance, appearance & weight may vary a bit considering the fact that it’s handmade.", 
+        "These are not flaws they are nature of handmade soaps."
       ],
       proImgs: [sample, sample, sample], // Array of images
       description:
@@ -127,6 +151,11 @@ const soapData = {
         "Distilled water",
         "Solvents (CAPB) and red color (FDA approved)",
       ],
+      disclaimer:[
+        "Patch test before use.",
+        "The colour, fragrance, appearance & weight may vary a bit considering the fact that it’s handmade.", 
+        "These are not flaws they are nature of handmade soaps."
+      ],
       proImgs: [sample, sample, sample], // Array of images
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus.",
@@ -152,6 +181,11 @@ const soapData = {
         "Lemongrass oil",
         "Potato powder",
         "Tomato purée",
+      ],
+      disclaimer:[
+        "Patch test before use.",
+        "The colour, fragrance, appearance & weight may vary a bit considering the fact that it’s handmade.", 
+        "These are not flaws they are nature of handmade soaps."
       ],
       proImgs: [sample, sample, sample], // Array of images
       description:
@@ -188,6 +222,10 @@ const soapData = {
         "Rosemary oil",
         "Tea tree oil.",
       ],
+      disclaimer:[
+        "Apply and wait for 24hrs.",
+        "If there’s no reaction you can continue to use."
+      ],
       proImgs: [sample, sample, sample], // Array of images
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus.",
@@ -221,6 +259,10 @@ const soapData = {
         "Vetiver",
         "White turmeric.",
       ],
+      disclaimer:[
+        "Apply and wait for 24hrs.",
+        "If there’s no reaction you can continue to use."
+      ],
       proImgs: [sample, sample, sample], // Array of images
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus.",
@@ -228,6 +270,75 @@ const soapData = {
       purchases: 300, 
       arrivalDate: "2024-10-05", 
     },
+    {
+      product_name: "Damascus Rose Water Toner",
+      MRP: 325,
+      benefits: [
+        "Helps to strengthen and regenerate skin cells.",
+        "Treats mild acne.",
+        "Helps clean pores.",
+        "Soothe sun damage."
+      ],
+      usage_storage: [
+        "After cleansing pat dry your face. Place the bottle a few inches away and spray it over your face.",
+        "You can also spray it on a cotton pad and dab it over your face.",
+        "Works great to mix powdered face packs & scrubs.",
+        "Store in a cool, dry place."
+      ],
+      loaded_with: [
+        "Organic Damascus rose petals"
+      ],
+      description: [
+        "Damascus rose is one of the best-known and renowned hydrosols because it is suitable for all skin types.",
+        "Like most hydrosols, it has astringent properties. It also helps comfort reactive and redness-prone skin."
+      ],
+      disclaimer: [
+        "Patch test before use.",
+        "Avoid contact with eyes."
+      ],
+      proImgs: [sample, sample, sample], 
+      ratings: 4.8, 
+      purchases: 180, 
+      arrivalDate: "2024-10-01", 
+    },
+    {
+      product_name: "Peach & Almond Scrub",
+      MRP: 440,
+      benefits: [
+        "Smoother skin.",
+        "Unclogged pores.",
+        "Better absorption of skincare products.",
+        "Reduces acne scars."
+      ],
+      usage_storage: [
+        "Rinse your face with water lightly.",
+        "Apply a dime-sized scrub onto skin, scrub using circular motions with your fingertips for about a minute.",
+        "Wash away with water and pat dry. For best results, use once every 4 days.",
+        "Store in a cool, dry place."
+      ],
+      loaded_with: [
+        "Demineralised water",
+        "Stearic acid",
+        "Vegetable glycerin",
+        "Xanthan gum",
+        "Almond granules",
+        "Peach oil",
+        "GMS SE",
+        "Preservative"
+      ],
+      description: [
+        "Our Glow Getter Face Scrub is a rich, moisturizing exfoliant that gently removes dead skin cells – without breaking your skin’s protective barrier.",
+        "Suitable for all skin types, this natural, anti-inflammatory formula hydrates and polishes your skin, leaving it lush, glowing, and smooth."
+      ],
+      disclaimer: [
+        "Patch test before use.",
+        "Avoid using wet hands or wet spatula for longer shelf life."
+      ],
+      proImgs: [sample, sample, sample], 
+      ratings: 4.9, 
+      purchases: 210, 
+      arrivalDate: "2024-09-15", 
+    }
   ],
 };
 
@@ -237,5 +348,12 @@ const soaps = soapData.products.filter((product) =>
 const oils = soapData.products.filter((product) =>
   product.product_name.toLowerCase().includes("oil")
 );
+const toners = soapData.products.filter((product) =>
+  product.product_name.toLowerCase().includes("toner")
+);
 
-export { soaps, oils };
+const scrubs = soapData.products.filter((product) =>
+  product.product_name.toLowerCase().includes("scrub")
+);
+
+export { soaps, oils, toners, scrubs };
