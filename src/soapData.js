@@ -12,7 +12,7 @@ const soapData = {
         "Prevents premature ageing.",
         "Provides exfoliation.",
       ],
-      "usage_&_storage": [
+      usage_storage: [
         "Ideal for acne & oily skin.",
         "Rub the soap gently on your wet skin to lather.",
         "Store in a ventilated soap box to drain away the water completely.",
@@ -39,7 +39,7 @@ const soapData = {
         "Promotes cell regeneration.",
         "Vitamin A, E & F present to keep skin healthy.",
       ],
-      "usage_&_storage": [
+      usage_storage: [
         "Ideal for dry & combination skin.",
         "Rub the soap gently on your wet skin to lather.",
         "Store in a ventilated soap box to drain away the water completely.",
@@ -61,7 +61,7 @@ const soapData = {
         "Toning & firming the skin.",
         "Releases the feeling of tiredness.",
       ],
-      "usage_&_storage": [
+      usage_storage: [
         "Ideal for acne & oily skin.",
         "Rub the soap gently on your wet skin to lather.",
         "Store in a ventilated soap box to drain away the water completely.",
@@ -87,7 +87,7 @@ const soapData = {
         "Treat acne.",
         "Restore & replenish skin with moisture while drawing out impurities.",
       ],
-      "usage_&_storage": [
+      usage_storage: [
         "Ideal for acne & oily skin.",
         "Rub the soap gently on your wet skin to lather.",
         "Store in a ventilated soap box to drain away the water completely.",
@@ -113,7 +113,7 @@ const soapData = {
         "Red wine gives boost to sagging skin, reducing fine lines and wrinkles.",
         "Sulphate free parables free.",
       ],
-      "usage_&_storage": [
+      usage_storage: [
         "Ideal for acne, all skin types.",
         "Rub the soap gently on your wet skin to lather.",
         "Store in a ventilated soap box to drain away the water completely.",
@@ -142,7 +142,7 @@ const soapData = {
         "Improves skin radiance.",
         "Reduces tanning.",
       ],
-      "usage_&_storage": [
+      usage_storage: [
         "Ideal for normal to oily skin.",
         "Rub the soap gently on your wet skin to lather.",
         "Store in a ventilated soap box to drain away the water completely.",
@@ -169,7 +169,7 @@ const soapData = {
         "Prevents split ends and adds shine & lustre to hair.",
         "Delays premature greying.",
       ],
-      "usage_&_storage": [
+      usage_storage: [
         "Apply the oil directly on the scalp using the applicator.",
         "Give a good massage and leave it for at least 30 mins or overnight for best results.",
         "Use weekly twice or can be used regularly.",
@@ -204,7 +204,7 @@ const soapData = {
         "Helps in regeneration of new hair follicles.",
         "Nourishes the hair.",
       ],
-      "usage_&_storage": [
+      usage_storage: [
         "Apply the oil directly on the scalp using the applicator.",
         "Give a good massage and leave it for at least 30 mins or overnight for best results.",
         "Use weekly twice or can be used regularly.",

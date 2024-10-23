@@ -4,3 +4,50 @@
     font-style: normal;
   }
   
+  .navbar-item {
+    position: relative;
+    padding-bottom: 5px;
+    cursor: pointer;
+  }
+  
+  .navbar-item::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: #000;
+    bottom: 0;
+    left: 0;
+    transition: width 0.3s ease-in-out;
+  }
+  
+  .navbar-item:hover::after {
+    width: 100%;
+  }
+
+  .icon-link {
+    display: inline-block;
+    position: relative;
+    text-decoration: none; 
+  }
+  
+  .icon-link::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: black; 
+    bottom: -5px;
+    left: 0;
+    transition: width 0.3s ease-in-out;
+  }
+  
+  .icon-link:hover::after {
+    width: 100%; 
+  }
+
+  .font-bold {
+    font-weight: bold;
+    color: #000; 
+  }
+  

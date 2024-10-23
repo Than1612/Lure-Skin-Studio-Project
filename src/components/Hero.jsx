@@ -29,10 +29,10 @@ const Hero = () => {
     const interval = setInterval(() => {
       setTransitioning(true);
       intervalBetweenSlides();
-    }, 5000);
+    }, 3000); // Updated interval to 3 seconds
 
     return () => clearInterval(interval);
-  }, []);
+  }, [active]);
 
   const isActive = (value) => active === value && "active";
 
