@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./products.css";
-import { soaps, oils } from "../soapData"; 
+import { soaps, oils, toners, scrubs } from "../soapData"; 
 import { FaShoppingCart } from "react-icons/fa";
 import ProductModal from "./Modal";
 
@@ -10,6 +10,8 @@ const Products = () => {
   const [filterByCategory, setFilterByCategory] = useState("");
   const [showMoreSoaps, setShowMoreSoaps] = useState(false);
   const [showMoreOils, setShowMoreOils] = useState(false);
+  const [showMoreToners, setShowMoreToners] = useState(false);
+  const [showMoreScrubs, setShowMoreScrubs] = useState(false);
 
   const openModal = (product) => {
     setSelectedProduct(product); 
@@ -34,10 +36,37 @@ const Products = () => {
   };
 
   const filterAndSortProducts = (category) => {
-    let filteredProducts = [];
-    if (category === "soaps") filteredProducts = soaps;
-    if (category === "oils") filteredProducts = oils;
-    return sortProducts(filteredProducts);
+    let filteredProducts = {
+      soaps: [],
+      oils: [],
+      toners: [],
+      scrubs: []
+    };
+
+    // Based on the filter, assign the correct products to each original category
+    if (category === "hair") {
+      filteredProducts.oils = oils;  // Only oils come under Hair
+    } else if (category === "body") {
+      filteredProducts.soaps = soaps;  // Only soaps come under Body
+    } else if (category === "face") {
+      filteredProducts.soaps = soaps;  // Soaps also come under Face
+      filteredProducts.toners = toners;
+      filteredProducts.scrubs = scrubs;
+    } else {
+      // No filter: return all categories normally
+      filteredProducts.soaps = soaps;
+      filteredProducts.oils = oils;
+      filteredProducts.toners = toners;
+      filteredProducts.scrubs = scrubs;
+    }
+
+    // Sort each category
+    return {
+      soaps: sortProducts(filteredProducts.soaps),
+      oils: sortProducts(filteredProducts.oils),
+      toners: sortProducts(filteredProducts.toners),
+      scrubs: sortProducts(filteredProducts.scrubs)
+    };
   };
 
   const renderProducts = (products, showMore, setShowMore) => (
@@ -61,6 +90,8 @@ const Products = () => {
     </>
   );
 
+  const filteredProducts = filterAndSortProducts(filterByCategory);
+
   return (
     <div className="product-container">
       <h1 className="tagline">Tag Line For Lure</h1>
@@ -74,8 +105,9 @@ const Products = () => {
             onChange={(e) => setFilterByCategory(e.target.value)}
           >
             <option value="">All Products</option>
-            <option value="soaps">Soaps</option>
-            <option value="oils">Oils</option>
+            <option value="hair">Hair</option>
+            <option value="body">Body</option>
+            <option value="face">Face</option>
           </select>
         </div>
         {filterByCategory && (
@@ -96,19 +128,34 @@ const Products = () => {
         )}
       </div>
 
-      {filterByCategory === "soaps" || filterByCategory === "" ? (
+      {/* Conditional rendering: Only show categories that have products */}
+      {filteredProducts.soaps.length > 0 && (
         <>
-          <h2>Soaps Products</h2>
-          {renderProducts(filterAndSortProducts("soaps"), showMoreSoaps, setShowMoreSoaps)}
+          <h2>Soaps</h2>
+          {renderProducts(filteredProducts.soaps, showMoreSoaps, setShowMoreSoaps)}
         </>
-      ) : null}
+      )}
 
-      {filterByCategory === "oils" || filterByCategory === "" ? (
+      {filteredProducts.oils.length > 0 && (
         <>
-          <h2>Oils Products</h2>
-          {renderProducts(filterAndSortProducts("oils"), showMoreOils, setShowMoreOils)}
+          <h2>Oils</h2>
+          {renderProducts(filteredProducts.oils, showMoreOils, setShowMoreOils)}
         </>
-      ) : null}
+      )}
+
+      {filteredProducts.toners.length > 0 && (
+        <>
+          <h2>Toners</h2>
+          {renderProducts(filteredProducts.toners, showMoreToners, setShowMoreToners)}
+        </>
+      )}
+
+      {filteredProducts.scrubs.length > 0 && (
+        <>
+          <h2>Scrubs</h2>
+          {renderProducts(filteredProducts.scrubs, showMoreScrubs, setShowMoreScrubs)}
+        </>
+      )}
 
       <ProductModal product={selectedProduct} onClose={closeModal} />
     </div>
