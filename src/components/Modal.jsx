@@ -26,9 +26,9 @@ const ProductModal = ({ product, onClose }) => {
         <div className="modal-details">
           {/* Carousel Image Section */}
           <div className="modal-image-container">
-            <button className="prev-button" onClick={handlePrevImage}>
+            {/* <button className="prev-button" onClick={handlePrevImage}>
               &#10094;
-            </button>
+            </button> */}
 
             <div className="slide-image">
               <img
@@ -38,9 +38,9 @@ const ProductModal = ({ product, onClose }) => {
               />
             </div>
 
-            <button className="next-button" onClick={handleNextImage}>
+            {/* <button className="next-button" onClick={handleNextImage}>
               &#10095;
-            </button>
+            </button> */}
           </div>
 
           {/* Product Info */}
@@ -49,13 +49,22 @@ const ProductModal = ({ product, onClose }) => {
             <p>
               <strong>Price:</strong> Rs {product.MRP}
             </p>
-            <p>
-              <strong>Description:</strong> {product.description}
-            </p>
             <ul>
               <strong>Benefits:</strong>
               {product.benefits.map((benefit, idx) => (
                 <li key={idx}>{benefit}</li>
+              ))}
+            </ul>
+            <ul>
+              <strong>Usage & Storage:</strong>
+              {product.usage_storage.map((usage, idx) => (
+                <li key={idx}>{usage}</li>
+              ))}
+            </ul>
+            <ul>
+              <strong>Loaded With:</strong>
+              {product.loaded_with.map((ingredient, idx) => (
+                <li key={idx}>{ingredient}</li>
               ))}
             </ul>
             <button className="cart-btn">
