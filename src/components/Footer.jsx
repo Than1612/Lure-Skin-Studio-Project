@@ -11,9 +11,7 @@ const Footer = () => {
           <div class="col-md-4 col-sm-6">
             <div class="footer-menu footer-menu-001">
               <div class="footer-intro mb-4">
-                <a href="index.html">
                   <img src={logo} alt="logo" />
-                </a>
               </div>
               <div class="social-links">
                 <ul class="list-unstyled d-flex flex-wrap gap-4">

@@ -21,21 +21,17 @@ const Products = () => {
     setSelectedProduct(null);
   };
 
-  const sortProducts = (products) => {
+  const sortProducts = (products, sortBy) => {
     const sortedProducts = [...products];
-    if (sortBy === "ratings") {
-      return sortedProducts.sort((a, b) => b.ratings - a.ratings);
-    } else if (sortBy === "purchases") {
-      return sortedProducts.sort((a, b) => b.purchases - a.purchases);
+    if (sortBy === "available") {
+      return sortedProducts.sort((a, b) => b.available - a.available);
     } else if (sortBy === "price") {
       return sortedProducts.sort((a, b) => a.MRP - b.MRP);
-    } else if (sortBy === "arrival") {
-      return sortedProducts.sort((a, b) => new Date(b.arrivalDate) - new Date(a.arrivalDate));
     }
     return products;
   };
-
-  const filterAndSortProducts = (category) => {
+  
+  const filterAndSortProducts = (category, sortBy) => {
     let filteredProducts = {
       soaps: [],
       oils: [],
@@ -60,12 +56,12 @@ const Products = () => {
       filteredProducts.scrubs = scrubs;
     }
 
-    // Sort each category
+    // Sort each category based on the sortBy criteria
     return {
-      soaps: sortProducts(filteredProducts.soaps),
-      oils: sortProducts(filteredProducts.oils),
-      toners: sortProducts(filteredProducts.toners),
-      scrubs: sortProducts(filteredProducts.scrubs)
+      soaps: sortProducts(filteredProducts.soaps, sortBy),
+      oils: sortProducts(filteredProducts.oils, sortBy),
+      toners: sortProducts(filteredProducts.toners, sortBy),
+      scrubs: sortProducts(filteredProducts.scrubs, sortBy)
     };
   };
 
@@ -90,7 +86,7 @@ const Products = () => {
     </>
   );
 
-  const filteredProducts = filterAndSortProducts(filterByCategory);
+  const filteredProducts = filterAndSortProducts(filterByCategory, sortBy);
 
   return (
     <div className="product-container">
@@ -119,10 +115,8 @@ const Products = () => {
               onChange={(e) => setSortBy(e.target.value)}
             >
               <option value="">Select</option>
-              <option value="ratings">Ratings</option>
-              <option value="purchases">Number of Purchases</option>
               <option value="price">Price</option>
-              <option value="arrival">Arrival Date</option>
+              <option value="available">Availability</option>
             </select>
           </div>
         )}

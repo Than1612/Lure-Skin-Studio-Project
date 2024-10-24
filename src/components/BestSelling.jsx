@@ -26,15 +26,13 @@ const BestSelling = () => {
   const visibleItemsCount = 3;
 
   const nextProduct = () => {
-    if (currentIndex + visibleItemsCount < products.length) {
-      setCurrentIndex((prev) => prev + 1);
-    }
+    setCurrentIndex((prev) => (prev + 1) % products.length);
   };
 
   const prevProduct = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex((prev) => prev - 1);
-    }
+    setCurrentIndex((prev) =>
+      prev === 0 ? products.length - 1 : prev - 1
+    );
   };
 
   return (
@@ -52,7 +50,7 @@ const BestSelling = () => {
         <div
           className="carousel"
           style={{
-            transform: `translateX(-${currentIndex * (100 / 3)}%)`,
+            transform: `translateX(-${currentIndex * (100 / visibleItemsCount)}%)`,
             transition: "transform 0.5s ease-in-out",
           }}
         >

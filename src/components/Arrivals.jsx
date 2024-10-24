@@ -26,15 +26,11 @@ const Arrivals = () => {
   const visibleItemsCount = 3;
 
   const nextProduct = () => {
-    if (currentIndex + visibleItemsCount < products.length) {
-      setCurrentIndex((prev) => prev + 1);
-    }
+    setCurrentIndex((prev) => (prev + 1) % products.length);
   };
 
   const prevProduct = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex((prev) => prev - 1);
-    }
+    setCurrentIndex((prev) => (prev === 0 ? products.length - 1 : prev - 1));
   };
 
   return (
@@ -43,7 +39,7 @@ const Arrivals = () => {
       style={{ width: "100vw" }}
       data-aos="zoom-out"
     >
-      <br/><br/>
+      <br /><br />
       <h2 className="section-title text-uppercase mb-0">ARRIVALS</h2>
       <div className="carousel-container">
         <button className="arrow-btn left-arrow" onClick={prevProduct}>
