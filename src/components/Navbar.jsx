@@ -34,29 +34,6 @@ const Navbar = () => {
       </ul>
 
       <ul className="flex gap-6 list-none">
-      <li>
-  {/* Clickable heart (favorites) icon with underline on hover */}
-  <a href="#" className="icon-link">
-    <svg
-      width="2rem"
-      height="2rem"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z"
-        stroke="#000000"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  </a>
-</li>
-
 <li>
   {/* Clickable cart icon with underline on hover */}
   <a href="#" className="icon-link">
@@ -77,26 +54,6 @@ const Navbar = () => {
   </a>
 </li>
 
-<li>
-  {/* Clickable search icon with underline on hover */}
-  <a href="#" className="icon-link">
-    <svg
-      width="2rem"
-      height="2rem"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M15.7955 15.8111L21 21M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z"
-        stroke="#000000"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  </a>
-</li>
 
 <li>
   {/* Clickable Profile text with underline on hover */}

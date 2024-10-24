@@ -55,7 +55,11 @@
   justify-content: center; /* Align content to the left */
   align-items: center; /* Align items to the top */
   position: relative;
-  height: 100%; /* Full height */
+  height: 95%; /* Image height */
+  top: 50%;
+  transform: translateY(-50%); /* Adjust shrinking to happen from both top and bottom */
+  overflow: hidden; /* Ensure no content overflows */
+
 }
 
 .modal-image {

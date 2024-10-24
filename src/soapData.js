@@ -1,4 +1,13 @@
-import sample from "../src/images/review-image2.jpg";
+import charcoalSoapImage from "./Product Images/soaps/Charcoal.JPG";
+import sheaButterSoapImage from "./Product Images/soaps/Shea Butter.JPG";
+import frenchGreenClaySoapImage from "./Product Images/soaps/French Green Clay.JPG";
+import pinkClaySoapImage from "./Product Images/soaps/French Pink Clay.JPG";
+import redWineSoapImage from "./Product Images/soaps/French Green Clay 1.JPG";
+import detanSoapImage from "./Product Images/soaps/Shea Butter 1.JPG";
+import dandruffHairOilImage from "./Product Images/hairoils/Anti Dandruff Oil.JPG";
+import hairGrowthOilImage from "./Product Images/hairoils/Hair Growth Oil.JPG";
+import roseWaterTonerImage from "./Product Images/toner/Damascus Rose Water.JPG";
+import peachAlmondScrubImage from "./Product Images/face scrub/Almond Peach Face Scrub.JPG";
 
 const soapData = {
   products: [
@@ -23,17 +32,12 @@ const soapData = {
         "Activated bamboo charcoal powder",
         "Tea tree oil",
       ],
-      disclaimer:[
+      disclaimer: [
         "Patch test before use.",
         "The colour, fragrance, appearance & weight may vary a bit considering the fact that it’s handmade.", 
-        "These are not flaws they are nature of handmade soaps."
-    ],
-      proImgs: [sample, sample, sample], // Array of images
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus.",
-      ratings: 4.7, 
-      purchases: 140, 
-      arrivalDate: "2024-09-20", 
+        "These are not flaws; they are nature of handmade soaps."
+      ],
+      proImgs: [charcoalSoapImage], // Unique image for this product
     },
     {
       product_name: "Shea Butter Soap",
@@ -54,17 +58,12 @@ const soapData = {
         "Unrefined Shea butter", 
         "Rose geranium oil"
       ],
-      disclaimer:[
+      disclaimer: [
         "Patch test before use.",
         "The colour, fragrance, appearance & weight may vary a bit considering the fact that it’s handmade.", 
-        "These are not flaws they are nature of handmade soaps."
-    ],
-      proImgs: [sample, sample, sample], // Array of images
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus.",
-      ratings: 4.5, 
-      purchases: 120, 
-      arrivalDate: "2024-08-25", 
+        "These are not flaws; they are nature of handmade soaps."
+      ],
+      proImgs: [sheaButterSoapImage], // Unique image for this product
     },
     {
       product_name: "French Green Clay with Spirulina Soap",
@@ -86,17 +85,12 @@ const soapData = {
         "Spirulina powder",
         "Peppermint oil",
       ],
-      disclaimer:[
+      disclaimer: [
         "Patch test before use.",
         "The colour, fragrance, appearance & weight may vary a bit considering the fact that it’s handmade.", 
-        "These are not flaws they are nature of handmade soaps."
+        "These are not flaws; they are nature of handmade soaps."
       ],
-      proImgs: [sample, sample, sample], // Array of images
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus.",
-      ratings: 4.3, 
-      purchases: 100, 
-      arrivalDate: "2024-09-05", 
+      proImgs: [frenchGreenClaySoapImage], // Unique image for this product
     },
     {
       product_name: "French Pink Clay with Rose Soap",
@@ -117,17 +111,12 @@ const soapData = {
         "French pink clay",
         "Organic rose petals",
       ],
-      disclaimer:[
+      disclaimer: [
         "Patch test before use.",
         "The colour, fragrance, appearance & weight may vary a bit considering the fact that it’s handmade.", 
-        "These are not flaws they are nature of handmade soaps."
+        "These are not flaws; they are nature of handmade soaps."
       ],
-      proImgs: [sample, sample, sample], // Array of images
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus.",
-      ratings: 4.6, 
-      purchases: 130, 
-      arrivalDate: "2024-08-15", 
+      proImgs: [pinkClaySoapImage], // Unique image for this product
     },
     {
       product_name: "Red-wine soap",
@@ -135,7 +124,7 @@ const soapData = {
       benefits: [
         "Red wine helps to fight aging by restoring collagen and elastic fibres.",
         "Red wine gives boost to sagging skin, reducing fine lines and wrinkles.",
-        "Sulphate free parables free.",
+        "Sulphate free, paraben free.",
       ],
       usage_storage: [
         "Ideal for acne, all skin types.",
@@ -151,20 +140,15 @@ const soapData = {
         "Distilled water",
         "Solvents (CAPB) and red color (FDA approved)",
       ],
-      disclaimer:[
+      disclaimer: [
         "Patch test before use.",
         "The colour, fragrance, appearance & weight may vary a bit considering the fact that it’s handmade.", 
-        "These are not flaws they are nature of handmade soaps."
+        "These are not flaws; they are nature of handmade soaps."
       ],
-      proImgs: [sample, sample, sample], // Array of images
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus.",
-      ratings: 4.1, 
-      purchases: 95, 
-      arrivalDate: "2024-07-10", 
+      proImgs: [redWineSoapImage], // Unique image for this product
     },
     {
-      product_name: "Detan soap",
+      product_name: "Detan Soap",
       MRP: 200,
       benefits: [
         "Deep cleanses and removes impurities.",
@@ -182,17 +166,12 @@ const soapData = {
         "Potato powder",
         "Tomato purée",
       ],
-      disclaimer:[
+      disclaimer: [
         "Patch test before use.",
         "The colour, fragrance, appearance & weight may vary a bit considering the fact that it’s handmade.", 
-        "These are not flaws they are nature of handmade soaps."
+        "These are not flaws; they are nature of handmade soaps."
       ],
-      proImgs: [sample, sample, sample], // Array of images
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus.",
-      ratings: 4.8, 
-      purchases: 160, 
-      arrivalDate: "2024-08-01", 
+      proImgs: [detanSoapImage], // Unique image for this product
     },
     {
       product_name: "All Clear Dandruff Hair Oil",
@@ -222,16 +201,11 @@ const soapData = {
         "Rosemary oil",
         "Tea tree oil.",
       ],
-      disclaimer:[
+      disclaimer: [
         "Apply and wait for 24hrs.",
-        "If there’s no reaction you can continue to use."
+        "If there’s no reaction, you can continue to use."
       ],
-      proImgs: [sample, sample, sample], // Array of images
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus.",
-      ratings: 4.9, 
-      purchases: 220, 
-      arrivalDate: "2024-09-10", 
+      proImgs: [dandruffHairOilImage], // Unique image for this product
     },
     {
       product_name: "Hair Growth Oil",
@@ -259,16 +233,11 @@ const soapData = {
         "Vetiver",
         "White turmeric.",
       ],
-      disclaimer:[
+      disclaimer: [
         "Apply and wait for 24hrs.",
-        "If there’s no reaction you can continue to use."
+        "If there’s no reaction, you can continue to use."
       ],
-      proImgs: [sample, sample, sample], // Array of images
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lacinia blandit nunc, et facilisis lectus.",
-      ratings: 5.0, 
-      purchases: 300, 
-      arrivalDate: "2024-10-05", 
+      proImgs: [hairGrowthOilImage], // Unique image for this product
     },
     {
       product_name: "Damascus Rose Water Toner",
@@ -277,10 +246,10 @@ const soapData = {
         "Helps to strengthen and regenerate skin cells.",
         "Treats mild acne.",
         "Helps clean pores.",
-        "Soothe sun damage."
+        "Soothes sun damage."
       ],
       usage_storage: [
-        "After cleansing pat dry your face. Place the bottle a few inches away and spray it over your face.",
+        "After cleansing, pat dry your face. Place the bottle a few inches away and spray it over your face.",
         "You can also spray it on a cotton pad and dab it over your face.",
         "Works great to mix powdered face packs & scrubs.",
         "Store in a cool, dry place."
@@ -288,18 +257,11 @@ const soapData = {
       loaded_with: [
         "Organic Damascus rose petals"
       ],
-      description: [
-        "Damascus rose is one of the best-known and renowned hydrosols because it is suitable for all skin types.",
-        "Like most hydrosols, it has astringent properties. It also helps comfort reactive and redness-prone skin."
-      ],
       disclaimer: [
         "Patch test before use.",
         "Avoid contact with eyes."
       ],
-      proImgs: [sample, sample, sample], 
-      ratings: 4.8, 
-      purchases: 180, 
-      arrivalDate: "2024-10-01", 
+      proImgs: [roseWaterTonerImage], // Unique image for this product
     },
     {
       product_name: "Peach & Almond Scrub",
@@ -326,22 +288,16 @@ const soapData = {
         "GMS SE",
         "Preservative"
       ],
-      description: [
-        "Our Glow Getter Face Scrub is a rich, moisturizing exfoliant that gently removes dead skin cells – without breaking your skin’s protective barrier.",
-        "Suitable for all skin types, this natural, anti-inflammatory formula hydrates and polishes your skin, leaving it lush, glowing, and smooth."
-      ],
       disclaimer: [
         "Patch test before use.",
         "Avoid using wet hands or wet spatula for longer shelf life."
       ],
-      proImgs: [sample, sample, sample], 
-      ratings: 4.9, 
-      purchases: 210, 
-      arrivalDate: "2024-09-15", 
-    }
+      proImgs: [peachAlmondScrubImage], // Unique image for this product
+    },
   ],
 };
 
+// Example function to filter the products based on type
 const soaps = soapData.products.filter((product) =>
   product.product_name.toLowerCase().includes("soap")
 );
@@ -351,7 +307,6 @@ const oils = soapData.products.filter((product) =>
 const toners = soapData.products.filter((product) =>
   product.product_name.toLowerCase().includes("toner")
 );
-
 const scrubs = soapData.products.filter((product) =>
   product.product_name.toLowerCase().includes("scrub")
 );
