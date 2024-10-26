@@ -131,35 +131,58 @@
   justify-content: space-between;
 }
 
-/* Responsive Design */
-@media (max-width: 1200px) {
-  .sort-filter-container {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+.filter-container-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0; /* Adds some vertical spacing */
+}
 
-  .sort-filter-container select {
-    width: 100%;
-    margin-bottom: 10px;
-  }
+.filter-sort-row {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Adds space between filter and sort options */
+}
 
-  .product-grid {
-    justify-content: center; 
-  }
+.filter-container label,
+.sort-container label {
+  margin-right: 10px;
+  font-weight: bold; /* Makes the label stand out */
+}
+
+.filter-container select,
+.sort-container select {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.sort-container {
+  margin-left: 20px;
+}
+
+.filter-container select:hover,
+.sort-container select:hover {
+  border-color: #4533ba; /* Highlights the border when hovering */
+  background-color: #f9f9f9;
 }
 
 @media (max-width: 768px) {
-  .product-grid {
-    justify-content: center;
+  /* Make filter and sort responsive for mobile view */
+  .filter-container-wrapper {
+    flex-direction: column;
+  }
+
+  .filter-sort-row {
+    flex-direction: column;
+    gap: 10px;
   }
 }
 
-@media (max-width: 480px) {
-  .product-grid {
-    justify-content: center;
-  }
-
-  .tagline {
-    font-size: 1.8rem; 
-  }
+.custom-tagline {
+  font-size: 2.75rem;
+  color: black;
+  font-style: italic;
+  text-align: center;
+  margin-bottom: 20px;
 }
