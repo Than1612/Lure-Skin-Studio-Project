@@ -12,6 +12,8 @@ const Products = () => {
   const [showMoreOils, setShowMoreOils] = useState(false);
   const [showMoreToners, setShowMoreToners] = useState(false);
   const [showMoreScrubs, setShowMoreScrubs] = useState(false);
+  const [showQuantitySelector, setShowQuantitySelector] = useState(null);
+  const [quantity, setQuantity] = useState(1);
 
   const openModal = (product) => {
     setSelectedProduct(product); 
@@ -39,24 +41,21 @@ const Products = () => {
       scrubs: []
     };
 
-    // Based on the filter, assign the correct products to each original category
     if (category === "hair") {
-      filteredProducts.oils = oils;  // Only oils come under Hair
+      filteredProducts.oils = oils;
     } else if (category === "body") {
-      filteredProducts.soaps = soaps;  // Only soaps come under Body
+      filteredProducts.soaps = soaps;
     } else if (category === "face") {
-      filteredProducts.soaps = soaps;  // Soaps also come under Face
+      filteredProducts.soaps = soaps;
       filteredProducts.toners = toners;
       filteredProducts.scrubs = scrubs;
     } else {
-      // No filter: return all categories normally
       filteredProducts.soaps = soaps;
       filteredProducts.oils = oils;
       filteredProducts.toners = toners;
       filteredProducts.scrubs = scrubs;
     }
 
-    // Sort each category based on the sortBy criteria
     return {
       soaps: sortProducts(filteredProducts.soaps, sortBy),
       oils: sortProducts(filteredProducts.oils, sortBy),
@@ -65,16 +64,55 @@ const Products = () => {
     };
   };
 
+  const handleIncrement = () => setQuantity((prev) => prev + 1);
+  const handleDecrement = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+
+  const handleConfirm = () => {
+    console.log(`Added ${quantity} of ${showQuantitySelector.product_name} to cart.`);
+    setShowQuantitySelector(null);
+    setQuantity(1);
+  };
+
+  const handleCancel = () => {
+    setShowQuantitySelector(null);
+    setQuantity(1);
+  };
+
   const renderProducts = (products, showMore, setShowMore) => (
     <>
       <div className="product-grid">
         {products.slice(0, showMore ? products.length : 4).map((product, index) => (
-          <div key={index} className="product-card" onClick={() => openModal(product)}>
-            <img src={product.proImgs[0]} alt={product.product_name} className="product-image" />
+          <div key={index} className="product-card">
+            <img src={product.proImgs[0]} alt={product.product_name} className="product-image" onClick={() => openModal(product)} />
+            <FaShoppingCart 
+              className="cart-icon" 
+              onClick={() => {
+                setShowQuantitySelector(product);
+                setQuantity(1);
+              }} 
+            /> 
             <div className="product-details text-left">
               <p className="product-price">Price: Rs {product.MRP}</p>
               <h6 className="product-name">{product.product_name}</h6>
             </div>
+
+            {showQuantitySelector === product && (
+  <div className="quantity-selector">
+    {/* First line: Quantity Selector */}
+    <div className="quantity-controls">
+      <button onClick={handleDecrement}>-</button>
+      <span>{quantity}</span>
+      <button onClick={handleIncrement}>+</button>
+    </div>
+
+    {/* Second line: Confirm and Cancel buttons */}
+    <div className="quantity-actions">
+      <button onClick={handleConfirm} className="confirm-btn">Confirm</button>
+      <button onClick={handleCancel} className="cancel-btn">Cancel</button>
+    </div>
+  </div>
+)}
+
           </div>
         ))}
       </div>
@@ -92,43 +130,41 @@ const Products = () => {
     <div className="product-container">
       <h1 className="custom-tagline">Feel the best version of you</h1>
 
-    <div className="filter-container-wrapper">
-    <div className="filter-sort-row">
-    <div className="filter-container">
-      <label htmlFor="filter">Filter By: </label>
-      <select
-        id="filter"
-        value={filterByCategory}
-        onChange={(e) => {
-          setFilterByCategory(e.target.value);
-          setSortBy(""); // Reset the sort filter when category changes
-        }}
-      >
-        <option value="">All Products</option>
-        <option value="hair">Hair</option>
-        <option value="body">Body</option>
-        <option value="face">Face</option>
-      </select>
-    </div>
-    {filterByCategory && (
-      <div className="sort-container">
-        <label htmlFor="sort">Sort By: </label>
-        <select
-          id="sort"
-          value={sortBy}
-          onChange={(e) => setSortBy(e.target.value)}
-        >
-          <option value="">Select</option>
-          <option value="price">Price</option>
-          <option value="available">Availability</option>
-        </select>
+      <div className="filter-container-wrapper">
+        <div className="filter-sort-row">
+          <div className="filter-container">
+            <label htmlFor="filter">Filter By: </label>
+            <select
+              id="filter"
+              value={filterByCategory}
+              onChange={(e) => {
+                setFilterByCategory(e.target.value);
+                setSortBy("");
+              }}
+            >
+              <option value="">All Products</option>
+              <option value="hair">Hair</option>
+              <option value="body">Body</option>
+              <option value="face">Face</option>
+            </select>
+          </div>
+          {filterByCategory && (
+            <div className="sort-container">
+              <label htmlFor="sort">Sort By: </label>
+              <select
+                id="sort"
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+              >
+                <option value="">Select</option>
+                <option value="price">Price</option>
+                <option value="available">Availability</option>
+              </select>
+            </div>
+          )}
+        </div>
       </div>
-    )}
-  </div>
-</div>
 
-
-      {/* Conditional rendering: Only show categories that have products */}
       {filteredProducts.soaps.length > 0 && (
         <>
           <h2>Soaps</h2>

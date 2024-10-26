@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
-import "./modal.css"; // Ensure your styles are imported here
+import "./modal.css";
 
 const ProductModal = ({ product, onClose }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [quantity, setQuantity] = useState(1);
+  const [showQuantitySelector, setShowQuantitySelector] = useState(false);
 
   if (!product) return null;
 
@@ -19,17 +21,29 @@ const ProductModal = ({ product, onClose }) => {
     );
   };
 
+  const handleIncrement = () => setQuantity((prev) => prev + 1);
+  const handleDecrement = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+
+  const handleAddToCartClick = () => {
+    setShowQuantitySelector(true);
+  };
+
+  const confirmAddToCart = () => {
+    console.log(`Added ${quantity} of ${product.product_name} to cart.`);
+    setShowQuantitySelector(false);
+    onClose();
+  };
+
+  const cancelAddToCart = () => {
+    setShowQuantitySelector(false);
+  };
+
   return (
     <div className="modal-overlay">
       <div className="modal-content">
         <button className="close-button" onClick={onClose}>X</button>
         <div className="modal-details">
-          {/* Carousel Image Section */}
           <div className="modal-image-container">
-            {/* <button className="prev-button" onClick={handlePrevImage}>
-              &#10094;
-            </button> */}
-
             <div className="slide-image">
               <img
                 src={product.proImgs[currentImageIndex]}
@@ -37,18 +51,11 @@ const ProductModal = ({ product, onClose }) => {
                 className="modal-image"
               />
             </div>
-
-            {/* <button className="next-button" onClick={handleNextImage}>
-              &#10095;
-            </button> */}
           </div>
 
-          {/* Product Info */}
           <div className="modal-info">
             <h2>{product.product_name}</h2>
-            <p>
-              <strong>Price:</strong> Rs {product.MRP}
-            </p>
+            <p><strong>Price:</strong> Rs {product.MRP}</p>
             <ul>
               <strong>Benefits:</strong>
               {product.benefits.map((benefit, idx) => (
@@ -73,9 +80,31 @@ const ProductModal = ({ product, onClose }) => {
                 <li key={idx}>{disclaimer}</li>
               ))}
             </ul>
-            <button className="cart-btn">
-              Add to Cart <FaShoppingCart />
-            </button>
+
+            {/* Show Add to Cart or Quantity Selector */}
+            {!showQuantitySelector ? (
+              <button className="cart-btn" onClick={handleAddToCartClick}>
+                Add to Cart <FaShoppingCart />
+              </button>
+            ) : (
+              <div className="quantity-selector">
+                {/* Horizontal quantity controls */}
+                <div className="quantity-controls">
+                  <button onClick={handleDecrement}>-</button>
+                  <span>{quantity}</span>
+                  <button onClick={handleIncrement}>+</button>
+                </div>
+                {/* Vertical confirm and cancel buttons */}
+                <div className="quantity-actions">
+                  <button onClick={confirmAddToCart} className="confirm-cart-btn">
+                    Confirm
+                  </button>
+                  <button onClick={cancelAddToCart} className="cancel-cart-btn">
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
