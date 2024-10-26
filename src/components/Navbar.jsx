@@ -1,13 +1,14 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import logo from "../attachments/logo2.png";
 import "../components/Navbar.css";
 import { IoHomeOutline } from "react-icons/io5";
 import { CiPen } from "react-icons/ci";
-import { IoMdCall } from "react-icons/io";
 import { AiOutlineShop } from "react-icons/ai";
 import { FaRegFileImage } from "react-icons/fa6";
 
 const Navbar = () => {
+  const navigate = useNavigate(); 
   return (
     <div
       className="flex justify-between items-center py-6 px-0 px-3 md-3 relative z-10"
@@ -16,20 +17,17 @@ const Navbar = () => {
       <img src={logo} alt="Logo" style={{ width: "18%" }} />
 
       <ul className="flex gap-6 list-none gap-12 prata-regular">
-        <li className="relative focus:outline-none flex bg-transparent border-none navbar-item">
+        <li className="relative focus:outline-none flex bg-transparent border-none navbar-item" onClick={() => navigate("/")}>
           <IoHomeOutline size={20} className="mr-2" /> Home
         </li>
-        <li className="relative focus:outline-none flex bg-transparent border-none navbar-item">
+        <li className="relative focus:outline-none flex bg-transparent border-none navbar-item" onClick={() => navigate("/products")}>
           <AiOutlineShop size={20} className="mr-2" /> Shop
         </li>
-        <li className="relative focus:outline-none flex bg-transparent border-none navbar-item">
-          <FaRegFileImage size={20} className="mr-2" /> Pages
+        <li className="relative focus:outline-none flex bg-transparent border-none navbar-item" onClick={() => navigate("/policy")}>
+          <FaRegFileImage size={20} className="mr-2" /> Policy
         </li>
-        <li className="navbar-item">
+        <li className="navbar-item" onClick={() => navigate("/blog")}>
           <CiPen size={20} className="mr-2" /> Blog
-        </li>
-        <li className="navbar-item">
-          <IoMdCall size={20} className="mr-2" /> Contact
         </li>
       </ul>
 

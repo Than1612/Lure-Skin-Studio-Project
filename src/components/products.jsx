@@ -90,37 +90,43 @@ const Products = () => {
 
   return (
     <div className="product-container">
-      <h1 className="tagline">Tag Line For Lure</h1>
+      <h1 className="custom-tagline">Feel the best version of you</h1>
 
-      <div className="filter-sort-row">
-        <div className="filter-container">
-          <label htmlFor="filter">Filter By: </label>
-          <select
-            id="filter"
-            value={filterByCategory}
-            onChange={(e) => setFilterByCategory(e.target.value)}
-          >
-            <option value="">All Products</option>
-            <option value="hair">Hair</option>
-            <option value="body">Body</option>
-            <option value="face">Face</option>
-          </select>
-        </div>
-        {filterByCategory && (
-          <div className="sort-container">
-            <label htmlFor="sort">Sort By: </label>
-            <select
-              id="sort"
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-            >
-              <option value="">Select</option>
-              <option value="price">Price</option>
-              <option value="available">Availability</option>
-            </select>
-          </div>
-        )}
+    <div className="filter-container-wrapper">
+    <div className="filter-sort-row">
+    <div className="filter-container">
+      <label htmlFor="filter">Filter By: </label>
+      <select
+        id="filter"
+        value={filterByCategory}
+        onChange={(e) => {
+          setFilterByCategory(e.target.value);
+          setSortBy(""); // Reset the sort filter when category changes
+        }}
+      >
+        <option value="">All Products</option>
+        <option value="hair">Hair</option>
+        <option value="body">Body</option>
+        <option value="face">Face</option>
+      </select>
+    </div>
+    {filterByCategory && (
+      <div className="sort-container">
+        <label htmlFor="sort">Sort By: </label>
+        <select
+          id="sort"
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value)}
+        >
+          <option value="">Select</option>
+          <option value="price">Price</option>
+          <option value="available">Availability</option>
+        </select>
       </div>
+    )}
+  </div>
+</div>
+
 
       {/* Conditional rendering: Only show categories that have products */}
       {filteredProducts.soaps.length > 0 && (
