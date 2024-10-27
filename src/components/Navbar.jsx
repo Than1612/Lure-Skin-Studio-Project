@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import logo from "../attachments/logo2.png";
 import "../components/Navbar.css";
-import { FaBlog, FaFileAlt, FaHome, FaPhone, FaStore } from "react-icons/fa";
 import { IoHomeOutline } from "react-icons/io5";
 import { CiPen } from "react-icons/ci";
 import { MdOutlinePhoneInTalk } from "react-icons/md";
@@ -56,12 +55,12 @@ const Navbar = () => {
 
   return (
     <div
-      className="flex justify-between items-center py-6 px-0 px-3 md-3 relative z-10"
+      className="flex justify-between items-center py-6 px-3 md-3 relative z-10"
       style={{ background: "#fff4f4" }}
     >
       <img src={logo} alt="Logo" style={{ width: "18%" }} />
 
-      <ul className="flex gap-6 list-none gap-12 prata-regular">
+      <ul className="flex list-none gap-12 prata-regular">
         <li
           className="relative focus:outline-none flex bg-transparent border-none"
           onClick={toggleDropdown}
