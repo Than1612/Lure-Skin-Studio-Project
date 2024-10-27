@@ -23,12 +23,18 @@ const Arrivals = () => {
     { id: 5, name: "NATURAL GLOW", price: "$100.00", img: img3 },
   ];
 
+  const visibleItemsCount = 3;
+
   const nextProduct = () => {
-    setCurrentIndex((prev) => (prev + 1) % products.length);
+    if (currentIndex + visibleItemsCount < products.length) {
+      setCurrentIndex((prev) => prev + 1);
+    }
   };
 
   const prevProduct = () => {
-    setCurrentIndex((prev) => (prev - 1 + products.length) % products.length);
+    if (currentIndex > 0) {
+      setCurrentIndex((prev) => prev - 1);
+    }
   };
 
   return (
@@ -46,7 +52,7 @@ const Arrivals = () => {
         <div
           className="carousel"
           style={{
-            transform: `translateX(-${currentIndex * (100 / 3)}%)`,
+            transform: `translateX(-${currentIndex * (100 / visibleItemsCount)}%)`,
             transition: "transform 0.5s ease-in-out",
           }}
         >
