@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ArrivalsCard from "./ArrivalsCard";
-import img1 from "../attachments/attachments1/i1.png";
-import img2 from "../attachments/attachments1/i2.png";
-import img3 from "../attachments/attachments1/i3.png";
-import img4 from "../attachments/attachments1/i4.png";
+import { soaps, oils, toners, scrubs } from '../soapData';
 import "./Arrivals.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -15,13 +12,17 @@ const Arrivals = () => {
     AOS.init({ duration: 1000 });
   }, []);
 
-  const products = [
-    { id: 1, name: "NATURAL GLOW", price: "$200.00", img: img1 },
-    { id: 2, name: "NATURAL GLOW", price: "$100.00", img: img2 },
-    { id: 3, name: "NATURAL GLOW", price: "$100.00", img: img3 },
-    { id: 4, name: "NATURAL GLOW", price: "$100.00", img: img4 },
-    { id: 5, name: "NATURAL GLOW", price: "$100.00", img: img3 },
-  ];
+  const getAllProducts = () => {
+    const allProducts = [...soaps, ...oils, ...toners, ...scrubs]; 
+    return allProducts.sort((a, b) => new Date(b.arrivalDate) - new Date(a.arrivalDate)); 
+  };
+
+  const products = getAllProducts().map((product) => ({
+    id: product.product_name,
+    name: product.product_name,
+    price: `$${product.MRP}.00`,
+    img: product.proImgs[0],
+  }));
 
   const visibleItemsCount = 3;
 
@@ -34,13 +35,9 @@ const Arrivals = () => {
   };
 
   return (
-    <div
-      className="arrivals-section open-up"
-      style={{ width: "100vw" }}
-      data-aos="zoom-out"
-    >
+    <div className="arrivals-section open-up" style={{ width: "100vw" }} data-aos="zoom-out">
       <br /><br />
-      <h2 className="section-title text-uppercase mb-0">ARRIVALS</h2>
+      <h2 className="section-title text-uppercase mb-0">Latest Arrivals</h2>
       <div className="carousel-container">
         <button className="arrow-btn left-arrow" onClick={prevProduct}>
           ←

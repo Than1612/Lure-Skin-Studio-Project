@@ -14,6 +14,7 @@ const soapData = {
     {
       product_name: "Charcoal soap",
       MRP: 150,
+      arrivalDate: "2024-10-28",
       benefits: [
         "Removes excess oil secretion.",
         "Reduces acne & pimples.",
@@ -34,14 +35,15 @@ const soapData = {
       ],
       disclaimer: [
         "Patch test before use.",
-        "The colour, fragrance, appearance & weight may vary a bit considering the fact that it’s handmade.", 
-        "These are not flaws; they are nature of handmade soaps."
+        "The colour, fragrance, appearance & weight may vary a bit considering the fact that it’s handmade.",
+        "These are not flaws; they are nature of handmade soaps.",
       ],
-      proImgs: [charcoalSoapImage], // Unique image for this product
+      proImgs: [charcoalSoapImage],
     },
     {
       product_name: "Shea Butter Soap",
       MRP: 150,
+      arrivalDate: "2024-10-28",
       benefits: [
         "Fantastic moisturiser.",
         "Collagen production is boosted (anti-ageing).",
@@ -53,21 +55,18 @@ const soapData = {
         "Rub the soap gently on your wet skin to lather.",
         "Store in a ventilated soap box to drain away the water completely.",
       ],
-      loaded_with: [
-        "Base oils", 
-        "Unrefined Shea butter", 
-        "Rose geranium oil"
-      ],
+      loaded_with: ["Base oils", "Unrefined Shea butter", "Rose geranium oil"],
       disclaimer: [
         "Patch test before use.",
-        "The colour, fragrance, appearance & weight may vary a bit considering the fact that it’s handmade.", 
-        "These are not flaws; they are nature of handmade soaps."
+        "The colour, fragrance, appearance & weight may vary a bit considering the fact that it’s handmade.",
+        "These are not flaws; they are nature of handmade soaps.",
       ],
-      proImgs: [sheaButterSoapImage], // Unique image for this product
+      proImgs: [sheaButterSoapImage],
     },
     {
       product_name: "French Green Clay with Spirulina Soap",
       MRP: 120,
+      arrivalDate: "2024-10-28",
       benefits: [
         "Drawing out impurities from the pores.",
         "Exfoliating dead skin cells.",
@@ -87,14 +86,15 @@ const soapData = {
       ],
       disclaimer: [
         "Patch test before use.",
-        "The colour, fragrance, appearance & weight may vary a bit considering the fact that it’s handmade.", 
-        "These are not flaws; they are nature of handmade soaps."
+        "The colour, fragrance, appearance & weight may vary a bit considering the fact that it’s handmade.",
+        "These are not flaws; they are nature of handmade soaps.",
       ],
-      proImgs: [frenchGreenClaySoapImage], // Unique image for this product
+      proImgs: [frenchGreenClaySoapImage],
     },
     {
       product_name: "French Pink Clay with Rose Soap",
       MRP: 120,
+      arrivalDate: "2024-10-28",
       benefits: [
         "Cleanse & detoxify skin.",
         "Treat acne.",
@@ -113,14 +113,15 @@ const soapData = {
       ],
       disclaimer: [
         "Patch test before use.",
-        "The colour, fragrance, appearance & weight may vary a bit considering the fact that it’s handmade.", 
-        "These are not flaws; they are nature of handmade soaps."
+        "The colour, fragrance, appearance & weight may vary a bit considering the fact that it’s handmade.",
+        "These are not flaws; they are nature of handmade soaps.",
       ],
-      proImgs: [pinkClaySoapImage], // Unique image for this product
+      proImgs: [pinkClaySoapImage],
     },
     {
       product_name: "Red-wine soap",
       MRP: 100,
+      arrivalDate: "2024-10-28",
       benefits: [
         "Red wine helps to fight aging by restoring collagen and elastic fibres.",
         "Red wine gives boost to sagging skin, reducing fine lines and wrinkles.",
@@ -142,14 +143,15 @@ const soapData = {
       ],
       disclaimer: [
         "Patch test before use.",
-        "The colour, fragrance, appearance & weight may vary a bit considering the fact that it’s handmade.", 
-        "These are not flaws; they are nature of handmade soaps."
+        "The colour, fragrance, appearance & weight may vary a bit considering the fact that it’s handmade.",
+        "These are not flaws; they are nature of handmade soaps.",
       ],
-      proImgs: [redWineSoapImage], // Unique image for this product
+      proImgs: [redWineSoapImage],
     },
     {
       product_name: "Detan Soap",
       MRP: 200,
+      arrivalDate: "2024-10-28",
       benefits: [
         "Deep cleanses and removes impurities.",
         "Improves skin radiance.",
@@ -168,14 +170,15 @@ const soapData = {
       ],
       disclaimer: [
         "Patch test before use.",
-        "The colour, fragrance, appearance & weight may vary a bit considering the fact that it’s handmade.", 
-        "These are not flaws; they are nature of handmade soaps."
+        "The colour, fragrance, appearance & weight may vary a bit considering the fact that it’s handmade.",
+        "These are not flaws; they are nature of handmade soaps.",
       ],
-      proImgs: [detanSoapImage], // Unique image for this product
+      proImgs: [detanSoapImage],
     },
     {
       product_name: "All Clear Dandruff Hair Oil",
       MRP: 430,
+      arrivalDate: "2024-10-28",
       benefits: [
         "Relieves scalp itchiness.",
         "Controls flaky dandruff and fungal infection of scalp.",
@@ -203,13 +206,14 @@ const soapData = {
       ],
       disclaimer: [
         "Apply and wait for 24hrs.",
-        "If there’s no reaction, you can continue to use."
+        "If there’s no reaction, you can continue to use.",
       ],
-      proImgs: [dandruffHairOilImage], // Unique image for this product
+      proImgs: [dandruffHairOilImage],
     },
     {
       product_name: "Hair Growth Oil",
       MRP: 550,
+      arrivalDate: "2024-10-28",
       benefits: [
         "Strengthens hair roots.",
         "Hydrates the hair and prevents frizz.",
@@ -235,69 +239,56 @@ const soapData = {
       ],
       disclaimer: [
         "Apply and wait for 24hrs.",
-        "If there’s no reaction, you can continue to use."
+        "If there’s no reaction, you can continue to use.",
       ],
-      proImgs: [hairGrowthOilImage], // Unique image for this product
+      proImgs: [hairGrowthOilImage],
     },
     {
-      product_name: "Damascus Rose Water Toner",
-      MRP: 325,
+      product_name: "Rose Water Toner",
+      MRP: 500,
+      arrivalDate: "2024-10-28",
       benefits: [
-        "Helps to strengthen and regenerate skin cells.",
-        "Treats mild acne.",
-        "Helps clean pores.",
-        "Soothes sun damage."
+        "Hydrating, revitalising and moisturising.",
+        "Has anti-inflammatory properties.",
+        "Controls excess oil & shrinks pores.",
       ],
       usage_storage: [
-        "After cleansing, pat dry your face. Place the bottle a few inches away and spray it over your face.",
-        "You can also spray it on a cotton pad and dab it over your face.",
-        "Works great to mix powdered face packs & scrubs.",
-        "Store in a cool, dry place."
+        "Use as a toner to balance the skin.",
+        "Spray it over the skin or dampen a cotton pad.",
+        "Best for daily use.",
       ],
-      loaded_with: [
-        "Organic Damascus rose petals"
-      ],
+      loaded_with: ["Damascus rose flower extracts", "Purified water"],
       disclaimer: [
         "Patch test before use.",
-        "Avoid contact with eyes."
+        "The colour, fragrance, appearance & weight may vary a bit considering the fact that it’s handmade.",
+        "These are not flaws; they are nature of handmade soaps.",
       ],
-      proImgs: [roseWaterTonerImage], // Unique image for this product
+      proImgs: [roseWaterTonerImage],
     },
     {
-      product_name: "Peach & Almond Scrub",
-      MRP: 440,
+      product_name: "Almond Peach Face Scrub",
+      MRP: 400,
+      arrivalDate: "2024-10-28",
       benefits: [
-        "Smoother skin.",
-        "Unclogged pores.",
-        "Better absorption of skincare products.",
-        "Reduces acne scars."
+        "Exfoliates dead skin cells.",
+        "Removes impurities.",
+        "Refreshes and revitalises skin.",
       ],
       usage_storage: [
-        "Rinse your face with water lightly.",
-        "Apply a dime-sized scrub onto skin, scrub using circular motions with your fingertips for about a minute.",
-        "Wash away with water and pat dry. For best results, use once every 4 days.",
-        "Store in a cool, dry place."
+        "Apply on wet face, gently massage in circular motions.",
+        "Leave it on for 10 mins, then rinse off.",
       ],
-      loaded_with: [
-        "Demineralised water",
-        "Stearic acid",
-        "Vegetable glycerin",
-        "Xanthan gum",
-        "Almond granules",
-        "Peach oil",
-        "GMS SE",
-        "Preservative"
-      ],
+      loaded_with: ["Almond powder", "Peach extracts", "Sugar"],
       disclaimer: [
         "Patch test before use.",
-        "Avoid using wet hands or wet spatula for longer shelf life."
+        "The colour, fragrance, appearance & weight may vary a bit considering the fact that it’s handmade.",
+        "These are not flaws; they are nature of handmade soaps.",
       ],
-      proImgs: [peachAlmondScrubImage], // Unique image for this product
+      proImgs: [peachAlmondScrubImage],
     },
   ],
 };
 
-// Example function to filter the products based on type
 const soaps = soapData.products.filter((product) =>
   product.product_name.toLowerCase().includes("soap")
 );
