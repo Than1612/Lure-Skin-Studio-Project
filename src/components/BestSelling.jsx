@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ArrivalsCard from "./ArrivalsCard";
-import img1 from "../attachments/attachments1/i1.png";
-import img2 from "../attachments/attachments1/i2.png";
-import img3 from "../attachments/attachments1/i3.png";
-import img4 from "../attachments/attachments1/i4.png";
+import { soaps, oils, toners, scrubs } from '../soapData'; // Import your product categories
 import "./BestSelling.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -15,14 +12,23 @@ const BestSelling = () => {
     AOS.init({ duration: 1000 });
   }, []);
 
-  const products = [
-    { id: 1, name: "NATURAL GLOW", price: "$200.00", img: img1 },
-    { id: 2, name: "NATURAL GLOW", price: "$100.00", img: img2 },
-    { id: 3, name: "NATURAL GLOW", price: "$100.00", img: img3 },
-    { id: 4, name: "NATURAL GLOW", price: "$100.00", img: img4 },
-    { id: 5, name: "NATURAL GLOW", price: "$100.00", img: img3 },
-  ];
+  const getBestSellingProducts = () => {
+    const allProducts = [...soaps, ...oils, ...toners, ...scrubs];
 
+    const bestSellingProducts = allProducts
+      .filter(product => product.MRP > 0)
+      .sort((a, b) => b.MRP - a.MRP) 
+      .slice(0, 5); 
+
+    return bestSellingProducts.map((product) => ({
+      id: product.product_name,
+      name: product.product_name,
+      price: `$${product.MRP}.00`,
+      img: product.proImgs[0],
+    }));
+  };
+
+  const products = getBestSellingProducts();
   const visibleItemsCount = 3;
 
   const nextProduct = () => {

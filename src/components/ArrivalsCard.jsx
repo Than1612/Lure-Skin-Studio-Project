@@ -2,20 +2,42 @@ import React from "react";
 
 const ArrivalsCard = ({ img, name, price }) => {
   return (
-    <div
-      className="card"
-      style={{ textAlign: "center", width: "100%", height: "100%" }}
-    >
+    <div className="card" style={styles.card}>
       <img
         src={img}
         alt={name}
         className="product-image"
-        style={{ width: "100%", height: "auto" }}
+        style={styles.image}
       />
-      <h3 className="product-name">{name}</h3>
-      <p className="product-price">{price}</p>
+      <h3 className="product-name" style={styles.name}>{name}</h3>
+      <p className="product-price" style={styles.price}>{price}</p>
     </div>
   );
+};
+const styles = {
+  card: {
+    textAlign: "center",
+    width: "100%",
+    height: "100%",
+    border: "1px solid #ddd",
+    borderRadius: "8px",
+    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)", 
+    padding: "16px",
+    transition: "transform 0.2s", 
+  },
+  image: {
+    width: "100%",
+    height: "auto", 
+    borderRadius: "10px", 
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+  },
+  name: {
+    fontSize: "1.5em", 
+    margin: "10px 0", 
+  },
+  price: {
+    fontSize: "1.2em", 
+  },
 };
 
 export default ArrivalsCard;
