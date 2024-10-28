@@ -8,6 +8,9 @@ import dandruffHairOilImage from "./Product Images/hairoils/Anti Dandruff Oil.JP
 import hairGrowthOilImage from "./Product Images/hairoils/Hair Growth Oil.JPG";
 import roseWaterTonerImage from "./Product Images/toner/Damascus Rose Water.JPG";
 import peachAlmondScrubImage from "./Product Images/face scrub/Almond Peach Face Scrub.JPG";
+import japanesecherryblossom from "./Product Images/shower gel/image0.jpeg";
+import greenapplecinnamon from "./Product Images/shower gel/image3.jpeg";
+import aloveragel from "./Product Images/alovera gel/image1.jpeg";
 
 const soapData = {
   products: [
@@ -294,6 +297,99 @@ const soapData = {
       ],
       proImgs: [peachAlmondScrubImage], // Unique image for this product
     },
+    {
+      product_name: "Japanese cherry blossom shower gel",
+      MRP:460,
+      benefits:
+      [
+        "Gentle and non-drying",
+        "It's the perfect daily cleanser to leave skin feeling fresh and clean!"
+      ],
+      usage_storage:
+      [
+        "Pump the gel on your wet palms/loofah.",
+        "Lather the gel and gently scrub yourself all over. Rinse well.",
+        "Store in a cool place and away from sunlight."
+      ],
+      loaded_with:
+      [
+        "Sodium cocyl isethionate(SCI)",
+        "coco amido propyl betaine (capb)",
+        "egms",
+        "aqua glycerin",
+        "decyl glucoside",
+        "polyquats"
+      ],
+      disclaimer:
+      [
+        "Patch test before use.", 
+        "Incase of any irritation stop usage."
+      ],
+      proImgs: [japanesecherryblossom], 
+    },
+    {
+      product_name: "Green apple cinnamon shower gel",
+      MRP:480,
+      benefits:
+      [
+        "Gentle and non-drying",
+        "It's the perfect daily cleanser to leave skin feeling fresh and clean!"
+      ],
+      usage_storage:
+      [
+        "Pump the gel on your wet palms/loofah.",
+        "Lather the gel and gently scrub yourself all over. Rinse well.",
+        "Store in a cool place and away from sunlight."
+      ],
+      loaded_with:
+      [
+        "Olive Oil", 
+        "Coconut Oil", 
+        "Jojoba Oil", 
+        "Castor Oil", 
+        "Hemp Oil",
+        "Palm Oil", 
+        "KOH", 
+        "Water", 
+        "Preservatives"
+      ],
+      disclaimer:
+      [
+        "Patch test before use.", 
+        "Incase of any irritation stop usage."
+      ],
+      proImgs: [greenapplecinnamon], 
+    },
+    {
+      product_name: "Aloevera gel",
+      MRP: 270,
+      benefits:
+      [
+        "Soothes sunburn",
+        "Boots healing of wounds",
+        "Deeply hydrates the skin",
+        "Lightens blemishes",
+        "Acts as a conditioner for hair and scalp"
+      ],
+      usage_storage:
+      [
+        "Apply it as a moisturiser for the day or sleeping mask for the night.",
+        "Can be used as hair styling gel.", 
+        "Makes a good leave on hair conditioner.",
+        "Best when refrigerated or in air tight dry condition."
+      ],
+      loaded_with:
+      [
+        "Aloe gel",
+        "Xantum gum"
+      ],
+      disclaimer:
+      [
+        "Patch test before use.", 
+        "Stop using incase of any irritation."
+      ],
+      proImgs:[aloveragel],
+    }
   ],
 };
 
@@ -310,5 +406,11 @@ const toners = soapData.products.filter((product) =>
 const scrubs = soapData.products.filter((product) =>
   product.product_name.toLowerCase().includes("scrub")
 );
+const shower_gel=soapData.products.filter((product) =>
+product.product_name.toLowerCase().includes("shower gel")
+);
+const aloevera_gel=soapData.products.filter((product) =>
+product.product_name.toLowerCase().includes("aloevera gel")
+);
 
-export { soaps, oils, toners, scrubs };
+export { soaps, oils, toners, scrubs, shower_gel, aloevera_gel };
