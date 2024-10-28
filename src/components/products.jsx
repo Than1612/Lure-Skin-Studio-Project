@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./products.css";
-import { soaps, oils, toners, scrubs } from "../soapData"; 
+import { soaps, oils, toners, scrubs, shower_gel, aloevera_gel} from "../soapData"; 
 import { FaShoppingCart } from "react-icons/fa";
 import ProductModal from "./Modal";
 
@@ -12,6 +12,8 @@ const Products = () => {
   const [showMoreOils, setShowMoreOils] = useState(false);
   const [showMoreToners, setShowMoreToners] = useState(false);
   const [showMoreScrubs, setShowMoreScrubs] = useState(false);
+  const [showMoreShowerGel, setShowMoreShowerGel] = useState(false);
+  const [showMoreAloveraGel, setShowMoreAloveraGel] = useState(false);
   const [showQuantitySelector, setShowQuantitySelector] = useState(null);
   const [quantity, setQuantity] = useState(1);
 
@@ -38,29 +40,39 @@ const Products = () => {
       soaps: [],
       oils: [],
       toners: [],
-      scrubs: []
+      scrubs: [],
+      shower_gel: [],
+      aloevera_gel: []
     };
 
     if (category === "hair") {
       filteredProducts.oils = oils;
+      filteredProducts.aloevera_gel = aloevera_gel; // Include Aloe Vera Gel in hair category
     } else if (category === "body") {
       filteredProducts.soaps = soaps;
+      filteredProducts.shower_gel = shower_gel;
+      filteredProducts.aloevera_gel = aloevera_gel; // Include Aloe Vera Gel in body category
     } else if (category === "face") {
       filteredProducts.soaps = soaps;
       filteredProducts.toners = toners;
       filteredProducts.scrubs = scrubs;
+      filteredProducts.aloevera_gel = aloevera_gel;
     } else {
       filteredProducts.soaps = soaps;
       filteredProducts.oils = oils;
       filteredProducts.toners = toners;
       filteredProducts.scrubs = scrubs;
+      filteredProducts.shower_gel = shower_gel;
+      filteredProducts.aloevera_gel = aloevera_gel;
     }
 
     return {
       soaps: sortProducts(filteredProducts.soaps, sortBy),
       oils: sortProducts(filteredProducts.oils, sortBy),
       toners: sortProducts(filteredProducts.toners, sortBy),
-      scrubs: sortProducts(filteredProducts.scrubs, sortBy)
+      scrubs: sortProducts(filteredProducts.scrubs, sortBy),
+      shower_gel: sortProducts(filteredProducts.shower_gel, sortBy),
+      aloevera_gel: sortProducts(filteredProducts.aloevera_gel, sortBy)
     };
   };
 
@@ -97,21 +109,18 @@ const Products = () => {
             </div>
 
             {showQuantitySelector === product && (
-  <div className="quantity-selector">
-    {/* First line: Quantity Selector */}
-    <div className="quantity-controls">
-      <button onClick={handleDecrement}>-</button>
-      <span>{quantity}</span>
-      <button onClick={handleIncrement}>+</button>
-    </div>
-
-    {/* Second line: Confirm and Cancel buttons */}
-    <div className="quantity-actions">
-      <button onClick={handleConfirm} className="confirm-btn">Confirm</button>
-      <button onClick={handleCancel} className="cancel-btn">Cancel</button>
-    </div>
-  </div>
-)}
+              <div className="quantity-selector">
+                <div className="quantity-controls">
+                  <button onClick={handleDecrement}>-</button>
+                  <span>{quantity}</span>
+                  <button onClick={handleIncrement}>+</button>
+                </div>
+                <div className="quantity-actions">
+                  <button onClick={handleConfirm} className="confirm-btn">Confirm</button>
+                  <button onClick={handleCancel} className="cancel-btn">Cancel</button>
+                </div>
+              </div>
+            )}
 
           </div>
         ))}
@@ -190,6 +199,20 @@ const Products = () => {
         <>
           <h2>Scrubs</h2>
           {renderProducts(filteredProducts.scrubs, showMoreScrubs, setShowMoreScrubs)}
+        </>
+      )}
+
+      {filteredProducts.shower_gel.length > 0 && (
+        <>
+          <h2>Shower Gels</h2>
+          {renderProducts(filteredProducts.shower_gel, showMoreShowerGel, setShowMoreShowerGel)}
+        </>
+      )}
+
+      {filteredProducts.aloevera_gel.length > 0 && (
+        <>
+          <h2>Aloe Vera Gel</h2>
+          {renderProducts(filteredProducts.aloevera_gel, showMoreAloveraGel, setShowMoreAloveraGel)}
         </>
       )}
 
