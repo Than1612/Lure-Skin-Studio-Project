@@ -2,13 +2,13 @@
  import logo from './logo.svg';
 import React, { useEffect } from "react";
 import './input.css';
-import Navbar from './components/Navbar';
-import Arrivals from './components/Arrivals';
-import BestSelling from './components/BestSelling';
-import Hero from './components/Hero';
-import Insta from './components/Insta';
-import Footer from './components/Footer';
-import Extra from './components/Extra';
+import Navbar from './components/Navbar.jsx';
+import Arrivals from './components/Arrivals.jsx';
+import BestSelling from './components/BestSelling.jsx';
+import Hero from './components/Hero.jsx';
+import Insta from './components/Insta.jsx';
+import Footer from './components/Footer.jsx';
+import Extra from './components/Extra.jsx';
  
 
 function App() {
