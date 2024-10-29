@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import ArrivalsCard from "./ArrivalsCard";
-import { soaps, oils, toners, scrubs } from '../soapData'; // Import your product categories
+import ProductModal from "./Modal";
+import { soaps, oils, toners, scrubs } from '../soapData';
 import "./BestSelling.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
 const BestSelling = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
     AOS.init({ duration: 1000 });
@@ -14,18 +16,17 @@ const BestSelling = () => {
 
   const getBestSellingProducts = () => {
     const allProducts = [...soaps, ...oils, ...toners, ...scrubs];
-
-    const bestSellingProducts = allProducts
+    return allProducts
       .filter(product => product.MRP > 0)
-      .sort((a, b) => b.MRP - a.MRP) 
-      .slice(0, 5); 
-
-    return bestSellingProducts.map((product) => ({
-      id: product.product_name,
-      name: product.product_name,
-      price: `$${product.MRP}.00`,
-      img: product.proImgs[0],
-    }));
+      .sort((a, b) => b.MRP - a.MRP)
+      .slice(0, 5)
+      .map((product) => ({
+        id: product.product_name,
+        name: product.product_name,
+        price: `$${product.MRP}.00`,
+        img: product.proImgs[0],
+        ...product // Pass all properties for modal use
+      }));
   };
 
   const products = getBestSellingProducts();
@@ -41,12 +42,11 @@ const BestSelling = () => {
     );
   };
 
+  const openModal = (product) => setSelectedProduct(product);
+  const closeModal = () => setSelectedProduct(null);
+
   return (
-    <div
-      className="arrivals-section open-up"
-      style={{ width: "100vw" }}
-      data-aos="zoom-out"
-    >
+    <div className="arrivals-section open-up" style={{ width: "100vw" }} data-aos="zoom-out">
       <h2 className="section-title text-uppercase mb-0">BEST SELLING</h2>
       <div className="carousel-container">
         <button className="arrow-btn left-arrow" onClick={prevProduct}>
@@ -61,12 +61,8 @@ const BestSelling = () => {
           }}
         >
           {products.map((product) => (
-            <div key={product.id} className="arrivals-card">
-              <ArrivalsCard
-                img={product.img}
-                name={product.name}
-                price={product.price}
-              />
+            <div key={product.id} className="arrivals-card" onClick={() => openModal(product)}>
+              <ArrivalsCard img={product.img} name={product.name} price={product.price} />
             </div>
           ))}
         </div>
@@ -75,6 +71,11 @@ const BestSelling = () => {
           →
         </button>
       </div>
+
+      {/* Product Modal */}
+      {selectedProduct && (
+        <ProductModal product={selectedProduct} onClose={closeModal} />
+      )}
     </div>
   );
 };

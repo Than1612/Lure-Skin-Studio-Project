@@ -14,21 +14,24 @@ const ArrivalsCard = ({ img, name, price }) => {
     </div>
   );
 };
+
 const styles = {
   card: {
     textAlign: "center",
     width: "100%",
     height: "100%",
+    backgroundColor: "#f9dcdc", 
     border: "1px solid #ddd",
     borderRadius: "8px",
     boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)", 
     padding: "16px",
-    transition: "transform 0.2s", 
+    transition: "transform 0.2s",
   },
   image: {
     width: "100%",
-    height: "auto", 
-    borderRadius: "10px", 
+    height: "100%", // Fixed height for consistency
+    objectFit: "cover", // Maintain aspect ratio within the fixed height
+    borderRadius: "10px",
     boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
   },
   name: {

@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./products.css";
 import { soaps, oils, toners, scrubs, shower_gel, aloevera_gel} from "../soapData"; 
 import { FaShoppingCart } from "react-icons/fa";
 import ProductModal from "./Modal";
 
 const Products = () => {
+  useEffect(()=>{window.scrollTo(0,0);},[]);
   const [sortBy, setSortBy] = useState(""); 
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [filterByCategory, setFilterByCategory] = useState("");
