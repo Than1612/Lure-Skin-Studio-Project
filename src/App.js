@@ -1,6 +1,6 @@
- 
- import logo from './logo.svg';
+import logo from './logo.svg';
 import React, { useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import './input.css';
 import Navbar from './components/Navbar.jsx';
 import Arrivals from './components/Arrivals.jsx';
@@ -28,21 +28,40 @@ function App() {
   }, []);
 
   return (
- 
-     <div className="App overflow-x-hidden relative" style={{background: "#F6E7E5"}}> 
-      <div className="loading"></div>
+    <Router>
+      <div className="App overflow-x-hidden relative" style={{ background: "#F6E7E5" }}>
+        <div className="loading"></div>
 
-      <div className="App">
         <Navbar />
-        <Hero />
-        <Arrivals />
-        <BestSelling />
-        <Extra/>
-        <Insta/>
-      <Footer/>
+        
+        <Routes>
+          {/* Route for the homepage */}
+          <Route
+            path="/"
+            element={
+              <>
+                <Hero />
+                <Arrivals />
+                <BestSelling />
+                <Extra />
+                <Insta />
+              </>
+            }
+          />
+
+          {/* Route for the products page */}
+          <Route path="/products" element={<Products />} />
+
+          {/* Route for the blog page */}
+          <Route path="/blog" element={<Blog />} />
+
+          {/* Route for the policy page */}
+          <Route path="/policy" element={<Policy />} /> 
+        </Routes>
+        
+        <Footer />
       </div>
- 
-    </div>
+    </Router>
   );
 }
 

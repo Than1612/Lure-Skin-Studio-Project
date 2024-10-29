@@ -1,0 +1,183 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8); /* Darker backdrop */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: all 0.3s ease; /* Smooth appearance */
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: row; /* Image on the left, details on the right */
+  background: linear-gradient(135deg, rgb(252, 209, 216), rgb(250, 222, 222));
+  padding: 20px;
+  border-radius: 15px;
+  max-width: 900px;
+  width: 95%;
+  height: 65vh; /* Adjust height for scrollable content */
+  position: relative;
+  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.2);
+  overflow: hidden; /* Prevent overflow for the modal content */
+}
+
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.close-button:hover {
+  transform: rotate(90deg);
+}
+
+.modal-details {
+  display: flex;
+  flex-direction: row;
+  height: 100%; /* Ensure full height is used */
+}
+
+.modal-image-container {
+  flex: 1; /* Take up the left half */
+  display: flex;
+  justify-content: center; /* Align content to the left */
+  align-items: center; /* Align items to the top */
+  position: relative;
+  height: 95%; /* Image height */
+  top: 50%;
+  transform: translateY(-50%); /* Adjust shrinking to happen from both top and bottom */
+  overflow: hidden; /* Ensure no content overflows */
+
+}
+
+.modal-image {
+  width: 100%; /* Image fills the container */
+  height: 100%;
+  object-fit: cover; /* Ensure the image maintains aspect ratio */
+  border-radius: 10px;
+}
+
+.modal-info {
+  flex: 1; /* Take up the right half */
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align content to the left */
+  text-align: left; /* Text is left-aligned */
+  max-height: 60vh; /* Set a fixed height for the product info box */
+  overflow-y: auto; /* Enables scrolling if content exceeds the height */
+  padding-right: 10px; /* Add padding for smooth scrolling */
+}
+
+.modal-info h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 10px;
+  text-align: left; /* Left-aligned heading */
+}
+
+.modal-info ul {
+  padding-left: 20px;
+  text-align: left; /* Left-align the list items */
+}
+
+ul strong {
+  margin-bottom: 10px;
+  display: block;
+  color: #333;
+}
+
+.cart-btn {
+  padding: 12px 25px;
+  background-color: #e37c8e;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Left-align button content */
+  gap: 10px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.cart-btn:hover {
+  background-color: #d9687c;
+  transform: scale(1.05);
+}
+
+.cart-btn svg {
+  font-size: 1.25rem;
+}
+
+.quantity-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px; 
+  margin-bottom: 10px; 
+}
+
+.quantity-controls button {
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+  background-color: #ddd;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.quantity-controls span {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Stack Confirm and Cancel buttons vertically */
+.quantity-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* Space between Confirm and Cancel */
+  width: 125px; /* Fixed width for both buttons */
+}
+
+.confirm-cart-btn, .cancel-cart-btn {
+  padding: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  width: 100%; /* Full width of the .quantity-actions container */
+  text-align: center;
+}
+
+.confirm-cart-btn {
+  background-color: #e37c8e;
+  color: white;
+}
+
+.cancel-cart-btn {
+  background-color: #e37c8e;
+  color: white;
+}
+
+

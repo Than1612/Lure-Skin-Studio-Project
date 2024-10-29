@@ -1,0 +1,40 @@
+/* Policy.css */
+.policy-container {
+    min-height: 50vh;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.policy-heading {
+    font-size: 2.5rem;
+    font-family: 'Prata', serif;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 24px;
+    color: #333;
+}
+
+.policy-section {
+    margin-bottom: 20px;
+}
+
+.policy-subheading {
+    font-size: 1.75rem;
+    font-family: 'Prata', serif;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #444;
+}
+
+.policy-paragraph {
+    font-size: 1.125rem;
+    font-family: 'Prata', serif;
+    line-height: 1.75rem;
+    color: #555;
+    margin-bottom: 16px;
+    max-width: 800px;
+    text-align: justify;
+}
