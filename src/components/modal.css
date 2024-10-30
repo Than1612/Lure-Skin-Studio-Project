@@ -4,26 +4,26 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.8); /* Darker backdrop */
+  background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  transition: all 0.3s ease; /* Smooth appearance */
+  transition: all 0.3s ease;
 }
 
 .modal-content {
   display: flex;
-  flex-direction: row; /* Image on the left, details on the right */
+  flex-direction: row;
   background: linear-gradient(135deg, rgb(252, 209, 216), rgb(250, 222, 222));
   padding: 20px;
   border-radius: 15px;
   max-width: 900px;
   width: 95%;
-  height: 65vh; /* Adjust height for scrollable content */
+  height: 65vh;
   position: relative;
   box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.2);
-  overflow: hidden; /* Prevent overflow for the modal content */
+  overflow: hidden;
 }
 
 .close-button {
@@ -46,51 +46,49 @@
 .modal-details {
   display: flex;
   flex-direction: row;
-  height: 100%; /* Ensure full height is used */
+  height: 100%;
 }
 
 .modal-image-container {
-  flex: 1; /* Take up the left half */
+  flex: 1;
   display: flex;
-  justify-content: center; /* Align content to the left */
-  align-items: center; /* Align items to the top */
+  justify-content: center;
+  align-items: center;
   position: relative;
-  height: 95%; /* Image height */
+  height: 95%;
   top: 50%;
-  transform: translateY(-50%); /* Adjust shrinking to happen from both top and bottom */
-  overflow: hidden; /* Ensure no content overflows */
-
+  transform: translateY(-50%);
+  overflow: hidden;
 }
 
 .modal-image {
-  width: 100%; /* Image fills the container */
+  width: 100%;
   height: 100%;
-  object-fit: cover; /* Ensure the image maintains aspect ratio */
+  object-fit: cover;
   border-radius: 10px;
 }
 
 .modal-info {
-  flex: 1; /* Take up the right half */
+  flex: 1;
   margin-left: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* Align content to the left */
-  text-align: left; /* Text is left-aligned */
-  max-height: 60vh; /* Set a fixed height for the product info box */
-  overflow-y: auto; /* Enables scrolling if content exceeds the height */
-  padding-right: 10px; /* Add padding for smooth scrolling */
+  justify-content: flex-start;
+  text-align: left;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 10px;
 }
 
 .modal-info h2 {
   font-size: 2rem;
   color: #333;
   margin-bottom: 10px;
-  text-align: left; /* Left-aligned heading */
 }
 
 .modal-info ul {
   padding-left: 20px;
-  text-align: left; /* Left-align the list items */
+  text-align: left;
 }
 
 ul strong {
@@ -109,7 +107,7 @@ ul strong {
   font-size: 1rem;
   display: flex;
   align-items: center;
-  justify-content: center; /* Left-align button content */
+  justify-content: center;
   gap: 10px;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
@@ -133,8 +131,8 @@ ul strong {
 .quantity-controls {
   display: flex;
   align-items: center;
-  gap: 10px; 
-  margin-bottom: 10px; 
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
 .quantity-controls button {
@@ -152,12 +150,11 @@ ul strong {
   font-weight: bold;
 }
 
-/* Stack Confirm and Cancel buttons vertically */
 .quantity-actions {
   display: flex;
   flex-direction: column;
-  gap: 5px; /* Space between Confirm and Cancel */
-  width: 125px; /* Fixed width for both buttons */
+  gap: 5px;
+  width: 125px;
 }
 
 .confirm-cart-btn, .cancel-cart-btn {
@@ -166,7 +163,7 @@ ul strong {
   cursor: pointer;
   border: none;
   border-radius: 4px;
-  width: 100%; /* Full width of the .quantity-actions container */
+  width: 100%;
   text-align: center;
 }
 
@@ -179,5 +176,3 @@ ul strong {
   background-color: #e37c8e;
   color: white;
 }
-
-
