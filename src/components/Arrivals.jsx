@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ArrivalsCard from "./ArrivalsCard";
- 
-import ProductModal from "./Modal"; // Import ProductModal
- 
+import ProductModal from "./Modal";
 import { soaps, oils, toners, scrubs } from '../soapData';
 import "./Arrivals.css";
 import AOS from "aos";
@@ -10,27 +8,26 @@ import "aos/dist/aos.css";
 
 const Arrivals = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedProduct, setSelectedProduct] = useState(null); // State for selected product modal
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
     AOS.init({ duration: 1000 });
   }, []);
 
   const getAllProducts = () => {
-    const allProducts = [...soaps, ...oils, ...toners, ...scrubs]; 
-    return allProducts.sort((a, b) => new Date(b.arrivalDate) - new Date(a.arrivalDate)); 
+    const allProducts = [...soaps, ...oils, ...toners, ...scrubs];
+    return allProducts
+      .sort((a, b) => new Date(b.arrivalDate) - new Date(a.arrivalDate))
+      .map((product) => ({
+        id: product.product_name,
+        name: product.product_name,
+        price: `$${product.MRP}.00`,
+        img: product.proImgs[0],
+        ...product // Pass all properties for modal use
+      }));
   };
 
-  const products = getAllProducts().map((product) => ({
-    id: product.product_name,
-    name: product.product_name,
-    price: `$${product.MRP}.00`,
-    img: product.proImgs[0],
- 
-    ...product, // Include all product details for the modal
- 
-  }));
-
+  const products = getAllProducts();
   const visibleItemsCount = 3;
 
   const nextProduct = () => {
@@ -42,11 +39,12 @@ const Arrivals = () => {
   };
 
   const openModal = (product) => {
-    setSelectedProduct(product); // Set product data for modal
+    setSelectedProduct(product);
   };
 
-  const closeModal = () => {
-    setSelectedProduct(null); // Close modal
+  const closeModal = (event) => {
+    if (event) event.stopPropagation();
+    setSelectedProduct(null);
   };
 
   return (
@@ -66,16 +64,12 @@ const Arrivals = () => {
           }}
         >
           {products.map((product) => (
-            <div 
-              key={product.id} 
+            <div
+              key={product.id}
               className="arrivals-card"
-              onClick={() => openModal(product)} // Open modal on click
+              onClick={() => openModal(product)}
             >
-              <ArrivalsCard
-                img={product.img}
-                name={product.name}
-                price={product.price}
-              />
+              <ArrivalsCard img={product.img} name={product.name} price={product.price} />
             </div>
           ))}
         </div>
@@ -85,11 +79,11 @@ const Arrivals = () => {
         </button>
       </div>
 
-      {/* Render ProductModal conditionally */}
+      {/* Product Modal */}
       {selectedProduct && (
-        <ProductModal 
-          product={selectedProduct} 
-          onClose={closeModal} // Pass closeModal to handle modal close
+        <ProductModal
+          product={selectedProduct}
+          onClose={(e) => closeModal(e)}
         />
       )}
     </div>

@@ -1,12 +1,12 @@
-import charcoalSoapImage from "./Product Images/soaps/Charcoal.JPG";
+import charcoalSoapImage from "./Product Images/soaps/Charcoal.png";
 import sheaButterSoapImage from "./Product Images/soaps/Shea Butter.JPG";
-import frenchGreenClaySoapImage from "./Product Images/soaps/French Green Clay.JPG";
+import frenchGreenClaySoapImage from "./Product Images/soaps/French Green Clay.png";
 import pinkClaySoapImage from "./Product Images/soaps/French Pink Clay.JPG";
-import redWineSoapImage from "./Product Images/soaps/French Green Clay 1.JPG";
+import redWineSoapImage from "./Product Images/soaps/French Green Clay 1.png";
 import detanSoapImage from "./Product Images/soaps/Shea Butter 1.JPG";
-import dandruffHairOilImage from "./Product Images/hairoils/Anti Dandruff Oil.JPG";
-import hairGrowthOilImage from "./Product Images/hairoils/Hair Growth Oil.JPG";
-import roseWaterTonerImage from "./Product Images/toner/Damascus Rose Water.JPG";
+import dandruffHairOilImage from "./Product Images/hairoils/Anti Dandruff Oil.png";
+import hairGrowthOilImage from "./Product Images/hairoils/Hair Growth Oil.png";
+import roseWaterTonerImage from "./Product Images/toner/Damascus Rose Water.png";
 import peachAlmondScrubImage from "./Product Images/face scrub/Almond Peach Face Scrub.JPG";
 import japanesecherryblossom from "./Product Images/shower gel/image0.jpeg";
 import greenapplecinnamon from "./Product Images/shower gel/image3.jpeg";
@@ -18,6 +18,11 @@ const soapData = {
       product_name: "Charcoal soap",
       MRP: 150,
       arrivalDate: "2024-10-28",
+      description:
+      [
+        "Our Soap Bars are handmade from scratch, using the cold processed method, one batch at a time - to ensure freshness, consistency, and perfection.",
+        "Our recipes are meticulously developed to produce a mild, skin-nourishing soap that offers a magnificent long-lasting lather and leaves your skin feeling clean, soft, and radiantly healthy."
+      ],
       benefits: [
         "Removes excess oil secretion.",
         "Reduces acne & pimples.",
@@ -47,6 +52,11 @@ const soapData = {
       product_name: "Shea Butter Soap",
       MRP: 150,
       arrivalDate: "2024-10-28",
+      description:
+      [
+        "Our Soap Bars are handmade from scratch, using the cold processed method, one batch at a time - to ensure freshness, consistency, and perfection.",
+        "Our recipes are meticulously developed to produce a mild, skin-nourishing soap that offers a magnificent long-lasting lather and leaves your skin feeling clean, soft, and radiantly healthy."
+      ],
       benefits: [
         "Fantastic moisturiser.",
         "Collagen production is boosted (anti-ageing).",
@@ -70,6 +80,11 @@ const soapData = {
       product_name: "French Green Clay with Spirulina Soap",
       MRP: 120,
       arrivalDate: "2024-10-28",
+      description:
+      [
+        "Our Soap Bars are handmade from scratch, using the cold processed method, one batch at a time - to ensure freshness, consistency, and perfection.",
+        "Our recipes are meticulously developed to produce a mild, skin-nourishing soap that offers a magnificent long-lasting lather and leaves your skin feeling clean, soft, and radiantly healthy."
+      ],
       benefits: [
         "Drawing out impurities from the pores.",
         "Exfoliating dead skin cells.",
@@ -98,6 +113,11 @@ const soapData = {
       product_name: "French Pink Clay with Rose Soap",
       MRP: 120,
       arrivalDate: "2024-10-28",
+      description:
+      [
+        "Our Soap Bars are handmade from scratch, using the cold processed method, one batch at a time - to ensure freshness, consistency, and perfection.",
+        "Our recipes are meticulously developed to produce a mild, skin-nourishing soap that offers a magnificent long-lasting lather and leaves your skin feeling clean, soft, and radiantly healthy."
+      ],
       benefits: [
         "Cleanse & detoxify skin.",
         "Treat acne.",
@@ -125,6 +145,13 @@ const soapData = {
       product_name: "Red-wine soap",
       MRP: 100,
       arrivalDate: "2024-10-28",
+      description:
+      [
+        "The beautiful smell of this soap will melt away the troubles of these day while you relax in a hot bath.", 
+        "The essential oils help purify the skin and have a gentler effect than many commercial soaps.",
+        "The glycerin will help moisturise and soften your skin.",
+        "Treat yourself right by getting some of this lovely soap today!"
+      ],
       benefits: [
         "Red wine helps to fight aging by restoring collagen and elastic fibres.",
         "Red wine gives boost to sagging skin, reducing fine lines and wrinkles.",
@@ -155,6 +182,13 @@ const soapData = {
       product_name: "Detan Soap",
       MRP: 200,
       arrivalDate: "2024-10-28",
+      description:
+      [
+        "The beautiful smell of this soap will melt away the troubles of these day while you relax in a hot bath.", 
+        "The essential oils help purify the skin and have a gentler effect than many commercial soaps.",
+        "The glycerin will help moisturise and soften your skin.",
+        "Treat yourself right by getting some of this lovely soap today!"
+      ],
       benefits: [
         "Deep cleanses and removes impurities.",
         "Improves skin radiance.",
@@ -182,6 +216,11 @@ const soapData = {
       product_name: "All Clear Dandruff Hair Oil",
       MRP: 430,
       arrivalDate: "2024-10-28",
+      description:
+      [
+        "It helps fight the dandruff-related issues with natural ingredients like rosemary, neem, and tea tree oil.", 
+        "The unique blend of these key ingredients helps treat your hair and scalp skin so you get strong and healthy hair."
+      ],
       benefits: [
         "Relieves scalp itchiness.",
         "Controls flaky dandruff and fungal infection of scalp.",
@@ -217,6 +256,12 @@ const soapData = {
       product_name: "Hair Growth Oil",
       MRP: 550,
       arrivalDate: "2024-10-28",
+      description:
+      [
+        "Ayurvedic formalisation is what makes this hair growth oil so special.", 
+        "With the finest of organic & natural blends of herbs infused in the oil works great for strengthening the hair and reducing the hair fall.", 
+        "A nice massage with this aromatic oil relives stress and reduces hair loss over a period of time."
+      ],
       benefits: [
         "Strengthens hair roots.",
         "Hydrates the hair and prevents frizz.",
@@ -250,6 +295,11 @@ const soapData = {
       product_name: "Rose Water Toner",
       MRP: 500,
       arrivalDate: "2024-10-28",
+      description:
+      [
+        "Damascus rose is one of the best known and renowned hydrosols because it is suitable for all skin types.",
+        "Like most hydrosols, it has astringent properties. It also helps comfort reactive and redness-prone skin."
+      ],
       benefits: [
         "Hydrating, revitalising and moisturising.",
         "Has anti-inflammatory properties.",
@@ -272,6 +322,11 @@ const soapData = {
       product_name: "Almond Peach Face Scrub",
       MRP: 400,
       arrivalDate: "2024-10-28",
+      description:
+      [
+        "Our Glow Getter Face Scrub is a rich, moisturizing exfoliant that gently removes dead skin cells – without breaking your skin’s protective barrier.", 
+        "Suitable for all skin types, this natural, anti-inflammatory formula hydrates and polishes your skin, and replenishes your moisture levels, leaving you lush, glowing, and smooth."
+      ],
       benefits: [
         "Exfoliates dead skin cells.",
         "Removes impurities.",
@@ -292,6 +347,11 @@ const soapData = {
     {
       product_name: "Japanese cherry blossom shower gel",
       MRP:460,
+      description:
+      [
+        "A great shower routine starts with a super-luxe moisturizing body wash or bubbly shower gel.",
+        "A great body soap refreshes, cleans and gets you ready to take on your day."
+      ],
       benefits:
       [
         "Gentle and non-drying",
@@ -322,6 +382,11 @@ const soapData = {
     {
       product_name: "Green apple cinnamon shower gel",
       MRP:480,
+      description:
+      [
+        "A great shower routine starts with a super-luxe moisturizing body wash or bubbly shower gel.",
+        "A great body soap refreshes, cleans and gets you ready to take on your day."
+      ],
       benefits:
       [
         "Gentle and non-drying",
@@ -355,6 +420,11 @@ const soapData = {
     {
       product_name: "Aloevera gel",
       MRP: 270,
+      description:
+      [
+        "Aloe Vera gel is a natural wonder gel offering a plethora of benefits – soothes sunburns,  moisturises the skin, boosts healing of wounds, fights skin-aging, reduces infection and acne and lightens blemishes on the face.",
+        "The gel offers benefits to scalp and hair too – it promotes hair growth, controls dandruff and acts as a conditioner to the hair and scalp."
+      ],
       benefits:
       [
         "Soothes sunburn",

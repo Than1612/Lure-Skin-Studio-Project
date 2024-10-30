@@ -37,13 +37,17 @@ const BestSelling = () => {
   };
 
   const prevProduct = () => {
-    setCurrentIndex((prev) =>
-      prev === 0 ? products.length - 1 : prev - 1
-    );
+    setCurrentIndex((prev) => (prev === 0 ? products.length - 1 : prev - 1));
   };
 
-  const openModal = (product) => setSelectedProduct(product);
-  const closeModal = () => setSelectedProduct(null);
+  const openModal = (product) => {
+    setSelectedProduct(product);
+  };
+
+  const closeModal = (event) => {
+    if (event) event.stopPropagation(); // Prevent event bubbling
+    setSelectedProduct(null);
+  };
 
   return (
     <div className="arrivals-section open-up" style={{ width: "100vw" }} data-aos="zoom-out">
@@ -61,7 +65,11 @@ const BestSelling = () => {
           }}
         >
           {products.map((product) => (
-            <div key={product.id} className="arrivals-card" onClick={() => openModal(product)}>
+            <div
+              key={product.id}
+              className="arrivals-card"
+              onClick={() => openModal(product)}
+            >
               <ArrivalsCard img={product.img} name={product.name} price={product.price} />
             </div>
           ))}
@@ -74,7 +82,10 @@ const BestSelling = () => {
 
       {/* Product Modal */}
       {selectedProduct && (
-        <ProductModal product={selectedProduct} onClose={closeModal} />
+        <ProductModal
+          product={selectedProduct}
+          onClose={(e) => closeModal(e)}
+        />
       )}
     </div>
   );
