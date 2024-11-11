@@ -5,25 +5,30 @@
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.8);
+  /* Darker backdrop */
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
   transition: all 0.3s ease;
+  /* Smooth appearance */
 }
 
 .modal-content {
   display: flex;
   flex-direction: row;
+  /* Image on the left, details on the right */
   background: linear-gradient(135deg, rgb(252, 209, 216), rgb(250, 222, 222));
   padding: 20px;
   border-radius: 15px;
   max-width: 900px;
   width: 95%;
   height: 65vh;
+  /* Adjust height for scrollable content */
   position: relative;
   box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.2);
   overflow: hidden;
+  /* Prevent overflow for the modal content */
 }
 
 .close-button {
@@ -39,56 +44,73 @@
   transition: transform 0.3s ease;
 }
 
-.close-button:hover {
-  transform: rotate(90deg);
-}
+
 
 .modal-details {
   display: flex;
   flex-direction: row;
   height: 100%;
+  /* Ensure full height is used */
 }
 
 .modal-image-container {
   flex: 1;
+  /* Take up the left half */
   display: flex;
   justify-content: center;
+  /* Align content to the left */
   align-items: center;
+  /* Align items to the top */
   position: relative;
   height: 95%;
+  /* Image height */
   top: 50%;
   transform: translateY(-50%);
+  /* Adjust shrinking to happen from both top and bottom */
   overflow: hidden;
+  /* Ensure no content overflows */
+
 }
 
 .modal-image {
   width: 100%;
+  /* Image fills the container */
   height: 100%;
   object-fit: cover;
+  /* Ensure the image maintains aspect ratio */
   border-radius: 10px;
 }
 
 .modal-info {
   flex: 1;
+  /* Take up the right half */
   margin-left: 20px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  /* Align content to the left */
   text-align: left;
+  /* Text is left-aligned */
   max-height: 60vh;
+  /* Set a fixed height for the product info box */
   overflow-y: auto;
+  /* Enables scrolling if content exceeds the height */
   padding-right: 10px;
+  /* Add padding for smooth scrolling */
 }
 
 .modal-info h2 {
   font-size: 2rem;
   color: #333;
   margin-bottom: 10px;
+  text-align: left;
+  /* Left-aligned heading */
 }
 
 .modal-info ul {
   padding-left: 20px;
   text-align: left;
+  /* Left-align the list items */
 }
 
 ul strong {
@@ -108,6 +130,7 @@ ul strong {
   display: flex;
   align-items: center;
   justify-content: center;
+  /* Left-align button content */
   gap: 10px;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
@@ -150,20 +173,25 @@ ul strong {
   font-weight: bold;
 }
 
+/* Stack Confirm and Cancel buttons vertically */
 .quantity-actions {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  /* Space between Confirm and Cancel */
   width: 125px;
+  /* Fixed width for both buttons */
 }
 
-.confirm-cart-btn, .cancel-cart-btn {
+.confirm-cart-btn,
+.cancel-cart-btn {
   padding: 5px;
   font-size: 14px;
   cursor: pointer;
   border: none;
   border-radius: 4px;
   width: 100%;
+  /* Full width of the .quantity-actions container */
   text-align: center;
 }
 
