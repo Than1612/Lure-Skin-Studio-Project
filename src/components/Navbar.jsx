@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../attachments/logo2.png";
 import "../components/Navbar.css";
@@ -9,33 +9,49 @@ import { FaRegFileImage } from "react-icons/fa6";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const [showCartOverlay, setShowCartOverlay] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
+  const [showFilterOptions, setShowFilterOptions] = useState(false);
+  const [filterCategory, setFilterCategory] = useState("");
+  const [sortOption, setSortOption] = useState("");
 
-  useEffect(() => {
-    const storedCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-    setCartItems(storedCartItems);
-  }, []);
+  const handleNavigateAndFilter = (category, sort) => {
+    navigate("/products", { state: { filterCategory: category, sortOption: sort } });
+    setShowFilterOptions(false); // Close dropdown after selection
+  };
 
-  const toggleCartOverlay = () => setShowCartOverlay(!showCartOverlay);
+  const handleCategorySelection = (category) => {
+    setFilterCategory(category);
+    handleNavigateAndFilter(category, sortOption); // Pass updated category with current sort
+  };
 
-  const calculateTotal = () => {
-    return cartItems.reduce((total, item) => total + item.quantity * item.MRP, 0);
+  const handleSortSelection = (sort) => {
+    setSortOption(sort);
+    handleNavigateAndFilter(filterCategory, sort); // Pass updated sort with current category
+  };
+
+  const toggleDropdown = () => {
+    setShowFilterOptions((prevState) => !prevState); // Toggle dropdown visibility
   };
 
   return (
-    <div
-      className="flex justify-between items-center py-6 px-0 px-3 md-3 relative z-10"
-      style={{ background: "#fff4f4" }}
-    >
+    <div className="flex justify-between items-center py-6 px-0 px-3 md-3 relative z-10" style={{ background: "#fff4f4" }}>
       <img src={logo} alt="Logo" style={{ width: "18%" }} />
 
       <ul className="flex gap-6 list-none gap-12 prata-regular">
         <li className="relative focus:outline-none flex bg-transparent border-none navbar-item" onClick={() => navigate("/")}>
           <IoHomeOutline size={20} className="mr-2" /> Home
         </li>
-        <li className="relative focus:outline-none flex bg-transparent border-none navbar-item" onClick={() => navigate("/products")}>
-          <AiOutlineShop size={20} className="mr-2" /> Shop
+        <li className="relative focus:outline-none flex bg-transparent border-none navbar-item" onClick={toggleDropdown}>
+          <AiOutlineShop size={20} className="mr-2" />
+          <span>Shop</span>
+          {showFilterOptions && (
+            <div className="dropdown">
+              <ul className="dropdown-menu">
+                <li onClick={() => handleCategorySelection("hair")}>Hair</li>
+                <li onClick={() => handleCategorySelection("body")}>Body</li>
+                <li onClick={() => handleCategorySelection("face")}>Face</li>
+              </ul>
+            </div>
+          )}
         </li>
         <li className="relative focus:outline-none flex bg-transparent border-none navbar-item" onClick={() => navigate("/policy")}>
           <FaRegFileImage size={20} className="mr-2" /> Policy
@@ -47,8 +63,8 @@ const Navbar = () => {
 
       <ul className="flex gap-6 list-none">
         <li>
-          <a href="#" className="icon-link" onClick={toggleCartOverlay}>
-            {/* Cart Icon */}
+          {/* Cart Icon */}
+          <a href="#" className="icon-link">
             <svg width="2rem" height="2rem" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 fillRule="evenodd"
@@ -58,49 +74,10 @@ const Navbar = () => {
               />
             </svg>
           </a>
-
-          {/* Cart Overlay */}
-          {showCartOverlay && (
-            <div className="cart-overlay">
-              <button className="close-button" onClick={toggleCartOverlay}>X</button>
-              <h3 className="cart-title">Your Cart</h3>
-              <table className="cart-table">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Cumulative Price</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {cartItems.map((item, index) => (
-                    <tr key={index}>
-                      <td>{item.product_name}</td>
-                      <td>{item.quantity}</td>
-                      <td>Rs {item.MRP}</td>
-                      <td>Rs {item.quantity * item.MRP}</td>
-                    </tr>
-                  ))}
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <td colSpan="3">Total</td>
-                    <td>Rs {calculateTotal()}</td>
-                  </tr>
-                </tfoot>
-              </table>
-              <div>
-
-              <span>Enter your whatsapp number</span>
-                  <input type="text" />
-              </div>
-              <button>Go to payment</button>
-            </div>
-          )}
         </li>
 
         <li>
+          {/* Profile Text */}
           <a href="#" className="icon-link font-bold">Profile</a>
         </li>
       </ul>
