@@ -1,109 +1,88 @@
 .prata-regular {
-  font-family: "Prata", system-ui;
-  font-weight: 400;
-  font-style: normal;
-}
+    font-family: "Prata", system-ui;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .navbar-item {
+    position: relative;
+    padding-bottom: 5px;
+    cursor: pointer;
+  }
+  
+  .navbar-item::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: #000;
+    bottom: 0;
+    left: 0;
+    transition: width 0.3s ease-in-out;
+  }
+  
+  .navbar-item:hover::after {
+    width: 100%;
+  }
+
+  .icon-link {
+    display: inline-block;
+    position: relative;
+    text-decoration: none; 
+  }
+  
+  .icon-link::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: black; 
+    bottom: -5px;
+    left: 0;
+    transition: width 0.3s ease-in-out;
+  }
+  
+  .icon-link:hover::after {
+    width: 100%; 
+  }
+
+  .font-bold {
+    font-weight: bold;
+    color: #000; 
+  }
+
 
 .navbar-item {
   position: relative;
-  padding-bottom: 5px;
   cursor: pointer;
 }
 
-.navbar-item::after {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 2px;
-  background-color: #000;
-  bottom: 0;
-  left: 0;
-  transition: width 0.3s ease-in-out;
-}
-
-.navbar-item:hover::after {
-  width: 100%;
-}
-
-.icon-link {
-  display: inline-block;
+.dropdown {
   position: relative;
-  text-decoration: none;
 }
 
-.icon-link::after {
-  content: "";
+.dropdown-menu {
+  display: none; /* Hidden by default */
   position: absolute;
-  width: 0;
-  height: 2px;
-  background-color: black;
-  bottom: -5px;
+  top: 100%; /* Position below the parent element */
   left: 0;
-  transition: width 0.3s ease-in-out;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 8px 0;
+  z-index: 1000;
+  width: 150px; /* Adjust width as needed */
 }
 
-.icon-link:hover::after {
-  width: 100%;
-}
-
-.font-bold {
-  font-weight: bold;
-  color: #000;
-}
-
-/* Cart Overlay Styling */
-.cart-overlay {
-  position: fixed;
-  top: 10%;
-  right: 2%;
-  width: fit-content;
-  max-height: 400px;
-  overflow-y: auto;
-  background-color: white;
-  border: 1px solid #ddd;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 100;
-  padding: 20px;
-  border-radius: 8px;
-}
-
-.cart-title {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.cart-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.cart-table th,
-.cart-table td {
-  padding: 8px 12px;
-  text-align: left;
-}
-
-.cart-table th {
-  background-color: #f4f4f4;
-}
-
-.cart-table tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-.cart-footer {
-  font-weight: bold;
-  margin-top: 10px;
-  text-align: right;
-}
-
-.close-button {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  background: transparent;
-  border: none;
-  font-size: 16px;
+.dropdown-menu li {
+  padding: 8px 16px;
   cursor: pointer;
+  white-space: nowrap;
+}
+
+.dropdown-menu li:hover {
+  background-color: #f2f2f2;
+}
+
+.navbar-item:hover .dropdown-menu {
+  display: block; /* Show on hover */
 }
