@@ -1,13 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 
 const ArrivalsCard = ({ img, name, price }) => {
-  const [showQuantitySelector, setShowQuantitySelector] = useState(false);
+  const [showQuantitySelector, setShowQuantitySelector] = useState(null); // Toggle with specific product
   const [quantity, setQuantity] = useState(1);
+  const cartIconRef = useRef(null);
 
   const handleAddToCartClick = (event) => {
     event.stopPropagation(); // Prevent any parent click events
-    setShowQuantitySelector(true);
+    if (showQuantitySelector !== name) {
+      setShowQuantitySelector(name); // Open quantity selector for this product
+      setQuantity(1);
+      scrollToCart(); // Scroll smoothly to cart icon
+    } else {
+      setShowQuantitySelector(null); // Close quantity selector if already open
+    }
+  };
+
+  const scrollToCart = () => {
+    if (cartIconRef.current) {
+      cartIconRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
   };
 
   const handleDecrement = (event) => {
@@ -23,32 +39,34 @@ const ArrivalsCard = ({ img, name, price }) => {
   const confirmAddToCart = (event) => {
     event.stopPropagation(); // Prevent any parent click events
     console.log(`Added ${quantity} of ${name} to the cart`);
-    setShowQuantitySelector(false);
+    setShowQuantitySelector(null); // Close quantity selector
     setQuantity(1); // Reset quantity after confirming
   };
 
   const cancelAddToCart = (event) => {
     event.stopPropagation(); // Prevent any parent click events
-    setShowQuantitySelector(false);
+    setShowQuantitySelector(null); // Close quantity selector
     setQuantity(1); // Reset quantity if canceled
   };
 
   return (
-    <div className="card" style={styles.card}>
+    <div className="card" style={styles.card} onClick={() => setShowQuantitySelector(null)}>
       <img src={img} alt={name} className="product-image" style={styles.image} />
       <h3 className="product-name" style={styles.name}>{name}</h3>
       <p className="product-price" style={styles.price}>{price}</p>
 
-      {/* Cart Icon */}
-      <div style={styles.cartIconContainer}>
-        <FaShoppingCart 
-          className="cart-icon" 
-          onClick={handleAddToCartClick} 
-        />
+      {/* Cart Icon with Expansion Control */}
+      <div
+        ref={cartIconRef}
+        className="cart-icon"
+        style={styles.cartIconContainer}
+        onClick={handleAddToCartClick}
+      >
+        <FaShoppingCart />
       </div>
 
       {/* Quantity Selector at the Bottom */}
-      {showQuantitySelector && (
+      {showQuantitySelector === name && (
         <div className="quantity-selector" style={styles.quantitySelector} onClick={(e) => e.stopPropagation()}>
           <div className="quantity-controls" style={styles.quantityControls}>
             <button onClick={handleDecrement} style={styles.button}>-</button>
@@ -78,7 +96,7 @@ const styles = {
     backgroundColor: "#f9dcdc",
     border: "1px solid #ddd",
     borderRadius: "8px",
-    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)", 
+    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
     padding: "12px",
     position: "relative",
     transition: "transform 0.2s",
@@ -104,7 +122,7 @@ const styles = {
   },
   quantitySelector: {
     marginTop: "16px",
-    padding: "12px",
+    padding: "12px", // Initial padding 0
     backgroundColor: "#f9dcdc",
     borderRadius: "8px",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",

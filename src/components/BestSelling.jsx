@@ -23,7 +23,7 @@ const BestSelling = () => {
       .map((product) => ({
         id: product.product_name,
         name: product.product_name,
-        price: `$${product.MRP}.00`,
+        price: `Rs ${product.MRP}`,
         img: product.proImgs[0],
         ...product // Pass all properties for modal use
       }));

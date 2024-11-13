@@ -2,18 +2,27 @@ import React, { useEffect, useState } from "react";
 import "./Hero.css";
 import img1 from "../attachments/attachments2/img10.png";
 import img2 from "../attachments/img1.png";
+import img3 from "../attachments/attachments1/i11.png";
 
 const slides = [
   {
     eachSlide: `url(${img1})`,
+    title: "Summer Glow",
+    description:
+      "Experience the warmth and brightness of summer fashion with our latest collection. Perfect for sunny days and breezy evenings.",
   },
   {
     eachSlide: `url(${img2})`,
+    title: "Timeless Elegance",
+    description:
+      "Embrace classic, understated style with designs that stand the test of time. Explore our elegant and minimalistic pieces.",
   },
   {
-    eachSlide:
-      "url(https://images.unsplash.com/photo-1509721434272-b79147e0e708?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80)",
-  },
+    eachSlide: `url(${img3})`,
+    title: "Bold Expressions",
+    description:
+      "Unleash your creativity and make a statement with vibrant colors and unique patterns. Stand out in modern fashion.",
+  }
 ];
 
 const Hero = () => {
@@ -55,15 +64,10 @@ const Hero = () => {
             style={{ backgroundImage: item.eachSlide }}
           >
             <div className="slide-content">
-              <h2 className="section-title">Summer Glow</h2>
-              <p className="caption">
-                Tortor eget placerat arcu integer. Lectus fames egestas
-                tincidunt aliquet vivamus nibh lorem nulla. This is Modern
-                fashion ectus fames egestas tincidunt aliquet vivamus nibh lorem
-                nulla.
-              </p>
+              <h2 className="section-title">{item.title}</h2>
+              <p className="caption">{item.description}</p>
               <div className="btn-left btn-swiper">
-                <a href="#" className="btn">
+                <a href="/products" className="btn">
                   Shop Collection
                 </a>
               </div>
