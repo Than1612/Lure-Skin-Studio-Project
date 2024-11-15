@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ArrivalsCard from "./ArrivalsCard";
+import ProductModal from "./Modal";
 import { soaps, oils, toners, scrubs } from '../soapData';
 import "./Arrivals.css";
 import AOS from "aos";
@@ -7,23 +8,26 @@ import "aos/dist/aos.css";
 
 const Arrivals = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
     AOS.init({ duration: 1000 });
   }, []);
 
   const getAllProducts = () => {
-    const allProducts = [...soaps, ...oils, ...toners, ...scrubs]; 
-    return allProducts.sort((a, b) => new Date(b.arrivalDate) - new Date(a.arrivalDate)); 
+    const allProducts = [...soaps, ...oils, ...toners, ...scrubs];
+    return allProducts
+      .sort((a, b) => new Date(b.arrivalDate) - new Date(a.arrivalDate))
+      .map((product) => ({
+        id: product.product_name,
+        name: product.product_name,
+        price: `Rs ${product.MRP}`,
+        img: product.proImgs[0],
+        ...product // Pass all properties for modal use
+      }));
   };
 
-  const products = getAllProducts().map((product) => ({
-    id: product.product_name,
-    name: product.product_name,
-    price: `$${product.MRP}.00`,
-    img: product.proImgs[0],
-  }));
-
+  const products = getAllProducts();
   const visibleItemsCount = 3;
 
   const nextProduct = () => {
@@ -32,6 +36,15 @@ const Arrivals = () => {
 
   const prevProduct = () => {
     setCurrentIndex((prev) => (prev === 0 ? products.length - 1 : prev - 1));
+  };
+
+  const openModal = (product) => {
+    setSelectedProduct(product);
+  };
+
+  const closeModal = (event) => {
+    if (event) event.stopPropagation();
+    setSelectedProduct(null);
   };
 
   return (
@@ -51,12 +64,12 @@ const Arrivals = () => {
           }}
         >
           {products.map((product) => (
-            <div key={product.id} className="arrivals-card">
-              <ArrivalsCard
-                img={product.img}
-                name={product.name}
-                price={product.price}
-              />
+            <div
+              key={product.id}
+              className="arrivals-card"
+              onClick={() => openModal(product)}
+            >
+              <ArrivalsCard img={product.img} name={product.name} price={product.price} />
             </div>
           ))}
         </div>
@@ -65,6 +78,14 @@ const Arrivals = () => {
           →
         </button>
       </div>
+
+      {/* Product Modal */}
+      {selectedProduct && (
+        <ProductModal
+          product={selectedProduct}
+          onClose={(e) => closeModal(e)}
+        />
+      )}
     </div>
   );
 };

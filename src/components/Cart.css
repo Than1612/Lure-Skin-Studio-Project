@@ -1,0 +1,8 @@
+.cart-page{
+    display: flex;
+    justify-content: center;
+}
+
+.cart-inner{
+    width: 80%;
+}

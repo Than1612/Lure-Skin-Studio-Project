@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./products.css";
-import { soaps, oils, toners, scrubs, shower_gel, aloevera_gel} from "../soapData"; 
+import { soaps, oils, toners, scrubs, shower_gel, aloevera_gel } from "../soapData"; 
 import { FaShoppingCart } from "react-icons/fa";
 import ProductModal from "./Modal";
+import { useLocation } from "react-router-dom";
 
 const Products = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  const location = useLocation(); 
   const [sortBy, setSortBy] = useState(""); 
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [filterByCategory, setFilterByCategory] = useState("");
@@ -16,6 +21,16 @@ const Products = () => {
   const [showMoreAloveraGel, setShowMoreAloveraGel] = useState(false);
   const [showQuantitySelector, setShowQuantitySelector] = useState(null);
   const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    // Set both filter and sort options from location state if provided
+    if (location.state?.filterCategory) {
+      setFilterByCategory(location.state.filterCategory);
+    }
+    if (location.state?.sortOption) {
+      setSortBy(location.state.sortOption);
+    }
+  }, [location.state]); // Update when location state changes
 
   const openModal = (product) => {
     setSelectedProduct(product); 
@@ -80,7 +95,6 @@ const Products = () => {
   const handleDecrement = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
   const handleConfirm = () => {
-    console.log(`Added ${quantity} of ${showQuantitySelector.product_name} to cart.`);
     setShowQuantitySelector(null);
     setQuantity(1);
   };
@@ -93,37 +107,45 @@ const Products = () => {
   const renderProducts = (products, showMore, setShowMore) => (
     <>
       <div className="product-grid">
-        {products.slice(0, showMore ? products.length : 4).map((product, index) => (
-          <div key={index} className="product-card">
-            <img src={product.proImgs[0]} alt={product.product_name} className="product-image" onClick={() => openModal(product)} />
-            <FaShoppingCart 
-              className="cart-icon" 
-              onClick={() => {
-                setShowQuantitySelector(product);
-                setQuantity(1);
-              }} 
-            /> 
-            <div className="product-details text-left">
-              <p className="product-price">Price: Rs {product.MRP}</p>
-              <h6 className="product-name">{product.product_name}</h6>
-            </div>
-
-            {showQuantitySelector === product && (
-              <div className="quantity-selector">
-                <div className="quantity-controls">
-                  <button onClick={handleDecrement}>-</button>
-                  <span>{quantity}</span>
-                  <button onClick={handleIncrement}>+</button>
-                </div>
-                <div className="quantity-actions">
-                  <button onClick={handleConfirm} className="confirm-btn">Confirm</button>
-                  <button onClick={handleCancel} className="cancel-btn">Cancel</button>
-                </div>
+        {products.slice(0, showMore ? products.length : 4).map((product, index) => {
+          const isExpanded = showQuantitySelector === product; // Check if the tile should be expanded
+          return (
+            <div key={index} className={`product-card ${isExpanded ? "expanded" : ""}`}>
+              <img src={product.proImgs[0]} alt={product.product_name} className="product-image" onClick={() => openModal(product)} />
+  
+              <div className="product-details text-left">
+                <p className="product-price">Price: Rs {product.MRP}</p>
+                <h6 className="product-name">{product.product_name}</h6>
               </div>
-            )}
-
-          </div>
-        ))}
+  
+              {/* Cart Icon with Expansion Control */}
+              <div
+                className="cart-icon"
+                onClick={() => {
+                  setShowQuantitySelector(isExpanded ? null : product); // Toggle expansion
+                  setQuantity(1);
+                }}
+              >
+                <FaShoppingCart />
+              </div>
+  
+              {/* Quantity Selector (Visible only when expanded) */}
+              {isExpanded && (
+                <div className="quantity-selector">
+                  <div className="quantity-controls">
+                    <button onClick={handleDecrement}>-</button>
+                    <span>{quantity}</span>
+                    <button onClick={handleIncrement}>+</button>
+                  </div>
+                  <div className="quantity-actions">
+                    <button onClick={handleConfirm} className="confirm-btn">Confirm</button>
+                    <button onClick={handleCancel} className="cancel-btn">Cancel</button>
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
       {products.length > 4 && (
         <button className="see-more-btn" onClick={() => setShowMore(!showMore)}>
@@ -132,6 +154,7 @@ const Products = () => {
       )}
     </>
   );
+  
 
   const filteredProducts = filterAndSortProducts(filterByCategory, sortBy);
 
@@ -148,7 +171,7 @@ const Products = () => {
               value={filterByCategory}
               onChange={(e) => {
                 setFilterByCategory(e.target.value);
-                setSortBy("");
+                setSortBy(""); // Reset sort when changing filter
               }}
             >
               <option value="">All Products</option>

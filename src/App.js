@@ -1,5 +1,5 @@
 import logo from './logo.svg';
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import './input.css';
 import Navbar from './components/Navbar.jsx';
@@ -30,6 +30,9 @@ function App() {
     };
   }, []);
 
+  const [cartItems, setCartItems] = useState(
+    JSON.parse(localStorage.getItem("cartItems")) || []
+  );
   return (
     <Router>
       <div className="App overflow-x-hidden relative" style={{ background: "#F6E7E5" }}>
@@ -60,6 +63,7 @@ function App() {
 
           {/* Route for the policy page */}
           <Route path="/policy" element={<Policy />} /> 
+          <Route path="/cart" element={<CartPage cartItems={cartItems} />} />
           <Route path="/payment" element={<Payment_test />} /> 
 
         </Routes>

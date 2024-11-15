@@ -50,3 +50,39 @@
     font-weight: bold;
     color: #000; 
   }
+
+
+.navbar-item {
+  position: relative;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: none; /* Hidden by default */
+  position: absolute;
+  top: 100%; /* Position below the parent element */
+  left: 0;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 8px 0;
+  z-index: 1000;
+  width: 150px; /* Adjust width as needed */
+}
+
+.dropdown-menu li {
+  padding: 8px 16px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.dropdown-menu li:hover {
+  background-color: #f2f2f2;
+}
+
+.navbar-item:hover .dropdown-menu {
+  display: block; /* Show on hover */
+}
