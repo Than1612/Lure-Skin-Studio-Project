@@ -38,7 +38,7 @@ cloudinary.config({
 
 const razorpayId = "rzp_test_cpR703nvZzCIdo";
 const razorpaySecret = "3r0f7OjbhQUoEgqNTSnePXgI";
-const whatsappToken = "EAAXEAIh0ErgBO1ZA5N3FN724N51UZCAxNZBj9ZBKGXZCZC8sQ3Gs2srntkEC1pT71V2UIZBgLd6wSZAsUg5izveklwBZCVVZCI1leRZCSwf8lW33Vlg17CcuMhmZAzyDWTZCtQGkZAEnlDGMojcrZBkDg9pvZBIKpU6uYXy3HUW6n3O8PxrCIYM7QnpZCNQvao1QDRaZCdcR9wIanYc1WAMVJlp6U2ZCEHxBC1j3chs03jKH70ZD";
+const whatsappToken = "EAAXEAIh0ErgBO5T5X4pxbXbSvw9ZAVg5YKJFfTCOoJFMUAyydNhJZASvqtFZB1ZCrwBsl44ZB9Q4fczuvrmpZBPNEjZBUL1YaylR7iPXHZB2ZC9VYhPDyZC2AdFsOf8lCdrYumdfpCtmCZAao9nNWZALw9oZANCFZAfPkRdZAi6kKuIW86eu5YfGZBUSSZA3ZBKmoN5QGdoODINi5sbVlQVC14edifjcEGg4gy0QFvxRNjFPwZD";
 const whatsappId = "470207039510486";
 
 const uploadCloudinary = async (localFilePath) => {
@@ -258,81 +258,41 @@ If you have any questions, feel free to reply to this message.
 
 Thank you for shopping with us!`;
 
-  try {
-    console.log("Attempting to send WhatsApp message to:", customerContact);
-    const {data:users,error}=await supabase.from("users").select("whatsapp_texts")
-    if(users.whatsapp_texts && users.whatsapp_texts.length==0){
-      axios.post(
-        `https://graph.facebook.com/v21.0/${whatsappId}/messages`,
-        {
-          messaging_product: "whatsapp",
-          to: `${customerContact}`,
-          type: "template",
-          template: {
-            name: "payment_link_template",
-            language: {
-              code: "en_US"
-            }
-          }
+try {
+  console.log("Attempting to send WhatsApp message to:", customerContact);
+    const whatsappResponse = await axios.post(
+      `https://graph.facebook.com/v21.0/${whatsappId}/messages`,
+      {
+        messaging_product: "whatsapp",
+        to: customerContact,
+        type: "text",
+        text: { body: message },
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${whatsappToken}`,
+          "Content-Type": "application/json",
         },
-        {
-          headers: {
-            Authorization: `Bearer ${whatsappToken}`,
-            "Content-Type": "application/json"
-          }
-        }
-      )
-      .then(async(response) => {
-        console.log("Template message sent:", response.data);
-        const { data, error } = await supabase
-        .from('users')
-        .update(
-          { whatsapp_texts:[...users.whatsapp_texts,"payment_link_template "] },
-        )
-        .eq("phone",customerContact)
-      })
-      .catch(error => {
-        console.error("Error sending message:", error.response ? error.response.data : error.message);
-      });
-
-    }else{
-      const whatsappResponse = await axios.post(
-        `https://graph.facebook.com/v21.0/${whatsappId}/messages`,
-        {
-          messaging_product: "whatsapp",
-          to: customerContact,
-          type: "text",
-          text: { body: message },
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${whatsappToken}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      console.log("WhatsApp message sent successfully:", whatsappResponse.data);
-      await supabase
-      .from("users")
-      .update({ whatsapp_texts: [...users.whatsapp_texts, message] })
-      .eq("contact", customerContact);
-      res.status(200).json({
-        message: "Payment link created and sent via WhatsApp",
-        paymentLink: paymentLink.short_url,
-      });
-    }
-  } catch (error) {
-    console.error("Error sending WhatsApp message:", error.message);
-    res.status(500).json({
-      error: "Failed to send WhatsApp message, but payment link was created",
+      }
+    );
+    console.log("WhatsApp message sent successfully:", whatsappResponse.data);
+    res.status(200).json({
+      message: "Payment link created and sent via WhatsApp",
       paymentLink: paymentLink.short_url,
+      whatsappResponse: whatsappResponse.data,
     });
-  }
+} catch (error) {
+  console.error("Error sending WhatsApp message:", error.message);
+  res.status(500).json({
+    error: "Failed to send WhatsApp message, but payment link was created",
+    paymentLink: paymentLink.short_url,
+  });
+} 
 });
 
 
 
-const PORT = 5000;
+const PORT = 5001;
 app.listen(PORT, () => {
   console.log(`The server is running on port ${PORT}`);
 });

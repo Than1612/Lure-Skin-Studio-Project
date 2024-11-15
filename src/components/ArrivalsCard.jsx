@@ -2,18 +2,18 @@ import React, { useState, useRef } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 
 const ArrivalsCard = ({ img, name, price }) => {
-  const [showQuantitySelector, setShowQuantitySelector] = useState(null); // Toggle with specific product
+  const [showQuantitySelector, setShowQuantitySelector] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const cartIconRef = useRef(null);
 
   const handleAddToCartClick = (event) => {
-    event.stopPropagation(); // Prevent any parent click events
+    event.stopPropagation();
     if (showQuantitySelector !== name) {
-      setShowQuantitySelector(name); // Open quantity selector for this product
+      setShowQuantitySelector(name);
       setQuantity(1);
-      scrollToCart(); // Scroll smoothly to cart icon
+      scrollToCart();
     } else {
-      setShowQuantitySelector(null); // Close quantity selector if already open
+      setShowQuantitySelector(null);
     }
   };
 
@@ -27,26 +27,47 @@ const ArrivalsCard = ({ img, name, price }) => {
   };
 
   const handleDecrement = (event) => {
-    event.stopPropagation(); // Prevent any parent click events
+    event.stopPropagation();
     if (quantity > 1) setQuantity((prev) => prev - 1);
   };
 
   const handleIncrement = (event) => {
-    event.stopPropagation(); // Prevent any parent click events
+    event.stopPropagation();
     setQuantity((prev) => prev + 1);
   };
 
   const confirmAddToCart = (event) => {
-    event.stopPropagation(); // Prevent any parent click events
+    event.stopPropagation();
+
+    // Parse price to ensure it's a number
+    const numericPrice = parseFloat(price.replace("Rs ", ""));
+
+    // Retrieve existing cart items from local storage or initialize empty array
+    const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+    // Check if the product is already in the cart
+    const existingItemIndex = cartItems.findIndex((item) => item.product_name === name);
+
+    if (existingItemIndex !== -1) {
+      // Update quantity of the existing item
+      cartItems[existingItemIndex].quantity += quantity;
+    } else {
+      // Add new item to the cart
+      cartItems.push({ product_name: name, MRP: numericPrice, quantity, img });
+    }
+
+    // Save updated cart items back to localStorage
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+
     console.log(`Added ${quantity} of ${name} to the cart`);
-    setShowQuantitySelector(null); // Close quantity selector
-    setQuantity(1); // Reset quantity after confirming
+    setShowQuantitySelector(null);
+    setQuantity(1);
   };
 
   const cancelAddToCart = (event) => {
-    event.stopPropagation(); // Prevent any parent click events
-    setShowQuantitySelector(null); // Close quantity selector
-    setQuantity(1); // Reset quantity if canceled
+    event.stopPropagation();
+    setShowQuantitySelector(null);
+    setQuantity(1);
   };
 
   return (
@@ -122,7 +143,7 @@ const styles = {
   },
   quantitySelector: {
     marginTop: "16px",
-    padding: "12px", // Initial padding 0
+    padding: "12px",
     backgroundColor: "#f9dcdc",
     borderRadius: "8px",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",

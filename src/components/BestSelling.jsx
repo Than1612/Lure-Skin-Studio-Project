@@ -25,7 +25,7 @@ const BestSelling = () => {
         name: product.product_name,
         price: `Rs ${product.MRP}`,
         img: product.proImgs[0],
-        ...product // Pass all properties for modal use
+        ...product
       }));
   };
 
@@ -45,7 +45,7 @@ const BestSelling = () => {
   };
 
   const closeModal = (event) => {
-    if (event) event.stopPropagation(); // Prevent event bubbling
+    if (event) event.stopPropagation();
     setSelectedProduct(null);
   };
 
@@ -53,9 +53,7 @@ const BestSelling = () => {
     <div className="arrivals-section open-up" style={{ width: "100vw" }} data-aos="zoom-out">
       <h2 className="section-title text-uppercase mb-0">BEST SELLING</h2>
       <div className="carousel-container">
-        <button className="arrow-btn left-arrow" onClick={prevProduct}>
-          ←
-        </button>
+        <button className="arrow-btn left-arrow" onClick={prevProduct}>←</button>
 
         <div
           className="carousel"
@@ -75,12 +73,9 @@ const BestSelling = () => {
           ))}
         </div>
 
-        <button className="arrow-btn right-arrow" onClick={nextProduct}>
-          →
-        </button>
+        <button className="arrow-btn right-arrow" onClick={nextProduct}>→</button>
       </div>
 
-      {/* Product Modal */}
       {selectedProduct && (
         <ProductModal
           product={selectedProduct}
