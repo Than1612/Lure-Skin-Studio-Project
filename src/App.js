@@ -9,7 +9,10 @@ import Hero from './components/Hero.jsx';
 import Insta from './components/Insta.jsx';
 import Footer from './components/Footer.jsx';
 import Extra from './components/Extra.jsx';
- 
+import Products from './components/products.jsx';
+import Blog from './components/blog.jsx'; 
+import Policy from './components/policy.jsx';
+import Payment_test from './components/Payment_test.jsx';
 
 function App() {
   useEffect(() => {
@@ -57,6 +60,8 @@ function App() {
 
           {/* Route for the policy page */}
           <Route path="/policy" element={<Policy />} /> 
+          <Route path="/payment" element={<Payment_test />} /> 
+
         </Routes>
         
         <Footer />
