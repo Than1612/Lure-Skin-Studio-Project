@@ -2,17 +2,18 @@ import logo from './logo.svg';
 import React, { useEffect,useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import './input.css';
-import Navbar from './components/Navbar';
-import Arrivals from './components/Arrivals';
-import BestSelling from './components/BestSelling';
-import Hero from './components/Hero';
-import Insta from './components/Insta';
-import Footer from './components/Footer';
-import Extra from './components/Extra';
-import Products from './components/products';
-import Blog from './components/blog'; 
-import Policy from './components/policy';
-import CartPage from '../src/components/Cart';
+import Navbar from './components/Navbar.jsx';
+import Arrivals from './components/Arrivals.jsx';
+import BestSelling from './components/BestSelling.jsx';
+import Hero from './components/Hero.jsx';
+import Insta from './components/Insta.jsx';
+import Footer from './components/Footer.jsx';
+import Extra from './components/Extra.jsx';
+import Products from './components/products.jsx';
+import Blog from './components/blog.jsx'; 
+import Policy from './components/policy.jsx';
+import Payment_test from './components/Payment_test.jsx';
+
 function App() {
   useEffect(() => {
     const loadingScreen = document.querySelector(".loading");
@@ -63,6 +64,8 @@ function App() {
           {/* Route for the policy page */}
           <Route path="/policy" element={<Policy />} /> 
           <Route path="/cart" element={<CartPage cartItems={cartItems} />} />
+          <Route path="/payment" element={<Payment_test />} /> 
+
         </Routes>
         
         <Footer />
