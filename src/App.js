@@ -12,7 +12,9 @@ import Extra from './components/Extra.jsx';
 import Products from './components/products.jsx';
 import Blog from './components/blog.jsx'; 
 import Policy from './components/policy.jsx';
+import CartPage from './components/Cart.jsx';
 import Payment_test from './components/Payment_test.jsx';
+
 
 function App() {
   useEffect(() => {

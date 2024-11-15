@@ -17,11 +17,29 @@ const ProductModal = ({ product, onClose }) => {
   };
 
   const confirmAddToCart = () => {
-    //console.log(`Added ${quantity} of ${product.product_name} to cart.`);
-    setQuantity(1); 
+    const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    
+    // Check if the item already exists in the cart
+    const existingItemIndex = cartItems.findIndex(item => item.product_name === product.product_name);
+    
+    if (existingItemIndex !== -1) {
+      // Update quantity if item exists
+      cartItems[existingItemIndex].quantity += quantity;
+    } else {
+      // Add new item if it doesn't exist
+      cartItems.push({ 
+        product_name: product.product_name, 
+        MRP: product.MRP, 
+        quantity 
+      });
+    }
+  
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    setQuantity(1);
     setShowQuantitySelector(false);
     handleClose();
   };
+  
 
   const cancelAddToCart = () => {
     setQuantity(1); 

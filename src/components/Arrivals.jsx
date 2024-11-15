@@ -23,7 +23,7 @@ const Arrivals = () => {
         name: product.product_name,
         price: `Rs ${product.MRP}`,
         img: product.proImgs[0],
-        ...product // Pass all properties for modal use
+        ...product
       }));
   };
 
@@ -52,9 +52,7 @@ const Arrivals = () => {
       <br /><br />
       <h2 className="section-title text-uppercase mb-0">Latest Arrivals</h2>
       <div className="carousel-container">
-        <button className="arrow-btn left-arrow" onClick={prevProduct}>
-          ←
-        </button>
+        <button className="arrow-btn left-arrow" onClick={prevProduct}>←</button>
 
         <div
           className="carousel"
@@ -74,12 +72,9 @@ const Arrivals = () => {
           ))}
         </div>
 
-        <button className="arrow-btn right-arrow" onClick={nextProduct}>
-          →
-        </button>
+        <button className="arrow-btn right-arrow" onClick={nextProduct}>→</button>
       </div>
 
-      {/* Product Modal */}
       {selectedProduct && (
         <ProductModal
           product={selectedProduct}

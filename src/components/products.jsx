@@ -9,6 +9,7 @@ const Products = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  
   const location = useLocation(); 
   const [sortBy, setSortBy] = useState(""); 
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -49,7 +50,7 @@ const Products = () => {
     }
     return products;
   };
-  
+
   const filterAndSortProducts = (category, sortBy) => {
     let filteredProducts = {
       soaps: [],
@@ -94,7 +95,20 @@ const Products = () => {
   const handleIncrement = () => setQuantity((prev) => prev + 1);
   const handleDecrement = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
-  const handleConfirm = () => {
+  const handleConfirm = (product) => {
+    // Add selected product with quantity to cart in local storage
+    const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    
+    const existingItemIndex = cartItems.findIndex(item => item.product_name === product.product_name);
+    if (existingItemIndex !== -1) {
+      cartItems[existingItemIndex].quantity += quantity; // Update quantity if already in cart
+    } else {
+      cartItems.push({ product_name: product.product_name, MRP: product.MRP, quantity });
+    }
+    
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+
+    // Reset the quantity selector
     setShowQuantitySelector(null);
     setQuantity(1);
   };
@@ -138,7 +152,7 @@ const Products = () => {
                     <button onClick={handleIncrement}>+</button>
                   </div>
                   <div className="quantity-actions">
-                    <button onClick={handleConfirm} className="confirm-btn">Confirm</button>
+                    <button onClick={() => handleConfirm(product)} className="confirm-btn">Confirm</button>
                     <button onClick={handleCancel} className="cancel-btn">Cancel</button>
                   </div>
                 </div>
