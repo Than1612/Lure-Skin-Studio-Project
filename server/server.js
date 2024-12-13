@@ -330,6 +330,111 @@ Thank you for shopping with us!`;
   }
 });
 
+app.post("/add-to-cart",async(req,res)=>{
+  const {id,name,price,customer_id}=req.body;
+  try {
+    let {data:carts,error:fetchError}=await supabase.from('cart').select('items').eq('customer_id',customer_id);
+    if (fetchError) throw fetchError;
+
+    const cart = carts && carts.length > 0 ? carts[0] : null;
+    if(cart){
+      let items = cart.items.length === 0 ? [] : [...cart.items];
+      let found=false;
+      items=items.map((item)=>{
+        if(item.p_id==id){
+          found=true;
+          return {...item,quantity:item.quantity+1}
+        }else{
+          return item;
+        }
+      })
+      if(!found){
+        items.push({'p_id':id,'name':name,'quantity':1,'price':price});
+      }
+      try {
+        const {data:updatedData,error:updateError} = await supabase.from('cart').update({items}).eq('customer_id',customer_id).select();
+        if(updatedData){
+          res.status(201).json({
+            message:"Succesfully updated !!!",
+            data:updatedData,
+          })
+        }else{
+          throw updateError;
+        }
+      } catch (error) {
+        res.status(500).json({
+          message:"Couldn't update table",
+          error: error.message
+        })
+      }
+    }else{
+      const items=[{'p_id':id,'name':name,'quantity':1,'price':price}]
+      try {
+        const {data:insertData,error:insertError} = await supabase.from('cart').insert({items,customer_id}).select();
+        if(insertData){
+          res.status(201).json({
+            message:"Succesfully created cart and added product !!!",
+            data:insertData,
+          })
+        }else{
+          throw insertError;
+        }
+      } catch (error) {
+        res.status(500).json({
+          message:"Couldn't create cart",
+          error: error.message
+        })
+      }
+    }
+  } catch (error) {
+    res.status(500).json({
+      message:"Couldn't fetch cart",
+      error: error.message
+    })
+  }
+
+})
+
+app.post("/delete-from-cart",async(req,res)=>{
+  const {id,customer_id}=req.body;
+  try {
+    const {data:carts,error:fetchError}=await supabase.from('cart').select('items').eq('customer_id',customer_id);
+    const cart=carts && carts.length!=0 ? carts[0]:null;
+    if(cart){
+      let items= cart.items?.length==0 ? [] : cart.items;
+      items=items.map((item)=>{
+        if(item.p_id==id){
+          if(item.quantity==1){
+            return null;
+          }else{
+            return {...item,quantity:item.quantity-1}
+          }
+        }
+      })
+      try {
+        const {data:updatedCart,error:updateError}=await supabase.from('cart').update({items}).eq('customer_id',customer_id).select();
+        if(updatedCart){
+          res.status(201).json({
+            message:"Item successfully deleted !!!",
+            data:updatedCart
+          })
+        }else throw updateError
+      } catch (error) {
+        res.status(500).json({
+          message:"Item could not be deleted !!!",
+          error:error
+        })
+      }
+    }else{
+      throw fetchError;
+    }
+  } catch (error) {
+    res.status(500).json({
+      message:"Cart could not be fetched",
+      error:error
+    })
+  }
+})
 
 
 const PORT = 5000;
