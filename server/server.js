@@ -38,7 +38,7 @@ cloudinary.config({
 
 const razorpayId = "rzp_test_cpR703nvZzCIdo";
 const razorpaySecret = "3r0f7OjbhQUoEgqNTSnePXgI";
-const whatsappToken = "EAAXEAIh0ErgBO5T5X4pxbXbSvw9ZAVg5YKJFfTCOoJFMUAyydNhJZASvqtFZB1ZCrwBsl44ZB9Q4fczuvrmpZBPNEjZBUL1YaylR7iPXHZB2ZC9VYhPDyZC2AdFsOf8lCdrYumdfpCtmCZAao9nNWZALw9oZANCFZAfPkRdZAi6kKuIW86eu5YfGZBUSSZA3ZBKmoN5QGdoODINi5sbVlQVC14edifjcEGg4gy0QFvxRNjFPwZD";
+const whatsappToken = "EAAXEAIh0ErgBOZBmOtR577kld5uCM8owhsQEmQ128ZCxeGpZA1J7C6pEhRKjLaXIv4dP46xitQW2lgV2d5tpy7QQb5NZAVfS2k6fAkRZAerUYvStMKuuxE2R1PHXeeChGO6sK0Ocsqa01lqazvmZCLJNuVyri8r0y2Ehp8tAE23EzgRGnoIsHKoOPiCzZBEkMmbuPDIzZCR3zWw2OI6KLalVry5acyrujpZC1iEAZD";
 const whatsappId = "470207039510486";
 
 const uploadCloudinary = async (localFilePath) => {
@@ -262,6 +262,56 @@ Thank you for shopping with us!`;
 
 try {
   console.log("Attempting to send WhatsApp message to:", customerContact);
+
+  const { data: users, error: fetchError } = await supabase
+    .from("users")
+    .select("hasContacted")
+    .eq("phone", customerContact)
+    .single();
+
+  if (fetchError) {
+    console.error("Error fetching user info:", fetchError.message);
+    throw new Error("Failed to check contact status");
+  }
+
+  if (!users || !users.hasContacted) {
+    console.log("Customer not contacted before, sending template message...");
+    await axios.post(
+      `https://graph.facebook.com/v21.0/${whatsappId}/messages`,
+      {
+        messaging_product: "whatsapp",
+        to: customerContact,
+        type: "template",
+        template: {
+          name: "hello_world",
+          language: { code: "en_US" },
+        },
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${whatsappToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const { data: updatedData, error: updateError } = await supabase
+      .from("users")
+      .update({ hasContacted: true })
+      .eq("phone", customerContact);
+
+    if (updateError) {
+      console.error("Error updating user contact status:", updateError.message);
+      throw new Error("Failed to update contact status");
+    }
+
+    console.log("Template message sent and user marked as contacted.");
+    res.status(200).json({
+      message: "Payment link created and template sent via WhatsApp",
+      paymentLink: paymentLink.short_url,
+    });
+  } else {
+    console.log("Customer already contacted, sending detailed payment info...");
     const whatsappResponse = await axios.post(
       `https://graph.facebook.com/v21.0/${whatsappId}/messages`,
       {
@@ -277,21 +327,129 @@ try {
         },
       }
     );
-    console.log("WhatsApp message sent successfully:", whatsappResponse.data);
+
+    console.log("Detailed payment info sent successfully:", whatsappResponse.data);
     res.status(200).json({
-      message: "Payment link created and sent via WhatsApp",
+      message: "Payment link created and detailed info sent via WhatsApp",
       paymentLink: paymentLink.short_url,
-      whatsappResponse: whatsappResponse.data,
     });
+  }
 } catch (error) {
   console.error("Error sending WhatsApp message:", error.message);
   res.status(500).json({
     error: "Failed to send WhatsApp message, but payment link was created",
     paymentLink: paymentLink.short_url,
   });
-} 
+}
+
+
 });
 
+app.post("/add-to-cart",async(req,res)=>{
+  const {id,name,price,customer_id}=req.body;
+  try {
+    let {data:carts,error:fetchError}=await supabase.from('cart').select('items').eq('customer_id',customer_id);
+    if (fetchError) throw fetchError;
+
+    const cart = carts && carts.length > 0 ? carts[0] : null;
+    if(cart){
+      let items = cart.items.length === 0 ? [] : [...cart.items];
+      let found=false;
+      items=items.map((item)=>{
+        if(item.p_id==id){
+          found=true;
+          return {...item,quantity:item.quantity+1}
+        }else{
+          return item;
+        }
+      })
+      if(!found){
+        items.push({'p_id':id,'name':name,'quantity':1,'price':price});
+      }
+      try {
+        const {data:updatedData,error:updateError} = await supabase.from('cart').update({items}).eq('customer_id',customer_id).select();
+        if(updatedData){
+          res.status(201).json({
+            message:"Succesfully updated !!!",
+            data:updatedData,
+          })
+        }else{
+          throw updateError;
+        }
+      } catch (error) {
+        res.status(500).json({
+          message:"Couldn't update table",
+          error: error.message
+        })
+      }
+    }else{
+      const items=[{'p_id':id,'name':name,'quantity':1,'price':price}]
+      try {
+        const {data:insertData,error:insertError} = await supabase.from('cart').insert({items,customer_id}).select();
+        if(insertData){
+          res.status(201).json({
+            message:"Succesfully created cart and added product !!!",
+            data:insertData,
+          })
+        }else{
+          throw insertError;
+        }
+      } catch (error) {
+        res.status(500).json({
+          message:"Couldn't create cart",
+          error: error.message
+        })
+      }
+    }
+  } catch (error) {
+    res.status(500).json({
+      message:"Couldn't fetch cart",
+      error: error.message
+    })
+  }
+
+})
+
+app.post("/delete-from-cart",async(req,res)=>{
+  const {id,customer_id}=req.body;
+  try {
+    const {data:carts,error:fetchError}=await supabase.from('cart').select('items').eq('customer_id',customer_id);
+    const cart=carts && carts.length!=0 ? carts[0]:null;
+    if(cart){
+      let items= cart.items?.length==0 ? [] : cart.items;
+      items=items.map((item)=>{
+        if(item.p_id==id){
+          if(item.quantity==1){
+            return null;
+          }else{
+            return {...item,quantity:item.quantity-1}
+          }
+        }
+      })
+      try {
+        const {data:updatedCart,error:updateError}=await supabase.from('cart').update({items}).eq('customer_id',customer_id).select();
+        if(updatedCart){
+          res.status(201).json({
+            message:"Item successfully deleted !!!",
+            data:updatedCart
+          })
+        }else throw updateError
+      } catch (error) {
+        res.status(500).json({
+          message:"Item could not be deleted !!!",
+          error:error
+        })
+      }
+    }else{
+      throw fetchError;
+    }
+  } catch (error) {
+    res.status(500).json({
+      message:"Cart could not be fetched",
+      error:error
+    })
+  }
+})
 
 
 const PORT = 5001;
