@@ -120,6 +120,18 @@ const Register = () => {
                 />
               </div>
 
+              <div className="mb-6">
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  placeholder="Confirm Password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                />
+              </div>
+
               {/* Submit Button */}
               <button
                 type="submit"
