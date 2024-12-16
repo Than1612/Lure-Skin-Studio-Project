@@ -53,15 +53,19 @@ const uploadCloudinary = async (localFilePath) => {
 };
 
 app.post("/user/register", async (req, res) => {
+  // Destructure user inputs from request body
   const { name, email, address, phone, password } = req.body;
 
+  // Validate input fields
   if (!name || !email || !address || !phone || !password) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
   try {
+    // Hash the password securely
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // Insert user into the database
     const { data, error } = await supabase
       .from("users")
       .insert([
@@ -73,8 +77,9 @@ app.post("/user/register", async (req, res) => {
           name,
         },
       ])
-      .select();
+      .select("*"); // Select all fields to confirm successful insertion
 
+    // Handle Supabase insertion errors
     if (error) {
       console.error("Error inserting user into users table:", error);
       return res.status(500).json({
@@ -82,15 +87,20 @@ app.post("/user/register", async (req, res) => {
         error: error.message,
       });
     }
-    console.log("Inserted user data:", data); // Log to debug
 
-    const { password, ...safeUser } = data[0];
+    // Remove password from the response for security
+    const safeUser = {
+      ...data[0],
+      password: undefined, // Explicitly exclude the password
+    };
+
+    // Respond with success
     res.status(201).json({
       message: "User registered successfully",
       user: safeUser,
     });
-
   } catch (err) {
+    // Catch unexpected errors
     console.error("Unexpected Error:", err);
     res.status(500).json({
       message: "An unexpected error occurred",
@@ -98,6 +108,7 @@ app.post("/user/register", async (req, res) => {
     });
   }
 });
+
 
 // User login route
 app.post("/user/login", async (req, res) => {
