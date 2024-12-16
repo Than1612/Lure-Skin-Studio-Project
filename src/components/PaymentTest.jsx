@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 
-function Payment_test() {
+function PaymentTest() {
   const [responseId, setResponseId] = useState("");
   const [responseState, setResponseState] = useState([]);
   const [formData, setFormData] = useState({
@@ -103,4 +103,4 @@ function Payment_test() {
   );
 }
 
-export default Payment_test;
+export default PaymentTest;

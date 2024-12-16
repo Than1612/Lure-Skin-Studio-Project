@@ -52,7 +52,7 @@ const uploadCloudinary = async (localFilePath) => {
   }
 };
 
-app.post("/register", async (req, res) => {
+app.post("/user/register", async (req, res) => {
   const { name, email, address, phone, password } = req.body;
 
   if (!name || !email || !address || !phone || !password) {
@@ -93,7 +93,8 @@ app.post("/register", async (req, res) => {
   }
 });
 
-app.post("/login", async (req, res) => {
+// User login route
+app.post("/user/login", async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -137,6 +138,7 @@ app.post("/login", async (req, res) => {
     });
   }
 });
+
 
 app.post("/upload/pic", upload.single("avatar"), async (req, res) => {
   try {
