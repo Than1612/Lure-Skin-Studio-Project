@@ -454,7 +454,7 @@ app.post("/delete-from-cart",async(req,res)=>{
 })
 
 
-const PORT = 5000;
+const PORT = 5001;
 app.listen(PORT, () => {
   console.log(`The server is running on port ${PORT}`);
 });
