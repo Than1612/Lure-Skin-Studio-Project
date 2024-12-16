@@ -62,15 +62,18 @@ app.post("/user/register", async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const { data, error } = await supabase.from("users").insert([
-      {
-        email,
-        password: hashedPassword,
-        address,
-        phone,
-        name,
-      },
-    ]);
+    const { data, error } = await supabase
+      .from("users")
+      .insert([
+        {
+          email,
+          password: hashedPassword,
+          address,
+          phone,
+          name,
+        },
+      ])
+      .select();
 
     if (error) {
       console.error("Error inserting user into users table:", error);
@@ -79,11 +82,14 @@ app.post("/user/register", async (req, res) => {
         error: error.message,
       });
     }
+    console.log("Inserted user data:", data); // Log to debug
 
+    const { password, ...safeUser } = data[0];
     res.status(201).json({
       message: "User registered successfully",
-      user: data,
+      user: safeUser,
     });
+
   } catch (err) {
     console.error("Unexpected Error:", err);
     res.status(500).json({
