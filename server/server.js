@@ -261,7 +261,6 @@ Thank you for shopping with us!`;
 try {
   console.log("Attempting to send WhatsApp message to:", customerContact);
 
-  // Check if the customer has been contacted before
   const { data: users, error: fetchError } = await supabase
     .from("users")
     .select("hasContacted")
@@ -274,7 +273,6 @@ try {
   }
 
   if (!users || !users.hasContacted) {
-    // Send the template message if the customer hasn't been contacted
     console.log("Customer not contacted before, sending template message...");
     await axios.post(
       `https://graph.facebook.com/v21.0/${whatsappId}/messages`,
@@ -295,7 +293,6 @@ try {
       }
     );
 
-    // Update the database to mark the customer as contacted
     const { data: updatedData, error: updateError } = await supabase
       .from("users")
       .update({ hasContacted: true })
@@ -312,7 +309,6 @@ try {
       paymentLink: paymentLink.short_url,
     });
   } else {
-    // Send the detailed message if the customer has been contacted before
     console.log("Customer already contacted, sending detailed payment info...");
     const whatsappResponse = await axios.post(
       `https://graph.facebook.com/v21.0/${whatsappId}/messages`,
