@@ -17,7 +17,7 @@ const Login = () => {
       if (response.status === 200) {
         localStorage.setItem('userToken', response.data.user); // Or store the user object
         alert('Login successful!');
-        window.location.href = '/dashboard'; // Redirect to Dashboard or home page
+        window.location.href = '/'; // Redirect to Dashboard or home page
       }
     } catch (err) {
       setError('Invalid credentials');
