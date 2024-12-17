@@ -474,6 +474,19 @@ app.get("/get-products",async(req,res)=>{
   }
 })
 
+app.post("/get-product",async(req,res)=>{
+  const {p_id}=req.body;
+  try {
+    const {data:products,error:fetchError}=await supabase.from('products').select('*').eq('id',p_id)
+    if(fetchError) throw fetchError
+    if(products){
+      res.status(201).json({data:products})
+    }
+  } catch (error) {
+    res.status(500).json({message:error.message})
+  }
+})
+
 const PORT = 5001;
 app.listen(PORT, () => {
   console.log(`The server is running on port ${PORT}`);
