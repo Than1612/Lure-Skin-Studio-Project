@@ -38,7 +38,7 @@ cloudinary.config({
 
 const razorpayId = "rzp_test_cpR703nvZzCIdo";
 const razorpaySecret = "3r0f7OjbhQUoEgqNTSnePXgI";
-const whatsappToken = "EAAXEAIh0ErgBOZBmOtR577kld5uCM8owhsQEmQ128ZCxeGpZA1J7C6pEhRKjLaXIv4dP46xitQW2lgV2d5tpy7QQb5NZAVfS2k6fAkRZAerUYvStMKuuxE2R1PHXeeChGO6sK0Ocsqa01lqazvmZCLJNuVyri8r0y2Ehp8tAE23EzgRGnoIsHKoOPiCzZBEkMmbuPDIzZCR3zWw2OI6KLalVry5acyrujpZC1iEAZD";
+const whatsappToken = "EAAXEAIh0ErgBO8lmCtFNfPy7zNA18KVs1ZA8lu5AyD7YV59x2HMG0mTJdcJbVF3ZAjQZCIklmrKCAZBcYbQiDjrEXLoKfu6wrPo5JtAAn1tLK47ZApTxbbY4h8WzgJkboZCx105LJcBz2c5vgDCQE3TGPUL5jphVgZBZBMf2t9ZBtGIiFCqVzGWuCEKna1WY5Nl6q";
 const whatsappId = "470207039510486";
 
 const uploadCloudinary = async (localFilePath) => {
@@ -453,6 +453,30 @@ app.post("/delete-from-cart",async(req,res)=>{
   }
 })
 
+app.post("/get-cart",async(req,res)=>{
+  const {customer_id}=req.body;
+  try {
+    const {data:carts,error:fetchError}=await supabase.from('cart').select('items').eq('customer_id',customer_id)
+    if(fetchError) throw fetchError
+    if(carts){
+      res.status(201).json({data:carts})
+    }
+  } catch (error) {
+    res.status(500).json({message:error.message})
+  }
+})
+
+app.get("/get-products",async(req,res)=>{
+  try {
+    const {data:products,error:fetchError}=await supabase.from('products').select('*')
+    if(fetchError) throw fetchError
+    if(products){
+      res.status(201).json({data:products})
+    }
+  } catch (error) {
+    res.status(500).json({message:error.message})
+  }
+})
 
 const PORT = 5001;
 app.listen(PORT, () => {
