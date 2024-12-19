@@ -7,6 +7,7 @@ import axios from "axios";
 import dotenv from "dotenv";
 import multer from "multer";
 import cloudinary from "cloudinary"
+import jwt from "jsonwebtoken";
 import Razorpay from "razorpay";
 
 dotenv.config();
@@ -26,6 +27,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+const secretKey = "secret_key";
+
 const supabaseUrl = "https://vmvxxjofzfpwvatbquhy.supabase.co";
 const supabaseKey ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZtdnh4am9memZwd3ZhdGJxdWh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzAxNzA1NjMsImV4cCI6MjA0NTc0NjU2M30.rt7ORhBz7UaHSE_gTWvX-D82uj_CQidpKcC1hVLLovA";
 const supabase = createClient(supabaseUrl, supabaseKey);
@@ -40,6 +43,26 @@ const razorpayId = "rzp_test_cpR703nvZzCIdo";
 const razorpaySecret = "3r0f7OjbhQUoEgqNTSnePXgI";
 const whatsappToken = "EAAXEAIh0ErgBO8lmCtFNfPy7zNA18KVs1ZA8lu5AyD7YV59x2HMG0mTJdcJbVF3ZAjQZCIklmrKCAZBcYbQiDjrEXLoKfu6wrPo5JtAAn1tLK47ZApTxbbY4h8WzgJkboZCx105LJcBz2c5vgDCQE3TGPUL5jphVgZBZBMf2t9ZBtGIiFCqVzGWuCEKna1WY5Nl6q";
 const whatsappId = "470207039510486";
+
+const verifyToken = (req, res, next) => {
+  const authHeader = req.headers["authorization"];
+  if (!authHeader) {
+    return res.status(401).json({ error: "No token provided" });
+  }
+
+  const token = authHeader.split(" ")[1];
+  if (!token) {
+    return res.status(401).json({ error: "No token provided" });
+  }
+
+  jwt.verify(token, secretKey, (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ error: "Failed to authenticate token" });
+    }
+    req.email = decoded.email;
+    next();
+  });
+};
 
 const uploadCloudinary = async (localFilePath) => {
   try {
@@ -93,11 +116,14 @@ app.post("/user/register", async (req, res) => {
       ...data[0],
       password: undefined, // Explicitly exclude the password
     };
-
+    const token = jwt.sign({ email: email}, secretKey, {
+      expiresIn: "1h",
+    });
     // Respond with success
     res.status(201).json({
       message: "User registered successfully",
       user: safeUser,
+      token,
     });
   } catch (err) {
     // Catch unexpected errors
@@ -137,7 +163,9 @@ app.post("/user/login", async (req, res) => {
         message: "Invalid email or password",
       });
     }
-
+    const token = jwt.sign({ email: email}, secretKey, {
+      expiresIn: "1h",
+    });
     res.status(200).json({
       message: "Login successful",
       user: {
@@ -146,6 +174,7 @@ app.post("/user/login", async (req, res) => {
         phone: users.phone,
         name: users.name,
       },
+      token
     });
   } catch (err) {
     console.error("Unexpected Error:", err);
@@ -166,7 +195,7 @@ app.post("/upload/pic", upload.single("avatar"), async (req, res) => {
   }
 });
 
-app.post("/upload", async (req, res) => {
+app.post("/upload",verifyToken, async (req, res) => {
   const { name, description, price, image } = req.body;
 
   if (!name || !description || !price || !image) {
@@ -205,7 +234,7 @@ app.post("/upload", async (req, res) => {
   }
 });
 
-app.post("/create-and-send-payment-link", async (req, res) => {
+app.post("/create-and-send-payment-link",verifyToken, async (req, res) => {
   const { amount, customerName, customerContact, customerEmail, orderDetails } = req.body;
 
   if (!amount || !customerName || !customerContact || !customerEmail || !orderDetails || orderDetails.length === 0) {
@@ -362,7 +391,7 @@ try {
 
 });
 
-app.post("/add-to-cart",async(req,res)=>{
+app.post("/add-to-cart",verifyToken,async(req,res)=>{
   const {id,name,price,customer_id}=req.body;
   try {
     let {data:carts,error:fetchError}=await supabase.from('cart').select('items').eq('customer_id',customer_id);
@@ -427,7 +456,7 @@ app.post("/add-to-cart",async(req,res)=>{
 
 })
 
-app.post("/delete-from-cart",async(req,res)=>{
+app.post("/delete-from-cart",verifyToken,async(req,res)=>{
   const {id,customer_id}=req.body;
   try {
     const {data:carts,error:fetchError}=await supabase.from('cart').select('items').eq('customer_id',customer_id);
@@ -468,7 +497,7 @@ app.post("/delete-from-cart",async(req,res)=>{
   }
 })
 
-app.post("/get-cart",async(req,res)=>{
+app.post("/get-cart",verifyToken,async(req,res)=>{
   const {customer_id}=req.body;
   try {
     const {data:carts,error:fetchError}=await supabase.from('cart').select('items').eq('customer_id',customer_id)
