@@ -8,6 +8,7 @@ import dotenv from "dotenv";
 import multer from "multer";
 import cloudinary from "cloudinary"
 import Razorpay from "razorpay";
+import jwt from "jsonwebtoken";
 
 dotenv.config();
 
@@ -153,6 +154,45 @@ app.post("/user/login", async (req, res) => {
       message: "An unexpected error occurred",
       error: err.message,
     });
+  }
+});
+
+const handleLogout = () => {
+  localStorage.removeItem("userToken");
+  window.location.href = "/login";
+};
+
+// Fetch Profile (Protected)
+app.get("/user/profile", async (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) {
+      return res
+        .status(401)
+        .json({ message: "Authorization token is required" });
+    }
+
+    // Decode token to get user ID (assuming you use JWT and have a `decode` utility)
+    const decoded = jwt.verify(token, process.env.JWT_SECRET); // Ensure you have JWT_SECRET in your .env
+    const userId = decoded.id;
+
+    // Fetch user details from the database
+    const { data, error } = await supabase
+      .from("users")
+      .select("name, email, address, phone")
+      .eq("id", userId)
+      .single();
+
+    if (error || !data) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(data);
+  } catch (err) {
+    console.error("Error fetching user profile:", err.message);
+    res
+      .status(500)
+      .json({ message: "An error occurred while fetching profile" });
   }
 });
 

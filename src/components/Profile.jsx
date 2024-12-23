@@ -1,57 +1,86 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get('http://localhost:5001/user/profile', {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-        });
-        setUser(response.data);
-      } catch (err) {
-        setError('Error fetching user data');
+useEffect(() => {
+  let isMounted = true;  // flag to track component mounting status
+  const fetchUserData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("User not logged in");
       }
-    };
 
-    fetchUserData();
-  }, []);
+      const response = await axios.get("http://localhost:5001/user/profile", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (isMounted) {
+        setUser(response.data);
+      }
+    } catch (err) {
+      if (isMounted) {
+        setError(err.response?.data?.message || "Error fetching user data");
+      }
+    } finally {
+      if (isMounted) {
+        setLoading(false);
+      }
+    }
+  };
+
+  fetchUserData();
+
+  return () => { isMounted = false; }; // cleanup function
+}, []);
+
+
+  if (loading) {
+    return <div className="text-center text-xl">Loading...</div>;
+  }
+
+  if (error) {
+    return (
+      <div className="text-center text-red-500 text-lg mt-4">
+        {error}
+      </div>
+    );
+  }
 
   return (
-    <div className="profile-container">
+    <div className="profile-container bg-gradient-to-br from-pink-200 via-pink-100 to-pink-50 min-h-screen flex items-center justify-center">
       <section className="container mx-auto px-6 py-12">
         <div className="flex justify-center">
-          {error && (
-            <div className="text-center border-2 border-red-600 p-2 mb-4 rounded-md bg-red-100 shadow-md">
-              {error}
-            </div>
-          )}
-          {user ? (
-            <div className="bg-white shadow-lg rounded-lg p-6 transform transition-transform hover:scale-105">
-              <h2 className="text-2xl font-bold mb-4">Profile Details</h2>
-              <div className="mb-4">
-                <strong>Full Name: </strong>
+          <div className="relative bg-white shadow-lg rounded-lg p-8 max-w-md w-full transition-transform transform hover:-translate-y-2 duration-300 hover:shadow-2xl hover:border-pink-400 border border-transparent">
+            <div className="absolute inset-0 bg-gradient-to-br from-pink-300 via-purple-300 to-pink-400 blur-xl opacity-20 rounded-lg z-[-1]"></div>
+            <h2 className="text-3xl font-extrabold text-center text-gray-800 mb-6">
+              Profile Details
+            </h2>
+            <div className="space-y-4">
+              <div className="text-lg font-medium text-gray-600">
+                <strong className="block text-gray-800">Full Name:</strong>
                 {user.name}
               </div>
-              <div className="mb-4">
-                <strong>Email Address: </strong>
+              <div className="text-lg font-medium text-gray-600">
+                <strong className="block text-gray-800">Email Address:</strong>
                 {user.email}
               </div>
-              <div className="mb-4">
-                <strong>Address: </strong>
+              <div className="text-lg font-medium text-gray-600">
+                <strong className="block text-gray-800">Address:</strong>
                 {user.address}
               </div>
-              <div className="mb-4">
-                <strong>Phone Number: </strong>
+              <div className="text-lg font-medium text-gray-600">
+                <strong className="block text-gray-800">Phone Number:</strong>
                 {user.phone}
               </div>
             </div>
-          ) : (
-            <div className="text-xl">Loading...</div>
-          )}
+          </div>
         </div>
       </section>
     </div>
@@ -61,58 +90,3 @@ const Profile = () => {
 export default Profile;
 
 
-
-/*
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-
-const ProfileCard = ({ user }) => {
-  return (
-    <div className="max-w-sm mx-auto bg-white rounded-lg shadow-lg mt-10">
-      <div className="p-5">
-        <h2 className="text-2xl font-bold text-center mb-2">{user.name}</h2>
-        <p className="text-gray-700 text-base mb-4">Email: {user.email}</p>
-        <p className="text-gray-700 text-base mb-4">Address: {user.address}</p>
-        <p className="text-gray-700 text-base mb-4">Phone: {user.phone}</p>
-      </div>
-    </div>
-  );
-};
-
-const ProfilePage = () => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get('http://localhost:5001/user/profile');
-        setUser(response.data);
-      } catch (err) {
-        setError('Error fetching user data');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUserData();
-  }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
-
-  return (
-    <div className="profile-page">
-      {user ? <ProfileCard user={user} /> : <div>No user data available</div>}
-    </div>
-  );
-};
-
-export default ProfilePage;
-*/

@@ -53,26 +53,39 @@ function App() {
         <Navbar />
 
         <Routes>
-          <Route
-            path="/"
-            element={
-              <PrivateRoute>
-                <Hero />
-                <Arrivals />
-                <BestSelling />
-                <Extra />
-                <Insta />
-              </PrivateRoute>
-            }
-          />
+          {/* Public Routes */}
+          <Route path="/" element={<><Hero /><Arrivals /><BestSelling /><Extra /><Insta /></>} />
           <Route path="/products" element={<Products />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/policy" element={<Policy />} />
-          <Route path="/cart" element={<CartPage cartItems={cartItems} />} />
-          <Route path="/payment" element={<PaymentTest />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/profile" component={<Profile />} />
+
+          {/* Protected Routes */}
+          <Route
+            path="/cart"
+            element={
+              <PrivateRoute>
+                <CartPage cartItems={cartItems} />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/payment"
+            element={
+              <PrivateRoute>
+                <PaymentTest />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            }
+          />
         </Routes>
 
         <Footer />
