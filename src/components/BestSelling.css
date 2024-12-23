@@ -103,7 +103,7 @@
 @media (max-width: 768px) {
   .arrivals-card {
     flex: 0 0 100%;
-    max-width: 100%;
+    /* max-width: 100%; */
   }
 
   .arrow-btn {
@@ -134,3 +134,4 @@
     clip-path: inset(0% 0% 0% 0%);
   }
 }
+
