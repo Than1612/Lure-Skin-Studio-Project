@@ -31,11 +31,11 @@ const Arrivals = () => {
   const visibleItemsCount = 3;
 
   const nextProduct = () => {
-    setCurrentIndex((prev) => (prev + 1) % products.length);
+    setCurrentIndex((prev) => (prev + 1) % (products.length-2));
   };
 
   const prevProduct = () => {
-    setCurrentIndex((prev) => (prev === 0 ? products.length - 1 : prev - 1));
+    setCurrentIndex((prev) => (prev === 0 ? products.length - 3 : prev - 1));
   };
 
   const openModal = (product) => {

@@ -1,3 +1,4 @@
+/* General Slider Styles */
 .slider {
   width: 100vw;
   height: 100vh;
@@ -8,7 +9,7 @@
 .slider .wrapper {
   height: 100vh;
   display: flex;
-  transition: transform 1s ease-in-out; /* Smoother transition over 1s */
+  transition: transform 1s ease-in-out;
 }
 
 .slider .dots-container {
@@ -40,33 +41,19 @@
 }
 
 .slider .dots-container li button span {
+  font-size: 30px; /* Default size for larger screens */
   min-height: 30px;
 }
-
+.slider .dots-container li.active button span {
+  font-size: 35px; /* Slightly larger for active dot */
+}
 .slider .dots-container li button:hover {
   text-decoration: none;
   opacity: 0.7;
   cursor: pointer;
 }
 
-.slider .toggle-play {
-  background: transparent;
-  border: none;
-  height: auto;
-  position: absolute;
-  width: auto;
-  right: 5%;
-  bottom: 9px;
-  color: #3d3d3d;
-  z-index: 1000000;
-}
-
-.slider .toggle-play:hover {
-  text-decoration: none;
-  opacity: 0.7;
-  cursor: pointer;
-}
-
+/* Each Slide */
 .slider .each-slide {
   width: 100vw;
   height: 100vh;
@@ -78,6 +65,7 @@
   background-position: center;
   background-color: transparent;
 }
+
 .slider .slide-content {
   border-radius: 10px;
   max-width: 80%;
@@ -109,4 +97,108 @@
 .slider .slide-content .btn:hover {
   background-color: white;
   color: black;
+}
+
+/* Responsive Styles */
+@media only screen and (max-width: 1200px) {
+  .slider .slide-content .section-title {
+    font-size: 4rem;
+  }
+
+  .slider .slide-content .caption {
+    padding: 0 150px;
+    font-size: 1rem;
+  }
+
+  .slider .slide-content .btn {
+    padding: 8px 16px;
+    font-size: 1rem;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .slider {
+    height: 80vh; /* Adjust height on smaller screens */
+  }
+
+  .slider .wrapper {
+    height: 80vh;
+  }
+
+  .slider .each-slide {
+    height: 80vh; /* Adjust slide height */
+  }
+
+  .slider .slide-content {
+    max-width: 90%;
+  }
+
+  .slider .slide-content .section-title {
+    font-size: 3rem;
+  }
+
+  .slider .slide-content .caption {
+    padding: 0 50px;
+    font-size: 1rem;
+  }
+
+  .slider .slide-content .btn {
+    padding: 8px 16px;
+    font-size: 1rem;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .slider {
+    height: 70vh;
+  }
+
+  .slider .wrapper {
+    height: 70vh;
+  }
+
+  .slider .each-slide {
+    height: 70vh;
+  }
+
+  .slider .slide-content .section-title {
+    font-size: 2.5rem;
+  }
+
+  .slider .slide-content .caption {
+    padding: 0 20px;
+    font-size: 0.9rem;
+  }
+
+  .slider .slide-content .btn {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+
+  .slider .dots-container {
+    bottom: 20px;
+  }
+}
+
+
+@media only screen and (max-width: 768px) {
+  .slider .dots-container li button span {
+    font-size: 20px; /* Smaller size for medium screens */
+    min-height: 20px;
+  }
+
+  .slider .dots-container li.active button span {
+    font-size: 25px; /* Slightly larger for active dot on medium screens */
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .slider .dots-container li button span {
+    font-size: 15px; /* Even smaller for small screens */
+    min-height: 15px;
+  }
+
+  .slider .dots-container li.active button span {
+    font-size: 18px; /* Slightly larger for active dot on small screens */
+  }
 }
