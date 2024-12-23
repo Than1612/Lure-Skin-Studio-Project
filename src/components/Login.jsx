@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios'; // For making API calls
-import { Link } from 'react-router-dom'; // For navigation to Register
+import axios from 'axios';
+import { Link } from 'react-router-dom'; 
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -13,11 +13,10 @@ const Login = () => {
     try {
       const response = await axios.post('http://localhost:5001/user/login', { email, password });
 
-      // If login is successful, store the user details or token
       if (response.status === 200) {
-        localStorage.setItem('userToken', response.data.user); // Or store the user object
+        localStorage.setItem('userToken', response.data.user); 
         alert('Login successful!');
-        window.location.href = '/'; // Redirect to Dashboard or home page
+        window.location.href = '/';
       }
     } catch (err) {
       setError('Invalid credentials');
