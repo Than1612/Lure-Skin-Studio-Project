@@ -172,7 +172,7 @@ const Navbar = () => {
         </li>
 
         <li>
-          <a href="/register" className="icon-link font-bold">Profile</a>
+          <a href="/login" className="icon-link font-bold">Profile</a>
         </li>
       </ul>
     </div>

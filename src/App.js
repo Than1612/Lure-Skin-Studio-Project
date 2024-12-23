@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import "./input.css";
 import Navbar from "./components/Navbar.jsx";
 import Arrivals from "./components/Arrivals.jsx";
@@ -15,9 +15,14 @@ import CartPage from "./components/Cart.jsx";
 import PaymentTest from "./components/PaymentTest.jsx";
 import Login from "./components/Login.jsx";
 import Register from "./components/Register.jsx";
-import Dashboard from "./components/Dashboard.jsx"; // Import Dashboard
+import Profile from "./components/Profile.jsx";
 
 function App() {
+  const PrivateRoute = ({ children }) => {
+    const token = localStorage.getItem("userToken");
+    return token ? children : <Navigate to="/login" />;
+  };
+
   useEffect(() => {
     const loadingScreen = document.querySelector(".loading");
 
@@ -51,13 +56,13 @@ function App() {
           <Route
             path="/"
             element={
-              <>
+              <PrivateRoute>
                 <Hero />
                 <Arrivals />
                 <BestSelling />
                 <Extra />
                 <Insta />
-              </>
+              </PrivateRoute>
             }
           />
           <Route path="/products" element={<Products />} />
@@ -67,8 +72,7 @@ function App() {
           <Route path="/payment" element={<PaymentTest />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/dashboard" element={<Dashboard />} />{" "}
-          {/* Add Dashboard route */}
+          <Route path="/profile" component={<Profile />} />
         </Routes>
 
         <Footer />
