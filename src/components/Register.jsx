@@ -1,25 +1,35 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [name, setName] = useState('');
-  const [address, setAddress] = useState('');
-  const [phone, setPhone] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
+  const [error, setError] = useState("");
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/products");
+    }
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError("Passwords do not match");
       return;
     }
 
     try {
-      const response = await axios.post('http://localhost:5001/user/register', {
+      const response = await axios.post("http://localhost:5001/user/register", {
         name,
         email,
         address,
@@ -28,11 +38,15 @@ const Register = () => {
       });
 
       if (response.status === 201) {
-        alert('Registration successful!');
-        window.location.href = '/login'; // Redirect to login page
+        const { token } = response.data;
+
+        localStorage.setItem("token", token);
+
+        alert("Registration successful!");
+        navigate("/products");
       }
     } catch (err) {
-      setError('Error registering user');
+      setError(err.response?.data?.message || "Error registering user");
     }
   };
 

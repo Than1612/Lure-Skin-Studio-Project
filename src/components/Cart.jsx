@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import '../components/Cart.css';
 
 const CartPage = () => {
@@ -6,6 +7,15 @@ const CartPage = () => {
   const [customerName, setCustomerName] = useState("");
   const [customerContact, setCustomerContact] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
+
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/products");
+    }
+    }, [navigate]);
 
   // Load cart items from local storage when the component mounts
   useEffect(() => {

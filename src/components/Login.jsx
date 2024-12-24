@@ -1,26 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import axios from 'axios'; // For making API calls
 import { Link } from 'react-router-dom'; // For navigation to Register
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/products");
+    }
+  }, [navigate]);
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
-      const response = await axios.post('http://localhost:5001/user/login', { email, password });
-
-      // If login is successful, store the user details or token
+      const response = await axios.post("http://localhost:5001/user/login", { email, password });
+  
       if (response.status === 200) {
-        localStorage.setItem('userToken', response.data.user); // Or store the user object
-        alert('Login successful!');
-        window.location.href = '/'; // Redirect to Dashboard or home page
+        localStorage.setItem("token", response.data.token);
+        alert("Login successful!");
+        navigate("/products");
       }
     } catch (err) {
-      setError('Invalid credentials');
+      setError("Invalid email or password");
     }
   };
 
