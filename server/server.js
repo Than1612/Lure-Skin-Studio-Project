@@ -191,24 +191,13 @@ const handleLogout = () => {
 };
 
 // Fetch Profile (Protected)
-app.get("/user/profile", async (req, res) => {
+app.get("/user/profile", verifyToken, async (req, res) => {
   try {
-    const token = req.headers.authorization?.split(" ")[1];
-    if (!token) {
-      return res
-        .status(401)
-        .json({ message: "Authorization token is required" });
-    }
-
-    // Decode token to get user ID (assuming you use JWT and have a `decode` utility)
-    const decoded = jwt.verify(token, process.env.JWT_SECRET); // Ensure you have JWT_SECRET in your .env
-    const userId = decoded.id;
-
-    // Fetch user details from the database
+    // Use `req.email` from the `verifyToken` middleware
     const { data, error } = await supabase
       .from("users")
       .select("name, email, address, phone")
-      .eq("id", userId)
+      .eq("email", req.email)
       .single();
 
     if (error || !data) {
@@ -223,6 +212,31 @@ app.get("/user/profile", async (req, res) => {
       .json({ message: "An error occurred while fetching profile" });
   }
 });
+
+// logout route
+
+app.post("/user/logout", (req, res) => {
+  try {
+    const authHeader = req.headers["authorization"];
+    if (!authHeader) {
+      return res
+        .status(400)
+        .json({ message: "Authorization token is required" });
+    }
+
+    const token = authHeader.split(" ")[1];
+    if (!token) {
+      return res.status(400).json({ message: "Token not found" });
+    }
+
+    // Optionally, invalidate token if stored on the server
+    res.status(200).json({ message: "Logout successful" });
+  } catch (err) {
+    console.error("Error during logout:", err.message);
+    res.status(500).json({ message: "An error occurred during logout" });
+  }
+});
+
 
 
 app.post("/upload/pic", upload.single("avatar"), async (req, res) => {
