@@ -84,7 +84,7 @@ const Hero = () => {
                 className={`transition-transform duration-300 ${
                   active === index ? "text-gray-600 scale-125" : "text-gray-300"
                 }`}
-                style={{ fontSize: active === index ? "50px" : "40px" }}
+                 
               >
                 &#9679;
               </span>

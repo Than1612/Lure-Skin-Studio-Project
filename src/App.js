@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import "./input.css";
 import Navbar from "./components/Navbar.jsx";
 import Arrivals from "./components/Arrivals.jsx";
@@ -15,9 +15,14 @@ import CartPage from "./components/Cart.jsx";
 import PaymentTest from "./components/PaymentTest.jsx";
 import Login from "./components/Login.jsx";
 import Register from "./components/Register.jsx";
-import Dashboard from "./components/Dashboard.jsx"; // Import Dashboard
+import Profile from "./components/Profile.jsx";
 
 function App() {
+  const PrivateRoute = ({ children }) => {
+    const token = localStorage.getItem("userToken");
+    return token ? children : <Navigate to="/login" />;
+  };
+
   useEffect(() => {
     const loadingScreen = document.querySelector(".loading");
 
@@ -48,27 +53,39 @@ function App() {
         <Navbar />
 
         <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <Hero />
-                <Arrivals />
-                <BestSelling />
-                <Extra />
-                <Insta />
-              </>
-            }
-          />
+          {/* Public Routes */}
+          <Route path="/" element={<><Hero /><Arrivals /><BestSelling /><Extra /><Insta /></>} />
           <Route path="/products" element={<Products />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/policy" element={<Policy />} />
-          <Route path="/cart" element={<CartPage cartItems={cartItems} />} />
-          <Route path="/payment" element={<PaymentTest />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/dashboard" element={<Dashboard />} />{" "}
-          {/* Add Dashboard route */}
+
+          {/* Protected Routes */}
+          <Route
+            path="/cart"
+            element={
+              <PrivateRoute>
+                <CartPage cartItems={cartItems} />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/payment"
+            element={
+              <PrivateRoute>
+                <PaymentTest />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            }
+          />
         </Routes>
 
         <Footer />
