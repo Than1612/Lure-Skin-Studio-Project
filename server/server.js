@@ -9,7 +9,6 @@ import multer from "multer";
 import cloudinary from "cloudinary"
 import jwt from "jsonwebtoken";
 import Razorpay from "razorpay";
-import jwt from "jsonwebtoken";
 
 dotenv.config();
 

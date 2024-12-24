@@ -8,15 +8,6 @@ const CartPage = () => {
   const [customerContact, setCustomerContact] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
 
-  const navigate = useNavigate();
-  
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      navigate("/products");
-    }
-    }, [navigate]);
-
   // Load cart items from local storage when the component mounts
   useEffect(() => {
     const storedCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];

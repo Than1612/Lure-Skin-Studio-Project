@@ -19,7 +19,7 @@ import Profile from "./components/Profile.jsx";
 
 function App() {
   const PrivateRoute = ({ children }) => {
-    const token = localStorage.getItem("userToken");
+    const token = localStorage.getItem("token");
     return token ? children : <Navigate to="/login" />;
   };
 
