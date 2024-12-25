@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import "./modal.css";
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const ProductModal = ({ product, onClose }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -16,29 +18,60 @@ const ProductModal = ({ product, onClose }) => {
     setShowQuantitySelector(true);
   };
 
-  const confirmAddToCart = () => {
-    const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-    
-    // Check if the item already exists in the cart
-    const existingItemIndex = cartItems.findIndex(item => item.product_name === product.product_name);
-    
-    if (existingItemIndex !== -1) {
-      // Update quantity if item exists
-      cartItems[existingItemIndex].quantity += quantity;
-    } else {
-      // Add new item if it doesn't exist
-      cartItems.push({ 
-        product_name: product.product_name, 
-        MRP: product.MRP, 
-        quantity 
-      });
-    }
+  const confirmAddToCart = async () => {
+    try {
+      const authToken = localStorage.getItem("token");
+      let customer_id;
+      if (!authToken) {
+        alert("User is not authenticated. Please log in.");
+        return;
+      }
+      try {
+        const decodedToken = jwtDecode(authToken);
+        customer_id = decodedToken.id;
+        if (!customer_id) {
+          throw new Error("Customer ID not found in token");
+        }
+      } catch (error) {
+        console.error("Error decoding token:", error.message);
+        alert("Invalid token. Please log in again.");
+        return;
+      }
+      const payload = {
+        id: product.id,
+        name: product.product_name,
+        price: product.MRP,
+        customer_id,
+      };
   
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    setQuantity(1);
-    setShowQuantitySelector(false);
-    handleClose();
+      const response = await axios.post(
+        "http://localhost:5001/add-to-cart",
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+  
+      if (response.status === 201) {
+        console.log("Product added to cart:", response.data);
+        alert(response.data.message);
+      }
+    } catch (error) {
+      console.error("Error adding product to cart:", error);
+      alert(
+        error.response?.data?.message ||
+        "Failed to add product to cart. Please try again."
+      );
+    } finally {
+      setQuantity(1);
+      setShowQuantitySelector(false);
+      handleClose();
+    }
   };
+  
+  
   
 
   const cancelAddToCart = () => {

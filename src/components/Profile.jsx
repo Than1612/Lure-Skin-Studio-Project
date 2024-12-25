@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     let isMounted = true;
@@ -27,6 +30,7 @@ const Profile = () => {
       } catch (err) {
         if (isMounted) {
           setError(err.response?.data?.message || "Error fetching user data");
+          navigate("/login")
         }
       } finally {
         if (isMounted) {
