@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 import '../components/Cart.css';
 
 const CartPage = () => {
@@ -8,59 +9,160 @@ const CartPage = () => {
   const [customerContact, setCustomerContact] = useState("");
   const [customerEmail, setCustomerEmail] = useState("");
 
-  // Load cart items from local storage when the component mounts
   useEffect(() => {
-    const storedCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-    const parsedCartItems = storedCartItems.map(item => ({
-      ...item,
-      MRP: Number(item.MRP), // Ensure MRP is a number
-      quantity: Number(item.quantity) // Ensure quantity is a number
-    }));
-    setCartItems(parsedCartItems);
+    const fetchCartItems = async () => {
+      const token = localStorage.getItem("token");
+      let customer_id;
+      if (!token) {
+        alert("User is not authenticated. Please log in.");
+        return;
+      }
+
+      try {
+        try {
+          const decodedToken = jwtDecode(token);
+          customer_id = decodedToken.id;
+          if (!customer_id) {
+            throw new Error("Customer ID not found in token");
+          }
+        } catch (error) {
+          console.error("Error decoding token:", error.message);
+          alert("Invalid token. Please log in again.");
+          return;
+        }
+        const response = await axios.post(
+          "http://localhost:5001/get-cart",
+          { customer_id },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (response.data && response.data.data) {
+          const items = response.data.data[0].items.map(item => ({
+            product_name: item.name,
+            p_id: item.p_id,
+            MRP: item.price,
+            quantity: item.quantity
+          }));
+          setCartItems(items);
+        } else {
+          alert("No cart items found.");
+        }
+      } catch (error) {
+        console.error("Error fetching cart:", error.response?.data || error.message);
+        alert("Failed to load cart items.");
+      }
+    };
+
+    fetchCartItems();
   }, []);
 
   const calculateTotal = () => {
     return cartItems.reduce((total, item) => total + (item.quantity * item.MRP), 0);
   };
 
-  const handlePayment = () => {
+  const handlePayment = async () => {
+    const authToken = localStorage.getItem("token");
+  
+    if (!authToken) {
+      alert("User is not authenticated. Please log in.");
+      return;
+    }
+  
     const orderDetails = cartItems.map(item => ({
       productName: item.product_name,
       price: item.MRP,
-      quantity: item.quantity
+      quantity: item.quantity,
     }));
 
+  
     const jsonData = {
       amount: calculateTotal(),
       customerName,
       customerContact,
       customerEmail,
-      orderDetails
+      orderDetails,
     };
-
-    // Send JSON data to API
-    fetch("https://your-api-url.com/checkout", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(jsonData)
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log("Payment response:", data);
-        alert("Order placed successfully!");
-      })
-      .catch(error => {
-        console.error("Payment error:", error);
-        alert("Failed to place order.");
-      });
+  
+    try {
+      const response = await axios.post(
+        "http://localhost:5001/create-and-send-payment-link",
+        jsonData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+  
+      if (response.status === 200) {
+        console.log("Payment link created successfully:", response.data);
+        alert(
+          `Payment link created successfully! Please complete your payment: ${response.data.paymentLink}`
+        );
+  
+        clearCart();
+      } else {
+        console.error("Unexpected response status:", response.status);
+        alert("Failed to create payment link. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error creating payment link:", error.response?.data || error.message);
+      alert(
+        error.response?.data?.error ||
+        "Failed to create payment link. Please try again."
+      );
+    }
   };
 
-  const clearCart = () => {
-    localStorage.removeItem("cartItems");
-    setCartItems([]);
-  };
+const clearCart = async () => {
+  const authToken = localStorage.getItem("token");
+
+  if (!authToken) {
+    alert("User is not authenticated. Please log in.");
+    return;
+  }
+
+  try {
+    const decodedToken = jwtDecode(authToken);
+    const customer_id = decodedToken?.id;
+
+    if (!customer_id) {
+      alert("Invalid token. Unable to find customer ID.");
+      return;
+    }
+
+    const response = await axios.post(
+      "http://localhost:5001/delete-cart",
+      { customer_id },
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
+    );
+
+    if (response.status === 201) {
+      console.log("Cart successfully deleted:", response.data);
+      alert(response.data.message);
+      setCartItems([]);
+    } else {
+      console.error("Unexpected response status:", response.status);
+      alert("Failed to delete the cart. Please try again.");
+    }
+  } catch (error) {
+    console.error("Error deleting cart:", error.response?.data || error.message);
+    alert(
+      error.response?.data?.message ||
+      "Failed to delete the cart. Please try again."
+    );
+  }
+};
+
 
   return (
     <div className="cart-page">

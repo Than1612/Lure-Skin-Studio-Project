@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./products.css";
+import axios from "axios";
 import { soaps, oils, toners, scrubs, shower_gel, aloevera_gel } from "../soapData"; 
 import { FaShoppingCart } from "react-icons/fa";
 import ProductModal from "./Modal";
 import { useLocation } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 const Products = () => {
   useEffect(() => {
@@ -95,23 +97,60 @@ const Products = () => {
   const handleIncrement = () => setQuantity((prev) => prev + 1);
   const handleDecrement = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
-  const handleConfirm = (product) => {
-    // Add selected product with quantity to cart in local storage
-    const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-    
-    const existingItemIndex = cartItems.findIndex(item => item.product_name === product.product_name);
-    if (existingItemIndex !== -1) {
-      cartItems[existingItemIndex].quantity += quantity; // Update quantity if already in cart
-    } else {
-      cartItems.push({ product_name: product.product_name, MRP: product.MRP, quantity });
+  const handleConfirm = async (product) => {
+    const authToken = localStorage.getItem("token");
+  
+    if (!authToken) {
+      alert("User is not authenticated. Please log in.");
+      return;
     }
-    
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-
-    // Reset the quantity selector
-    setShowQuantitySelector(null);
-    setQuantity(1);
+    let customer_id;
+    try {
+      const decodedToken = jwtDecode(authToken);
+      customer_id = decodedToken.id;
+      if (!customer_id) {
+        throw new Error("Customer ID not found in token");
+      }
+    } catch (error) {
+      console.error("Error decoding token:", error.message);
+      alert("Invalid token. Please log in again.");
+      return;
+    }
+    const payload = {
+      id: product.product_id,
+      name: product.product_name,
+      price: product.MRP,
+      quantity,
+      customer_id,
+    };
+  
+    try {
+      const response = await axios.post(
+        "http://localhost:5001/add-to-cart",
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+  
+      if (response.status === 201) {
+        console.log("Cart updated successfully:", response.data);
+        alert(response.data.message);
+      }
+  
+      setShowQuantitySelector(null);
+      setQuantity(1);
+    } catch (error) {
+      console.error("Error adding to cart:", error.response?.data || error.message);
+      alert(
+        error.response?.data?.message ||
+        "Failed to add product to cart. Please try again."
+      );
+    }
   };
+  
 
   const handleCancel = () => {
     setShowQuantitySelector(null);

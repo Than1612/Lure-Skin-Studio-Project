@@ -59,7 +59,7 @@ const verifyToken = (req, res, next) => {
     if (err) {
       return res.status(401).json({ error: "Failed to authenticate token" });
     }
-    req.email = decoded.email;
+    req.id = decoded.id;
     next();
   });
 };
@@ -116,7 +116,7 @@ app.post("/user/register", async (req, res) => {
       ...data[0],
       password: undefined, // Explicitly exclude the password
     };
-    const token = jwt.sign({ email: email}, secretKey, {
+    const token = jwt.sign({ id: data.id}, secretKey, {
       expiresIn: "1h",
     });
     // Respond with success
@@ -136,7 +136,6 @@ app.post("/user/register", async (req, res) => {
 });
 
 
-// User login route
 app.post("/user/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -163,7 +162,7 @@ app.post("/user/login", async (req, res) => {
         message: "Invalid email or password",
       });
     }
-    const token = jwt.sign({ email: email}, secretKey, {
+    const token = jwt.sign({ id: users.id}, secretKey, {
       expiresIn: "1h",
     });
     res.status(200).json({
@@ -190,7 +189,6 @@ const handleLogout = () => {
   window.location.href = "/login";
 };
 
-// Fetch Profile (Protected)
 app.get("/user/profile", verifyToken, async (req, res) => {
   try {
     // Use `req.email` from the `verifyToken` middleware
@@ -213,7 +211,6 @@ app.get("/user/profile", verifyToken, async (req, res) => {
   }
 });
 
-// logout route
 
 app.post("/user/logout", (req, res) => {
   try {
@@ -550,6 +547,39 @@ app.post("/delete-from-cart",verifyToken,async(req,res)=>{
   }
 })
 
+app.post("/delete-cart",verifyToken,async(req,res)=>{
+  const {customer_id}=req.body;
+  try {
+    const {data:carts,error:fetchError}=await supabase.from('cart').select('items').eq('customer_id',customer_id);
+    const cart=carts && carts.length!=0 ? carts[0]:null;
+    if(cart){
+      let items= cart.items?.length==0 ? [] : cart.items;
+      items=null
+      try {
+        const {data:updatedCart,error:updateError}=await supabase.from('cart').update({items}).eq('customer_id',customer_id).select();
+        if(updatedCart){
+          res.status(201).json({
+            message:"Cart successfully deleted !!!",
+            data:updatedCart
+          })
+        }else throw updateError
+      } catch (error) {
+        res.status(500).json({
+          message:"Cart could not be deleted !!!",
+          error:error
+        })
+      }
+    }else{
+      throw fetchError;
+    }
+  } catch (error) {
+    res.status(500).json({
+      message:"Cart could not be fetched",
+      error:error
+    })
+  }
+})
+
 app.post("/get-cart",verifyToken,async(req,res)=>{
   const {customer_id}=req.body;
   try {
@@ -562,6 +592,8 @@ app.post("/get-cart",verifyToken,async(req,res)=>{
     res.status(500).json({message:error.message})
   }
 })
+
+
 
 app.get("/get-products",async(req,res)=>{
   try {
