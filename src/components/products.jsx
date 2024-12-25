@@ -117,7 +117,7 @@ const Products = () => {
       return;
     }
     const payload = {
-      id: product.product_id,
+      p_id: product.product_id,
       name: product.product_name,
       price: product.MRP,
       quantity,
