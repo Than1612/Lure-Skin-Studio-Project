@@ -195,7 +195,7 @@ app.get("/user/profile", verifyToken, async (req, res) => {
     const { data, error } = await supabase
       .from("users")
       .select("name, email, address, phone")
-      .eq("email", req.email)
+      .eq("id", req.id)
       .single();
 
     if (error || !data) {
@@ -441,70 +441,102 @@ try {
 
 });
 
-app.post("/add-to-cart",verifyToken,async(req,res)=>{
-  const {id,name,price,customer_id}=req.body;
+app.post("/add-to-cart", verifyToken, async (req, res) => {
+  const { p_id, name, price } = req.body;
+  const customer_id = req.id; // Use customer_id from the decoded token
+
   try {
-    let {data:carts,error:fetchError}=await supabase.from('cart').select('items').eq('customer_id',customer_id);
-    if (fetchError) throw fetchError;
+    console.log("Fetching cart for customer_id:", customer_id);
+
+    const { data: carts, error: fetchError } = await supabase
+      .from("cart")
+      .select("items")
+      .eq("customer_id", customer_id);
+
+    if (fetchError) {
+      console.error("Error fetching cart:", fetchError.message);
+      throw new Error("Supabase query failed while fetching cart.");
+    }
 
     const cart = carts && carts.length > 0 ? carts[0] : null;
-    if(cart){
-      let items = cart.items.length === 0 ? [] : [...cart.items];
-      let found=false;
-      items=items.map((item)=>{
-        if(item.p_id==id){
-          found=true;
-          return {...item,quantity:item.quantity+1}
-        }else{
+
+    if (cart) {
+      console.log("Cart found for customer_id:", customer_id);
+      let items = cart.items ? [...cart.items] : []; // Initialize items as an array if null
+      let found = false;
+
+      items = items.map((item) => {
+        if (item.p_id === p_id) {
+          found = true;
+          return { ...item, quantity: item.quantity + 1 };
+        } else {
           return item;
         }
-      })
-      if(!found){
-        items.push({'p_id':id,'name':name,'quantity':1,'price':price});
+      });
+
+      if (!found) {
+        items.push({ p_id, name, quantity: 1, price });
       }
+
       try {
-        const {data:updatedData,error:updateError} = await supabase.from('cart').update({items}).eq('customer_id',customer_id).select();
-        if(updatedData){
-          res.status(201).json({
-            message:"Succesfully updated !!!",
-            data:updatedData,
-          })
-        }else{
-          throw updateError;
+        const { data: updatedData, error: updateError } = await supabase
+          .from("cart")
+          .update({ items })
+          .eq("customer_id", customer_id)
+          .select();
+
+        if (updateError) {
+          console.error("Error updating cart:", updateError.message);
+          throw new Error("Supabase query failed while updating cart.");
         }
+
+        res.status(201).json({
+          message: "Successfully updated cart!",
+          data: updatedData,
+        });
       } catch (error) {
+        console.error("Error updating cart:", error.message);
         res.status(500).json({
-          message:"Couldn't update table",
-          error: error.message
-        })
+          message: "Couldn't update cart",
+          error: error.message,
+        });
       }
-    }else{
-      const items=[{'p_id':id,'name':name,'quantity':1,'price':price}]
+    } else {
+      console.log("No cart found for customer_id, creating a new cart.");
+      const items = [{ p_id, name, quantity: 1, price }];
       try {
-        const {data:insertData,error:insertError} = await supabase.from('cart').insert({items,customer_id}).select();
-        if(insertData){
-          res.status(201).json({
-            message:"Succesfully created cart and added product !!!",
-            data:insertData,
-          })
-        }else{
-          throw insertError;
+        const { data: insertData, error: insertError } = await supabase
+          .from("cart")
+          .insert({ items, customer_id })
+          .select();
+
+        if (insertError) {
+          console.error("Error creating cart:", insertError.message);
+          throw new Error("Supabase query failed while creating cart.");
         }
+
+        res.status(201).json({
+          message: "Successfully created cart and added product!",
+          data: insertData,
+        });
       } catch (error) {
+        console.error("Error creating cart:", error.message);
         res.status(500).json({
-          message:"Couldn't create cart",
-          error: error.message
-        })
+          message: "Couldn't create cart",
+          error: error.message,
+        });
       }
     }
   } catch (error) {
+    console.error("Error in add-to-cart endpoint:", error.message);
     res.status(500).json({
-      message:"Couldn't fetch cart",
-      error: error.message
-    })
+      message: "Couldn't fetch cart",
+      error: error.message,
+    });
   }
+});
 
-})
+
 
 app.post("/delete-from-cart",verifyToken,async(req,res)=>{
   const {id,customer_id}=req.body;
