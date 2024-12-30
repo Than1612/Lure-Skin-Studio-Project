@@ -64,6 +64,47 @@ const verifyToken = (req, res, next) => {
   });
 };
 
+const verifyAdminToken = async (req, res, next) => {
+  const authHeader = req.headers["authorization"];
+  if (!authHeader) {
+    return res.status(401).json({ error: "No token provided" });
+  }
+
+  const token = authHeader.split(" ")[1];
+  if (!token) {
+    return res.status(401).json({ error: "No token provided" });
+  }
+
+  jwt.verify(token, secretKey, async (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ error: "Failed to authenticate token" });
+    }
+
+    try {
+      req.id = decoded.id;
+
+      const { data: user, error: fetchError } = await supabase
+        .from("users")
+        .select("role")
+        .eq("id", decoded.id)
+        .single();
+
+      if (fetchError) {
+        throw fetchError;
+      }
+
+      if (user.role === "admin") {
+        next();
+      } else {
+        return res.status(403).json({ error: "User is not authorized as admin" });
+      }
+    } catch (error) {
+      return res.status(500).json({ error: error.message || "Internal Server Error" });
+    }
+  });
+};
+
+
 const uploadCloudinary = async (localFilePath) => {
   try {
     const response = await cloudinary.uploader.upload(localFilePath, {
@@ -245,11 +286,35 @@ app.post("/upload/pic", upload.single("avatar"), async (req, res) => {
   }
 });
 
-app.post("/upload",verifyToken, async (req, res) => {
-  const { name, description, price, image } = req.body;
+app.post("/upload", verifyAdminToken, async (req, res) => {
+  const {
+    name,
+    price,
+    arrival_date,
+    description,
+    benefits,
+    usage_storage,
+    loaded_with,
+    disclaimer,
+    images,
+    quantity,
+    category,
+  } = req.body;
 
-  if (!name || !description || !price || !image) {
-    return res.status(400).json({ message: "Missing required fields" });
+  if (
+    !name ||
+    !price ||
+    !arrival_date ||
+    !description ||
+    !Array.isArray(benefits) ||
+    !Array.isArray(usage_storage) ||
+    !Array.isArray(loaded_with) ||
+    !Array.isArray(disclaimer) ||
+    !Array.isArray(images) ||
+    !quantity ||
+    !category
+  ) {
+    return res.status(400).json({ message: "Missing or invalid required fields" });
   }
 
   try {
@@ -257,10 +322,17 @@ app.post("/upload",verifyToken, async (req, res) => {
       .from("products")
       .insert([
         {
-          name: name,
-          description: description,
-          price: price,
-          image:image,
+          name,
+          price,
+          arrival_date,
+          description,
+          benefits,
+          usage_storage,
+          loaded_with,
+          disclaimer,
+          images,
+          quantity,
+          category,
         },
       ])
       .select();
@@ -274,7 +346,7 @@ app.post("/upload",verifyToken, async (req, res) => {
 
     res.status(201).json({
       message: "Product uploaded successfully",
-      data: data,
+      data: data[0],
     });
   } catch (err) {
     res.status(500).json({
@@ -283,6 +355,7 @@ app.post("/upload",verifyToken, async (req, res) => {
     });
   }
 });
+
 
 app.post("/create-and-send-payment-link",verifyToken, async (req, res) => {
   const { amount, customerName, customerContact, customerEmail, orderDetails } = req.body;

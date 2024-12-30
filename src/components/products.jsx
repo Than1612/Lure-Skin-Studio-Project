@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./products.css";
 import axios from "axios";
-import { soaps, oils, toners, scrubs, shower_gel, aloevera_gel } from "../soapData"; 
 import { FaShoppingCart } from "react-icons/fa";
 import ProductModal from "./Modal";
 import { useLocation } from "react-router-dom";
@@ -13,7 +12,13 @@ const Products = () => {
   }, []);
   
   const location = useLocation(); 
-  const [sortBy, setSortBy] = useState(""); 
+  const [sortBy, setSortBy] = useState("");
+  const [soaps,setSoaps]=useState([])
+  const [oils,setOils]=useState([])
+  const [toners,setToners]=useState([])
+  const [scrubs,setScrubs]=useState([])
+  const [shower_gel,setShower_gel]=useState([])
+  const [aloevera_gel,setAloevera_gel]=useState([])
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [filterByCategory, setFilterByCategory] = useState("");
   const [showMoreSoaps, setShowMoreSoaps] = useState(false);
@@ -26,18 +31,55 @@ const Products = () => {
   const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
-    // Set both filter and sort options from location state if provided
     if (location.state?.filterCategory) {
       setFilterByCategory(location.state.filterCategory);
     }
     if (location.state?.sortOption) {
       setSortBy(location.state.sortOption);
     }
-  }, [location.state]); // Update when location state changes
+  }, [location.state]);
 
   const openModal = (product) => {
     setSelectedProduct(product); 
   };
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get("http://localhost:5001/get-products");
+        console.log(response)
+        const temp_soaps = response.data.data.filter((product) =>
+          product.name.toLowerCase().includes("soap")
+        );
+        setSoaps(temp_soaps)
+        const temp_oils = response.data.data.filter((product) =>
+          product.name.toLowerCase().includes("oil")
+        );
+        setOils(temp_oils)
+        const temp_toners = response.data.data.filter((product) =>
+          product.name.toLowerCase().includes("toner")
+        );
+        setToners(temp_toners)
+        const temp_scrubs = response.data.data.filter((product) =>
+          product.name.toLowerCase().includes("scrub")
+        );
+        setScrubs(temp_scrubs)
+        const temp_shower_gel=response.data.data.filter((product) =>
+        product.name.toLowerCase().includes("shower gel")
+        );
+        setShower_gel(temp_shower_gel)
+        const temp_aloevera_gel=response.data.data.filter((product) =>
+        product.name.toLowerCase().includes("aloevera gel")
+        );
+        setAloevera_gel(temp_aloevera_gel)
+      } catch (err) {
+        console.error("Error fetching products:", err.message);
+      }
+    };
+  
+    fetchProducts();
+  }, []);
+  
 
   const closeModal = () => {
     setSelectedProduct(null);
@@ -48,7 +90,7 @@ const Products = () => {
     if (sortBy === "available") {
       return sortedProducts.sort((a, b) => b.available - a.available);
     } else if (sortBy === "price") {
-      return sortedProducts.sort((a, b) => a.MRP - b.MRP);
+      return sortedProducts.sort((a, b) => a.price - b.price);
     }
     return products;
   };
@@ -65,11 +107,11 @@ const Products = () => {
 
     if (category === "hair") {
       filteredProducts.oils = oils;
-      filteredProducts.aloevera_gel = aloevera_gel; // Include Aloe Vera Gel in hair category
+      filteredProducts.aloevera_gel = aloevera_gel;
     } else if (category === "body") {
       filteredProducts.soaps = soaps;
       filteredProducts.shower_gel = shower_gel;
-      filteredProducts.aloevera_gel = aloevera_gel; // Include Aloe Vera Gel in body category
+      filteredProducts.aloevera_gel = aloevera_gel;
     } else if (category === "face") {
       filteredProducts.soaps = soaps;
       filteredProducts.toners = toners;
@@ -117,9 +159,9 @@ const Products = () => {
       return;
     }
     const payload = {
-      p_id: product.product_id,
-      name: product.product_name,
-      price: product.MRP,
+      p_id: product.id,
+      name: product.name,
+      price: product.price,
       quantity,
       customer_id,
     };
@@ -136,8 +178,8 @@ const Products = () => {
       );
   
       if (response.status === 201) {
-        console.log("Cart updated successfully:", response.data);
-        alert(response.data.message);
+        console.log("Cart updated successfully:", response.data.data);
+        alert(response.data.data.message);
       }
   
       setShowQuantitySelector(null);
@@ -164,11 +206,11 @@ const Products = () => {
           const isExpanded = showQuantitySelector === product; // Check if the tile should be expanded
           return (
             <div key={index} className={`product-card ${isExpanded ? "expanded" : ""}`}>
-              <img src={product.proImgs[0]} alt={product.product_name} className="product-image" onClick={() => openModal(product)} />
+              <img src={product.images[0]} alt={product.name} className="product-image" onClick={() => openModal(product)} />
   
               <div className="product-details text-left">
-                <p className="product-price">Price: Rs {product.MRP}</p>
-                <h6 className="product-name">{product.product_name}</h6>
+                <p className="product-price">Price: Rs {product.price}</p>
+                <h6 className="product-name">{product.name}</h6>
               </div>
   
               {/* Cart Icon with Expansion Control */}
@@ -224,7 +266,7 @@ const Products = () => {
               value={filterByCategory}
               onChange={(e) => {
                 setFilterByCategory(e.target.value);
-                setSortBy(""); // Reset sort when changing filter
+                setSortBy("");
               }}
             >
               <option value="">All Products</option>
