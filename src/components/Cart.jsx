@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import { MdDelete } from "react-icons/md";
 import '../components/Cart.css';
 
 const CartPage = () => {
@@ -163,6 +164,44 @@ const clearCart = async () => {
   }
 };
 
+const handleDelete = async (item) => {
+  const authToken = localStorage.getItem("token");
+
+  if (!authToken) {
+    alert("User is not authenticated. Please log in.");
+    return;
+  }
+
+  try {
+    const response = await axios.post(
+      "http://localhost:5001/delete-from-cart",
+      { id: item.p_id },
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
+    );
+
+    if (response.status === 201) {
+      alert(response.data.message);
+
+      setCartItems((prevItems) =>
+        prevItems.filter((cartItem) => cartItem.p_id !== item.p_id)
+      );
+    } else {
+      console.error("Unexpected response status:", response.status);
+      alert("Failed to delete the item. Please try again.");
+    }
+  } catch (error) {
+    console.error("Error deleting item:", error.response?.data || error.message);
+    alert(
+      error.response?.data?.message ||
+      "Failed to delete the item. Please try again."
+    );
+  }
+};
+
 
   return (
     <div className="cart-page">
@@ -179,6 +218,7 @@ const clearCart = async () => {
                   <th>Quantity</th>
                   <th>Price</th>
                   <th>Cumulative Price</th>
+                  <th>Delete</th>
                 </tr>
               </thead>
               <tbody>
@@ -188,6 +228,7 @@ const clearCart = async () => {
                     <td>{item.quantity}</td>
                     <td>Rs {item.MRP}</td>
                     <td>Rs {item.quantity * item.MRP}</td>
+                    <td><MdDelete onClick={()=>handleDelete(item)} style={{cursor:"pointer"}}/></td>
                   </tr>
                 ))}
               </tbody>

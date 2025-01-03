@@ -225,11 +225,6 @@ app.post("/user/login", async (req, res) => {
   }
 });
 
-const handleLogout = () => {
-  localStorage.removeItem("userToken");
-  window.location.href = "/login";
-};
-
 app.get("/user/profile", verifyToken, async (req, res) => {
   try {
     // Use `req.email` from the `verifyToken` middleware
