@@ -36,10 +36,10 @@ const Navbar = () => {
             <AiOutlineShop size={20} className="mr-2" /> Shop
             {showFilterOptions && (
               <ul className="dropdown-menu">
-                <li onClick={() => navigate("/products?category=hair")}>Hair</li>
-                <li onClick={() => navigate("/products?category=body")}>Body</li>
-                <li onClick={() => navigate("/products?category=face")}>Face</li>
-              </ul>
+              <li onClick={() => navigate("/products", { state: { filterCategory: "hair" } })}>Hair</li>
+              <li onClick={() => navigate("/products", { state: { filterCategory: "body" } })}>Body</li>
+              <li onClick={() => navigate("/products", { state: { filterCategory: "face" } })}>Face</li>
+            </ul>            
             )}
           </li>
           <li className="navbar-item" onClick={() => navigate("/policy")}>
@@ -73,11 +73,11 @@ const Navbar = () => {
               <AiOutlineShop size={20} className="mr-2" /> Shop
             </div>
             {showFilterOptions && (
-              <ul className="dropdown-menu-mobile">
-                <li onClick={() => navigate("/products?category=hair")}>Hair</li>
-                <li onClick={() => navigate("/products?category=body")}>Body</li>
-                <li onClick={() => navigate("/products?category=face")}>Face</li>
-              </ul>
+             <ul className="dropdown-menu-mobile">
+             <li onClick={() => navigate("/products", { state: { filterCategory: "hair" } })}>Hair</li>
+             <li onClick={() => navigate("/products", { state: { filterCategory: "body" } })}>Body</li>
+             <li onClick={() => navigate("/products", { state: { filterCategory: "face" } })}>Face</li>
+           </ul>           
             )}
           </li>
           <li className="navbar-item" onClick={() => navigate("/policy")}>
