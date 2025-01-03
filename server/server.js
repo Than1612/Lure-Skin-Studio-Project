@@ -515,8 +515,8 @@ try {
 });
 
 app.post("/add-to-cart", verifyToken, async (req, res) => {
-  const { p_id, name, price } = req.body;
-  const customer_id = req.id; // Use customer_id from the decoded token
+  const { p_id, name, price, quantity } = req.body;
+  const customer_id = req.id;
 
   try {
     console.log("Fetching cart for customer_id:", customer_id);
@@ -541,14 +541,14 @@ app.post("/add-to-cart", verifyToken, async (req, res) => {
       items = items.map((item) => {
         if (item.p_id === p_id) {
           found = true;
-          return { ...item, quantity: item.quantity + 1 };
+          return { ...item, quantity: item.quantity + quantity };
         } else {
           return item;
         }
       });
 
       if (!found) {
-        items.push({ p_id, name, quantity: 1, price });
+        items.push({ p_id, name, quantity, price });
       }
 
       try {
@@ -609,10 +609,10 @@ app.post("/add-to-cart", verifyToken, async (req, res) => {
   }
 });
 
-
-
 app.post("/delete-from-cart",verifyToken,async(req,res)=>{
-  const {id,customer_id}=req.body;
+  const {id}=req.body;
+  const customer_id = req.id;
+
   try {
     const {data:carts,error:fetchError}=await supabase.from('cart').select('items').eq('customer_id',customer_id);
     const cart=carts && carts.length!=0 ? carts[0]:null;
@@ -620,11 +620,7 @@ app.post("/delete-from-cart",verifyToken,async(req,res)=>{
       let items= cart.items?.length==0 ? [] : cart.items;
       items=items.map((item)=>{
         if(item.p_id==id){
-          if(item.quantity==1){
-            return null;
-          }else{
-            return {...item,quantity:item.quantity-1}
-          }
+          return null;
         }
       })
       try {

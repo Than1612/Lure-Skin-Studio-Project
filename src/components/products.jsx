@@ -4,7 +4,6 @@ import axios from "axios";
 import { FaShoppingCart } from "react-icons/fa";
 import ProductModal from "./Modal";
 import { useLocation } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 
 const Products = () => {
   useEffect(() => {
@@ -141,21 +140,9 @@ const Products = () => {
 
   const handleConfirm = async (product) => {
     const authToken = localStorage.getItem("token");
-  
+    console.log(quantity)
     if (!authToken) {
       alert("User is not authenticated. Please log in.");
-      return;
-    }
-    let customer_id;
-    try {
-      const decodedToken = jwtDecode(authToken);
-      customer_id = decodedToken.id;
-      if (!customer_id) {
-        throw new Error("Customer ID not found in token");
-      }
-    } catch (error) {
-      console.error("Error decoding token:", error.message);
-      alert("Invalid token. Please log in again.");
       return;
     }
     const payload = {
@@ -163,7 +150,6 @@ const Products = () => {
       name: product.name,
       price: product.price,
       quantity,
-      customer_id,
     };
   
     try {
@@ -179,7 +165,7 @@ const Products = () => {
   
       if (response.status === 201) {
         console.log("Cart updated successfully:", response.data.data);
-        alert(response.data.data.message);
+        alert("Cart updated successfully");
       }
   
       setShowQuantitySelector(null);
