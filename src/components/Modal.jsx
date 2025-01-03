@@ -39,8 +39,8 @@ const ProductModal = ({ product, onClose }) => {
       }
       const payload = {
         id: product.id,
-        name: product.product_name,
-        price: product.MRP,
+        name: product.name,
+        price: product.price,
         customer_id,
       };
   
@@ -93,22 +93,25 @@ const ProductModal = ({ product, onClose }) => {
           <div className="modal-image-container">
             <div className="slide-image">
               <img
-                src={product.proImgs?.[currentImageIndex] || ""}
-                alt={product.product_name || "Product Image"}
+                src={product.images?.[currentImageIndex] || ""}
+                alt={product.name || "Product Image"}
                 className="modal-image"
               />
             </div>
           </div>
 
           <div className="modal-info">
-            <h2>{product.product_name || "Product Name"}</h2>
-            <p><strong>Price:</strong> Rs {product.MRP || "N/A"}</p>
+            <h2>{product.name || "Product Name"}</h2>
+            <p><strong>Price:</strong> Rs {product.price || "N/A"}</p>
 
             <ul>
               <strong>Description:</strong>
-              {(product.description || []).map((desc, idx) => (
+              {/* {(product.description || []).map((desc, idx) => (
                 <li key={idx}>{desc}</li>
-              ))}
+              ))} */}
+              <p>
+                {product.description}
+              </p>
             </ul> 
 
             <ul>
