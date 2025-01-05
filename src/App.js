@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import "./input.css";
+import Admin from "./components/admin.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Arrivals from "./components/Arrivals.jsx";
 import BestSelling from "./components/BestSelling.jsx";
@@ -84,6 +85,15 @@ function App() {
               <PrivateRoute>
                 <Profile />
               </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/admin"
+            element={
+              //add private route here
+                <Admin />
+               
             }
           />
         </Routes>
