@@ -64,45 +64,52 @@ const verifyToken = (req, res, next) => {
   });
 };
 
+// Updated `verifyAdminToken` middleware
 const verifyAdminToken = async (req, res, next) => {
   const authHeader = req.headers["authorization"];
-  if (!authHeader) {
-    return res.status(401).json({ error: "No token provided" });
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res
+      .status(401)
+      .json({ error: "Authorization token missing or invalid" });
   }
 
   const token = authHeader.split(" ")[1];
-  if (!token) {
-    return res.status(401).json({ error: "No token provided" });
-  }
-
   jwt.verify(token, secretKey, async (err, decoded) => {
     if (err) {
-      return res.status(401).json({ error: "Failed to authenticate token" });
+      return res.status(401).json({ error: "Invalid or expired token" });
     }
 
     try {
-      req.id = decoded.id;
+      req.id = decoded.id; // Set the user ID for further use
 
+      // Fetch user role from the database
       const { data: user, error: fetchError } = await supabase
         .from("users")
         .select("role")
         .eq("id", decoded.id)
         .single();
 
-      if (fetchError) {
-        throw fetchError;
+      if (fetchError || !user) {
+        throw new Error("Failed to fetch user data");
       }
 
       if (user.role === "admin") {
-        next();
+        return next(); // Proceed if the user is an admin
       } else {
-        return res.status(403).json({ error: "User is not authorized as admin" });
+        return res.status(403).json({ error: "You are not authorized as admin" });
       }
     } catch (error) {
-      return res.status(500).json({ error: error.message || "Internal Server Error" });
+      console.error("Error verifying admin token:", error.message);
+      return res.status(500).json({ error: "Internal Server Error" });
     }
   });
 };
+
+// Protect the admin page with `verifyAdminToken` middleware
+app.get("/admin", verifyAdminToken, (req, res) => {
+  res.status(200).json({ message: "Welcome to the Admin page" });
+});
+
 
 
 const uploadCloudinary = async (localFilePath) => {
@@ -688,8 +695,6 @@ app.post("/get-cart",verifyToken,async(req,res)=>{
     res.status(500).json({message:error.message})
   }
 })
-
-
 
 app.get("/get-products",async(req,res)=>{
   try {
