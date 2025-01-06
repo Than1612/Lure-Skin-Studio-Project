@@ -4,8 +4,8 @@ import "./admin.css";
 
 const Admin = () => {
   const navigate = useNavigate();
-  const [isAdmin, setIsAdmin] = useState(false); 
-  const [loading, setLoading] = useState(true); 
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     productName: "",
     productPrice: "",
@@ -19,9 +19,10 @@ const Admin = () => {
     category: "body",
     images: null,
   });
-  const [error, setError] = useState(""); 
+  const [error, setError] = useState("");
 
-  const categories = ["body", "face", "hair", "skincare", "fragrance"]; 
+  const categories = ["body", "face", "hair", "skincare", "fragrance"];
+
   useEffect(() => {
     const verifyAdmin = async () => {
       const token = localStorage.getItem("token");
@@ -35,7 +36,7 @@ const Admin = () => {
         const response = await fetch("http://localhost:5001/admin", {
           method: "GET",
           headers: {
-            "Authorization": `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         });
 
@@ -51,25 +52,19 @@ const Admin = () => {
         alert("An error occurred. Please try again.");
         navigate("/login");
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
     verifyAdmin();
   }, [navigate]);
+
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
-    if (type === "file") {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: files[0],
-      }));
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    }
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: type === "file" ? files[0] : value,
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -82,34 +77,22 @@ const Admin = () => {
     }
 
     const formDataToSend = new FormData();
-    for (let key in formData) {
+    Object.keys(formData).forEach((key) => {
       formDataToSend.append(key, formData[key]);
-    }
+    });
 
     try {
       const response = await fetch("http://localhost:5001/upload", {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: formDataToSend,
       });
 
       if (response.ok) {
         alert("Product uploaded successfully!");
-        setFormData({
-          productName: "",
-          productPrice: "",
-          arrivalDate: "",
-          description: "",
-          benefits: "",
-          usageStorage: "",
-          loadedWith: "",
-          disclaimer: "",
-          quantity: "",
-          category: "body",
-          images: null,
-        });
+        handleClear();
       } else {
         const errorData = await response.json();
         setError(errorData.message || "Failed to upload product.");
@@ -137,11 +120,11 @@ const Admin = () => {
   };
 
   if (loading) {
-    return <div className="spinner">Loading...</div>; 
+    return <div className="spinner">Loading...</div>;
   }
 
   if (!isAdmin) {
-    return null; 
+    return null;
   }
 
   return (
