@@ -64,7 +64,6 @@ const verifyToken = (req, res, next) => {
   });
 };
 
-// Updated `verifyAdminToken` middleware
 const verifyAdminToken = async (req, res, next) => {
   const authHeader = req.headers["authorization"];
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -105,7 +104,6 @@ const verifyAdminToken = async (req, res, next) => {
   });
 };
 
-// Protect the admin page with `verifyAdminToken` middleware
 app.get("/admin", verifyAdminToken, (req, res) => {
   res.status(200).json({ message: "Welcome to the Admin page" });
 });
