@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./admin.css";
 
 const Admin = () => {
@@ -17,7 +18,7 @@ const Admin = () => {
     disclaimer: "",
     quantity: "",
     category: "body",
-    images: null,
+    images: [],
   });
   const [error, setError] = useState("");
 
@@ -69,39 +70,47 @@ const Admin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const token = localStorage.getItem("token");
     if (!token) {
       setError("Unauthorized. Please login.");
       return;
     }
-
-    const formDataToSend = new FormData();
-    Object.keys(formData).forEach((key) => {
-      formDataToSend.append(key, formData[key]);
-    });
-
+  
+    const productData = {
+      name: formData.productName,
+      price: formData.productPrice,
+      arrival_date: formData.arrivalDate,
+      description: formData.description,
+      benefits: formData.benefits.split("\n"),
+      usage_storage: formData.usageStorage.split("\n"),
+      loaded_with: formData.loadedWith.split("\n"),
+      disclaimer: formData.disclaimer.split("\n"),
+      images: formData.images,
+      quantity: formData.quantity,
+      category: formData.category,
+    };
+  
     try {
-      const response = await fetch("http://localhost:5001/upload", {
-        method: "POST",
+      const response = await axios.post("http://localhost:5001/upload", productData, {
         headers: {
           Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
-        body: formDataToSend,
       });
-
-      if (response.ok) {
+  
+      if (response.status === 201) {
         alert("Product uploaded successfully!");
         handleClear();
       } else {
-        const errorData = await response.json();
-        setError(errorData.message || "Failed to upload product.");
+        setError(response.data.message || "Failed to upload product.");
       }
-    } catch (err) {
-      console.error("Error uploading product:", err);
+    } catch (error) {
+      console.error("Error uploading product:", error.response?.data || error.message);
       setError("An error occurred while uploading the product.");
     }
   };
+  
 
   const handleClear = () => {
     setFormData({
@@ -118,6 +127,33 @@ const Admin = () => {
       images: null,
     });
   };
+
+  const handleImageUpload = async (file) => {
+    const formData = new FormData();
+    formData.append("avatar", file);
+  
+    try {
+      const response = await axios.post("http://localhost:5001/upload/pic", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+  
+      const uploadedImageUrl = response.data.picUrl;
+  
+      if (uploadedImageUrl) {
+        setFormData((prevData) => ({
+          ...prevData,
+          images: [...prevData.images, uploadedImageUrl],
+        }));
+        console.log("Image uploaded successfully:", uploadedImageUrl);
+      } else {
+        alert("Failed to upload image. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error.response?.data || error.message);
+      alert("Failed to upload image. Please try again.");
+    }
+  };
+  
 
   if (loading) {
     return <div className="spinner">Loading...</div>;
@@ -233,7 +269,7 @@ const Admin = () => {
           <input
             type="file"
             name="images"
-            onChange={handleChange}
+            onChange={(e) => handleImageUpload(e.target.files[0])}
             required
           />
         </div>
