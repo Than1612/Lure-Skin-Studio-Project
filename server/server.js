@@ -511,7 +511,6 @@ app.post("/verification", async (req, res) => {
   const SECRET = "X41romc$4F";
   const signature = req.headers["x-razorpay-signature"];
   const payload = JSON.stringify(req.body);
-
   const expectedSignature = crypto
     .createHmac("sha256", SECRET)
     .update(payload)
