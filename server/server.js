@@ -9,7 +9,7 @@ import multer from "multer";
 import cloudinary from "cloudinary"
 import jwt from "jsonwebtoken";
 import Razorpay from "razorpay";
-
+import crypto from "crypto"
 dotenv.config();
 
 const app = express();
@@ -107,8 +107,6 @@ const verifyAdminToken = async (req, res, next) => {
 app.get("/admin", verifyAdminToken, (req, res) => {
   res.status(200).json({ message: "Welcome to the Admin page" });
 });
-
-
 
 const uploadCloudinary = async (localFilePath) => {
   try {
@@ -252,7 +250,6 @@ app.get("/user/profile", verifyToken, async (req, res) => {
   }
 });
 
-
 app.post("/user/logout", (req, res) => {
   try {
     const authHeader = req.headers["authorization"];
@@ -274,8 +271,6 @@ app.post("/user/logout", (req, res) => {
     res.status(500).json({ message: "An error occurred during logout" });
   }
 });
-
-
 
 app.post("/upload/pic", upload.single("avatar"), async (req, res) => {
   try {
@@ -356,7 +351,6 @@ app.post("/upload", verifyAdminToken, async (req, res) => {
   }
 });
 
-
 app.post("/create-and-send-payment-link",verifyToken, async (req, res) => {
   const { amount, customerName, customerContact, customerEmail, orderDetails } = req.body;
 
@@ -391,8 +385,9 @@ app.post("/create-and-send-payment-link",verifyToken, async (req, res) => {
     reminder_enable: true,
     notes: {
       policy_name: "Policy 1",
+      customer_id:req.id,
     },
-    callback_url: "http://localhost:8000/payment/",
+    callback_url: "http://localhost:3000/cart",
     callback_method: "get",
   };
 
@@ -510,14 +505,118 @@ try {
     paymentLink: paymentLink.short_url,
   });
 }
+});
 
+app.post("/verification", async (req, res) => {
+  const SECRET = "X41romc$4F";
+  const signature = req.headers["x-razorpay-signature"];
+  const payload = JSON.stringify(req.body);
+  const expectedSignature = crypto
+    .createHmac("sha256", SECRET)
+    .update(payload)
+    .digest("hex");
 
+  if (signature === expectedSignature) {
+    console.log("Valid webhook received:", req.body);
+
+    const { event, payload } = req.body;
+
+    if (event === "payment_link.paid") {
+      const customer_id = payload.payment_link.entity.notes.customer_id;
+
+      try {
+        const { data: cartItems, error: fetchError } = await supabase
+          .from("cart")
+          .select("items")
+          .eq("customer_id", customer_id);
+
+        if (fetchError) {
+          console.error("Error fetching cart items:", fetchError.message);
+          return res.status(500).json({ error: "Failed to fetch cart items" });
+        }
+
+        if (cartItems && cartItems.length > 0) {
+          const cart = cartItems[0].items || [];
+
+          for (const item of cart) {
+            const { p_id: product_id, quantity } = item;
+
+            try {
+              const { data: productData, error: fetchProductError } = await supabase
+                .from("products")
+                .select("quantity, quantity_sold")
+                .eq("id", product_id)
+                .single();
+
+              if (fetchProductError) {
+                console.error(
+                  `Error fetching product details for product_id=${product_id}:`,
+                  fetchProductError.message
+                );
+                continue;
+              }
+
+              const updatedQuantity = productData.quantity - quantity;
+              const updatedQuantitySold = (productData.quantity_sold || 0) + quantity;
+
+              const { error: updateError } = await supabase
+                .from("products")
+                .update({
+                  quantity: updatedQuantity,
+                  quantity_sold: updatedQuantitySold,
+                })
+                .eq("id", product_id);
+
+              if (updateError) {
+                console.error(
+                  `Error updating product quantity and quantity_sold for product_id=${product_id}:`,
+                  updateError.message
+                );
+              } else {
+                console.log(
+                  `Product updated successfully for product_id=${product_id}: quantity=${updatedQuantity}, quantity_sold=${updatedQuantitySold}`
+                );
+              }
+            } catch (error) {
+              console.error(
+                `Unexpected error updating product quantity and quantity_sold for product_id=${product_id}:`,
+                error.message
+              );
+            }
+          }
+
+          const { error: clearCartError } = await supabase
+            .from("cart")
+            .update({ items: null })
+            .eq("customer_id", customer_id);
+
+          if (clearCartError) {
+            console.error("Error clearing cart:", clearCartError.message);
+            return res
+              .status(500)
+              .json({ error: "Failed to clear cart after payment" });
+          }
+        }
+
+        console.log("Payment success tasks completed successfully");
+        res.status(200).json({ message: "Payment processed and cart cleared" });
+      } catch (error) {
+        console.error("Error processing payment tasks:", error.message);
+        res.status(500).json({ error: "Failed to process payment tasks" });
+      }
+    } else {
+      console.error("Unhandled event type:", event);
+      res.status(400).json({ error: "Unhandled event type" });
+    }
+  } else {
+    console.error("Invalid webhook signature");
+    res.status(400).send("Invalid signature");
+  }
 });
 
 app.post("/add-to-cart", verifyToken, async (req, res) => {
   const { p_id, name, price, quantity } = req.body;
   const customer_id = req.id;
-
   try {
     console.log("Fetching cart for customer_id:", customer_id);
 
