@@ -106,7 +106,6 @@ const CartPage = () => {
           `Payment link created successfully! Please complete your payment: ${response.data.paymentLink}`
         );
   
-        clearCart();
       } else {
         console.error("Unexpected response status:", response.status);
         alert("Failed to create payment link. Please try again.");

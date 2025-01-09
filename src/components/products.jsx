@@ -170,7 +170,6 @@ const Products = () => {
       price: product.price,
       quantity
     };
-
     try {
       const response = await axios.post(
         "http://localhost:5001/add-to-cart",
