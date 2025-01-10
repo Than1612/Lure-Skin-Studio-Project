@@ -74,7 +74,7 @@ const ArrivalsCard = ({ img, name, price }) => {
     <div className="card" style={styles.card} onClick={() => setShowQuantitySelector(null)}>
       <img src={img} alt={name} className="product-image" style={styles.image} />
       <h3 className="product-name" style={styles.name}>{name}</h3>
-      <p className="product-price" style={styles.price}>{price}</p>
+      <p className="product-price" style={styles.price}>Price: Rs {price}</p>
 
       {/* Cart Icon with Expansion Control */}
       <div
