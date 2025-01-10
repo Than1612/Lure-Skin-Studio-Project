@@ -30,7 +30,7 @@ const Arrivals = () => {
             ...product,
           }));
 
-        setProducts(sortedProducts);
+        setProducts(sortedProducts.slice(0, 6));
       } catch (error) {
         console.error("Error fetching products:", error.message);
       }
