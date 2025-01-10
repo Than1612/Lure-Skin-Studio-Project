@@ -112,7 +112,7 @@ const styles = {
   card: {
     textAlign: "center",
     width: "90%",
-    maxWidth: "400px",
+    maxWidth: "360px",
     minHeight: "450px",
     backgroundColor: "#f9dcdc",
     border: "1px solid #ddd",

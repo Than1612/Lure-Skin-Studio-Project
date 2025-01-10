@@ -1,10 +1,17 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import logo from "../attachments/logo2.png";
 import { FaInstagram, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "./Footer.css";
 
 const Footer = () => {
+  const navigate = useNavigate();
+  const handleLogoClick=()=>{navigate("/");};
+  const handleClick = () => {
+    handleLogoClick();
+    scrollToTop();
+  };
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -21,7 +28,7 @@ const Footer = () => {
           <div className="col-md-4 col-sm-6">
             <div className="footer-menu footer-menu-001">
               <div className="footer-intro mb-4">
-                <img src={logo} alt="logo" />
+                <img src={logo} alt="logo" onClick={handleClick} style={{cursor:"pointer"}} />
               </div>
               <p>
                 <em>Feel the best version of you</em>
@@ -113,7 +120,7 @@ const Footer = () => {
           <div className="row">
             <div className="col-md-6 d-flex flex-wrap"></div>
             <div className="col-md-6 text-md-end mt-3 mt-md-0">
-              <p>© Copyright 2024. All rights reserved.</p>
+              <p>© Copyright 2025. All rights reserved.</p>
             </div>
           </div>
         </div>

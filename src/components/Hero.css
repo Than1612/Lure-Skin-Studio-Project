@@ -44,9 +44,11 @@
   font-size: 30px; /* Default size for larger screens */
   min-height: 30px;
 }
+
 .slider .dots-container li.active button span {
-  font-size: 35px; /* Slightly larger for active dot */
+  font-size: 25px; /* Slightly larger for active dot */
 }
+
 .slider .dots-container li button:hover {
   text-decoration: none;
   opacity: 0.7;
@@ -64,11 +66,26 @@
   background-size: cover;
   background-position: center;
   background-color: transparent;
+  animation: fadeIn 1s ease-in-out;
+  position: relative;
+}
+
+.slider .each-slide::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6));
+  z-index: 1;
 }
 
 .slider .slide-content {
   border-radius: 10px;
   max-width: 80%;
+  position: relative;
+  z-index: 2;
 }
 
 .slider .slide-content .section-title {
@@ -76,6 +93,8 @@
   font-size: 6rem;
   text-transform: uppercase;
   margin-bottom: 20px;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+  font-family: 'Times New Roman', Times, serif
 }
 
 .slider .slide-content .caption {
@@ -84,6 +103,7 @@
   padding: 0 300px;
   font-size: 1.2rem;
   margin-bottom: 30px;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
 }
 
 .slider .slide-content .btn {
@@ -92,11 +112,14 @@
   padding: 10px 20px;
   border: 2px solid white;
   text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .slider .slide-content .btn:hover {
   background-color: white;
   color: black;
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
 }
 
 /* Responsive Styles */
@@ -146,6 +169,15 @@
     padding: 8px 16px;
     font-size: 1rem;
   }
+
+  .slider .dots-container li button span {
+    font-size: 20px; /* Smaller size for medium screens */
+    min-height: 20px;
+  }
+
+  .slider .dots-container li.active button span {
+    font-size: 20px; /* Slightly larger for active dot on medium screens */
+  }
 }
 
 @media only screen and (max-width: 480px) {
@@ -178,27 +210,25 @@
   .slider .dots-container {
     bottom: 20px;
   }
-}
 
-
-@media only screen and (max-width: 768px) {
-  .slider .dots-container li button span {
-    font-size: 20px; /* Smaller size for medium screens */
-    min-height: 20px;
-  }
-
-  .slider .dots-container li.active button span {
-    font-size: 25px; /* Slightly larger for active dot on medium screens */
-  }
-}
-
-@media only screen and (max-width: 480px) {
   .slider .dots-container li button span {
     font-size: 15px; /* Even smaller for small screens */
     min-height: 15px;
   }
 
   .slider .dots-container li.active button span {
-    font-size: 18px; /* Slightly larger for active dot on small screens */
+    font-size: 16px; /* Slightly larger for active dot on small screens */
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }

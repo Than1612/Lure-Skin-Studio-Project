@@ -13,6 +13,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [showFilterOptions, setShowFilterOptions] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const handleLogoClick=()=>{navigate("/");};
 
   const toggleDropdown = () => setShowFilterOptions((prev) => !prev);
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
@@ -20,7 +21,7 @@ const Navbar = () => {
   return (
     <div className="navbar-container">
       <div className="flex justify-between items-center navbar">
-        <img src={logo} alt="Logo" className="logo" />
+        <img src={logo} alt="Logo" className="logo" onClick={handleLogoClick} style={{cursor:"pointer"}}/>
 
         {/* Hamburger Menu */}
         <div className="md:hidden" onClick={toggleMenu}>

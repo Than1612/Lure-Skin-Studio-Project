@@ -29,7 +29,7 @@ const BestSelling = () => {
             ...product,
           }));
 
-        setProducts(sortedProducts);
+          setProducts(sortedProducts.slice(0, 6));
       } catch (error) {
         console.error("Error fetching products:", error.message);
       }
@@ -38,7 +38,7 @@ const BestSelling = () => {
     getAllProducts();
   }, []);
 
-  const visibleItemsCount = 5;
+  const visibleItemsCount = 3;
 
   const nextProduct = () => {
     if (products.length > visibleItemsCount) {
