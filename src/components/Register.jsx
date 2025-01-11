@@ -109,7 +109,7 @@ const Register = () => {
                   type="text"
                   name="phone"
                   className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-600"
-                  placeholder="Phone Number"
+                  placeholder="Phone Number: Add +91 before your contact number"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   required

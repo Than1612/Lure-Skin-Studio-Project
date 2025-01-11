@@ -244,7 +244,7 @@ const handleDelete = async (item) => {
         <div className="checkout-section">
           <h3>Customer Details:</h3>
           <div className="form-row">
-            <label>Name:</label>
+            <label>Name</label>
             <input
               type="text"
               placeholder="Name"
@@ -253,16 +253,16 @@ const handleDelete = async (item) => {
             />
           </div>
           <div className="form-row">
-            <label>Contact Number:</label>
+            <label>Contact Number</label>
             <input
               type="text"
-              placeholder="Contact Number"
+              placeholder="Contact Number: Add +91 before your contact number"
               value={customerContact}
               onChange={(e) => setCustomerContact(e.target.value)}
             />
           </div>
           <div className="form-row">
-            <label>Email:</label>
+            <label>Email</label>
             <input
               type="email"
               placeholder="Email"
